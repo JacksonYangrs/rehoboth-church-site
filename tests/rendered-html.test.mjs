@@ -8,8 +8,9 @@ test("ships the Bible reader instead of the disposable starter", async () => {
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
   ]);
-  assert.match(page, /全书预排已就绪/);
+  assert.match(page, /全书预排/);
   assert.match(page, /SOURCE_URL/);
+  assert.match(page, /api\/rare-lexicon/);
   assert.match(page, /setTimeout\([\s\S]*3000/);
   assert.match(page, /requestFullscreen/);
   assert.match(page, /chapterPages/);

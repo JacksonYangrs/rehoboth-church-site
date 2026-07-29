@@ -39,7 +39,9 @@ type Layout = {
   chapterPages: Record<string, number>;
   labels: string[];
 };
-type Tip = { char: string; pinyin: string; meaning?: string; x: number; y: number };
+type SupplementalEntry = { pinyin: string; definition?: string; reference: string };
+type SupplementalLexicon = Record<string, SupplementalEntry>;
+type Tip = { char: string; pinyin: string; meaning?: string; source?: string; x: number; y: number };
 
 const seedData: BibleData = {
   books: [
@@ -170,6 +172,8 @@ function useIsCompact() {
 export default function Home() {
   const [data, setData] = useState<BibleData>(seedData);
   const [status, setStatus] = useState<"loading" | "ready" | "fallback">("loading");
+  const [supplement, setSupplement] = useState<SupplementalLexicon>({});
+  const [supplementReady, setSupplementReady] = useState(false);
   const [language, setLanguage] = useState<Language>("trad");
   const [includeCommon, setIncludeCommon] = useState(false);
   const [known, setKnown] = useState<Set<string>>(new Set());
@@ -188,6 +192,21 @@ export default function Home() {
     setLanguage(savedLanguage === "simp" ? "simp" : "trad");
     setIncludeCommon(window.localStorage.getItem("cuv-common-pinyin") === "1");
     if (savedKnown) setKnown(new Set(JSON.parse(savedKnown)));
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    fetch("/api/rare-lexicon")
+      .then((response) => response.json())
+      .then((payload: { entries?: SupplementalLexicon }) => {
+        if (!active) return;
+        setSupplement(payload.entries || {});
+        setSupplementReady(true);
+      })
+      .catch(() => active && setSupplementReady(true));
+    return () => {
+      active = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -243,13 +262,23 @@ export default function Home() {
 
   useEffect(() => setPage((current) => Math.min(current, maxPage)), [maxPage]);
 
+  const traditionalToSimplified = useMemo(
+    () => Object.fromEntries(Object.entries(data.lexicon.SIMP2TRAD).map(([simp, trad]) => [trad, simp])),
+    [data.lexicon.SIMP2TRAD],
+  );
+
+  const supplementalFor = useCallback(
+    (char: string) => supplement[language === "trad" ? traditionalToSimplified[char] || char : char],
+    [language, supplement, traditionalToSimplified],
+  );
+
   const pinyinFor = useCallback(
     (char: string) => {
       const lexicon = language === "trad" ? data.lexicon.RPMAP : data.lexicon.RPMAP_S;
       const additional = language === "trad" ? data.lexicon.EXTRA : data.lexicon.EXTRA_S;
-      return lexicon[char] || (includeCommon ? additional[char] : "");
+      return lexicon[char] || supplementalFor(char)?.pinyin || (includeCommon ? additional[char] : "");
     },
-    [data.lexicon, includeCommon, language],
+    [data.lexicon, includeCommon, language, supplementalFor],
   );
 
   const canonical = useCallback(
@@ -294,10 +323,12 @@ export default function Home() {
     const element = event.currentTarget;
     const timer = window.setTimeout(() => {
       const bounds = element.getBoundingClientRect();
+      const supplemental = supplementalFor(char);
       setTip({
         char,
         pinyin,
-        meaning: data.lexicon.DEFS[char] || data.lexicon.DEFS[canonical(char)],
+        meaning: supplemental?.definition || data.lexicon.DEFS[char] || data.lexicon.DEFS[canonical(char)],
+        source: supplemental ? `一般释义 · ${supplemental.reference}` : undefined,
         x: Math.max(14, Math.min(window.innerWidth - 246, bounds.left - 52)),
         y: Math.max(80, bounds.top - 68),
       });
@@ -383,7 +414,7 @@ export default function Home() {
           <strong>聖經 · 和合本</strong>
         </div>
         <div className="header-spacer" />
-        <span className={`layout-status ${status}`}>{status === "loading" ? "正在载入全书…" : status === "ready" ? "全书预排已就绪" : "示例经文模式"}</span>
+        <span className={`layout-status ${status}`}>{status === "loading" ? "正在载入全书…" : status === "ready" ? supplementReady ? `全书预排 · 补充词库 ${Object.keys(supplement).length} 字` : "全书预排 · 正在合并词库…" : "示例经文模式"}</span>
         <button className={`control ${includeCommon ? "active" : ""}`} onClick={() => { setIncludeCommon((value) => { window.localStorage.setItem("cuv-common-pinyin", value ? "0" : "1"); return !value; }); setLayoutRevision((value) => value + 1); }}>
           <span className="desktop-only">常用字</span>{includeCommon ? "注音开" : "注音关"}
         </button>
@@ -419,7 +450,7 @@ export default function Home() {
         </button>
       </footer>
 
-      {tip && <aside className="character-tip" style={{ left: tip.x, top: tip.y }} role="status"><b>{tip.char}</b><span>{tip.pinyin}</span><em>{tip.meaning || "点击可标记为已识"}</em></aside>}
+      {tip && <aside className="character-tip" style={{ left: tip.x, top: tip.y }} role="status"><b>{tip.char}</b><span>{tip.pinyin}</span><em>{tip.meaning || "点击可标记为已识"}</em>{tip.source && <small>{tip.source}</small>}</aside>}
 
       {tocOpen && (
         <div className="toc-layer" role="dialog" aria-modal="true" aria-label="圣经目录">
