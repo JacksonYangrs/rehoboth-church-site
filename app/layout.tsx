@@ -1,28 +1,32 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "聖經 · 和合本生僻字標音版",
-  description: "带拼音、熟字记忆与快速预排的和合本圣经阅读器。",
-  openGraph: {
-    title: "聖經 · 和合本生僻字標音版",
-    description: "带拼音、熟字记忆与快速预排的和合本圣经阅读器。",
-    images: ["/og.png"],
-  },
-  icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const requestHeaders = await headers();
+  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
+  const protocol = requestHeaders.get("x-forwarded-proto") ?? "https";
+  const origin = `${protocol}://${host}`;
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="zh-Hant">
-      <body>{children}</body>
-    </html>
-  );
+  return {
+    metadataBase: new URL(origin),
+    title: "每日与主同行",
+    description: "每天自动打开当天的灵修内容，一起安静、读经、思想、同行与代祷。",
+    openGraph: {
+      title: "每日与主同行",
+      description: "今天，一起安静聆听、思想、回应。",
+      images: [{ url: "/og.png", width: 1728, height: 972, alt: "每日与主同行" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "每日与主同行",
+      description: "今天，一起安静聆听、思想、回应。",
+      images: ["/og.png"],
+    },
+    icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
+  };
+}
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <html lang="zh-Hans"><body>{children}</body></html>;
 }
