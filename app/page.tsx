@@ -13,7 +13,7 @@ const growth = [
   ["青少年团契", "13—18岁", "总要在言语、行为、爱心、信心上作榜样。", "提摩太前书 4:12", "youth"],
   ["姊妹团契", "彼此相伴", "最要紧的是彼此切实相爱。", "彼得前书 4:8", "sister"],
   ["弟兄团契", "一起建造", "两个人总比一个人好。", "传道书 4:9", "brother"],
-  ["教会探访", "爱的行动", "作在我这弟兄中一个最小的身上。", "马太福音 25:40", "visit"],
+  ["教会探访", "爱的行动", "作在我这弟兄中一个最小的身上。", "马太福音 25:40", "visit", "访"],
 ];
 
 export default function Home() {
@@ -44,7 +44,7 @@ export default function Home() {
 
       <section className="section" id="worship"><div className="heading"><div><p className="label">WORSHIP & MESSAGE</p><h2>线上敬拜</h2><p className="heading-note">来啊，我们要屈身敬拜，在造我们的耶和华面前跪下。<small>诗篇 95:6</small></p></div><a className="link" href="#worship">查看全部资料 →</a></div><div className="feature" onClick={() => setSelected(media[0])} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && setSelected(media[0])}><div className="feature-art"><span className="play">▶</span><small>主日敬拜 · 2026.07.26</small></div><div className="feature-info"><p className="label">LATEST MESSAGE</p><h3>在旷野中看见恩典</h3><p>“我要向山举目；我的帮助从何而来？我的帮助从造天地的耶和华而来。”</p><div className="meta">诗篇 121 篇　·　林牧师　·　约 42 分钟</div><button className="btn gold small">开始观看 →</button></div></div><div className="media-grid">{media.slice(1).map(item => <article className="media-card" key={item.title} onClick={() => setSelected(item)}><div className={`media-thumb ${item.color}`}><span className="play tiny">▶</span><b>{item.label}</b></div><div className="media-body"><small>{item.meta}</small><h3>{item.title}</h3><p>一起在神的话语中学习、思想与回应。</p><span className="link">观看信息 →</span></div></article>)}</div></section>
 
-      <section className="dark-section" id="growth"><div className="section"><div className="heading light"><div><p className="label">LIFE TOGETHER</p><h2>教会成长</h2><p className="heading-note">记录每一次相聚，纪念神在我们中间的工作。<small>诗篇 126:3</small></p></div><a className="link light-link" href="#growth">查看成长记录 →</a></div><div className="growth-grid">{growth.map(([title, sub, quote, ref, cls]) => <article className={`growth-card ${cls}`} key={title}><div className="growth-visual"><span>{sub}</span><b>{title.slice(0, 1)}</b></div><div><h3>{title}</h3><p>“{quote}”</p><small>{ref}</small><a href="#growth">照片与视频 →</a></div></article>)}</div></div></section>
+      <section className="dark-section" id="growth"><div className="section"><div className="heading light"><div><p className="label">LIFE TOGETHER</p><h2>教会成长</h2><p className="heading-note">记录每一次相聚，纪念神在我们中间的工作。<small>诗篇 126:3</small></p></div><a className="link light-link" href="#growth">查看成长记录 →</a></div><div className="growth-grid">{growth.map(([title, sub, quote, ref, cls, mark]) => <article className={`growth-card ${cls}`} key={title}><div className="growth-visual"><span>{sub}</span><b>{mark || title.slice(0, 1)}</b></div><div><h3>{title}</h3><p>“{quote}”</p><small>{ref}</small><a href="#growth">照片与视频 →</a></div></article>)}</div></div></section>
 
       <section className="section study" id="bible-study"><div className="study-box"><div className="study-date"><b>每周五</b><span>7:30 PM</span></div><div><p className="label">BIBLE STUDY NOTICE</p><h2>每周查经公告</h2><p>本周五，我们继续在线上一起查考圣经。欢迎提前阅读经文，带着问题和期待参加 Zoom 查经。</p><div className="study-meta"><span>本周主题：约翰福音中的生命</span><span>形式：Zoom 同步</span></div></div><a className="btn dark" href="#bible-study">查看公告 →</a></div></section>
 
