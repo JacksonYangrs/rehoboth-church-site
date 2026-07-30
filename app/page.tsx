@@ -35,8 +35,8 @@ export default function Home() {
       </header>
 
       <section className="hero" id="top">
-        <div className="hero-inner"><p className="eyebrow">WELCOME TO REHOBOTH</p><h1>在这里敬拜，<br /><em>在这里见证。</em></h1><p className="hero-lead">利河伯，意为“宽阔之地”。这里记录神在我们中间的工作，也邀请每一个人来到祂面前，得着安慰、盼望与新的开始。</p><div className="hero-buttons"><a className="btn gold" href="#worship">进入线上敬拜 <span>→</span></a><a className="btn outline" href="#about">认识利河伯</a></div></div>
-        <div className="hero-mark" aria-hidden="true"><div className="hero-circle"></div><div className="hero-cross">✝</div><div className="hero-wave wave-one"></div><div className="hero-wave wave-two"></div><p>神在这里<br />为我们开了宽阔之地</p></div>
+        <div className="hero-inner"><p className="eyebrow">利河伯教会 · REHOBOTH CHURCH</p><h1>在这里敬拜，<br /><em>在这里，看见恩典。</em></h1><p className="hero-lead">“那坐在黑暗里的百姓，看见了大光。”<br /><small>马太福音 4:16</small></p><p className="hero-subcopy">利河伯，意为“宽阔之地”。愿每一个来到这里的人，在主的光中得着安慰、盼望与新的开始。</p><div className="hero-buttons"><a className="btn gold" href="#worship">进入线上敬拜 <span>→</span></a><a className="btn outline" href="#about">认识利河伯</a></div></div>
+        <div className="hero-mark" aria-hidden="true"><div className="hero-circle"></div><div className="hero-cross">✝</div><div className="candle"><i></i></div><div className="open-bible"><span></span><span></span></div><div className="hero-wave wave-one"></div><div className="hero-wave wave-two"></div><p>神在这里<br />为我们开了宽阔之地</p></div>
         <div className="hero-strip"><span>本周主日崇拜</span><b>每周日 · 上午 10:00</b><i></i><span>线上同步更新</span></div>
       </section>
 
