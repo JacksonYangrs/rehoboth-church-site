@@ -282,7 +282,30 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 @media (max-width: 720px) {
   .site-cta { flex-direction: column; align-items: start; }
   .site-hero { min-height: 380px; padding-top: 60px; padding-bottom: 56px; }
+  .site-block { padding-top: 58px; padding-bottom: 58px; }
+  .site-block--photo { min-height: 420px; }
 }
+
+/* ===== 首页长滚动布局：一栏目一宽幅区块 ===== */
+.site-block { position: relative; display: grid; align-items: center; padding: 86px max(32px, calc((100vw - 1090px) / 2)); }
+.site-block--photo { min-height: 500px; background-size: cover; background-position: center; background-color: #14233f; color: #f3f6fb; }
+.site-block-overlay { position: absolute; inset: 0; background: linear-gradient(115deg, rgba(15,27,50,.93), rgba(20,35,63,.62) 62%, rgba(20,35,63,.74)); }
+.site-block-inner { position: relative; z-index: 1; width: min(1090px, 100%); margin: auto; }
+.site-block-inner--center { text-align: center; }
+.site-block-inner--center .site-verse, .site-block-inner--center .site-block-copy { margin-left: auto; margin-right: auto; }
+.site-block h2 { margin: 13px 0 0; font: 500 clamp(30px, 4vw, 44px)/1.2 Georgia, "Songti SC", serif; letter-spacing: -.03em; }
+.site-block-copy { max-width: 620px; margin: 16px 0 0; color: #c7d3e6; font: 15px/1.85 Georgia, "Songti SC", serif; }
+.site-block-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.site-block-inner--center .site-block-actions { justify-content: center; }
+
+.site-block--dark { color: #f3f6fb; background: linear-gradient(120deg, #12203c, #1b2f52); }
+.site-block--paper { color: #14233f; background: #f7f3ea; }
+.site-block-head { max-width: 700px; }
+.site-block-head h2 { color: inherit; }
+.site-block--paper .site-block-copy { color: #4a5a72; }
+.site-block-head .site-verse { margin: 20px 0 0; text-align: left; }
+.site-block-logo { display: block; width: 86px; height: 86px; margin: 0 auto 24px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+.site-block-inner--left .site-verse { margin-left: 0; text-align: left; }
 
 /* ===== 栏目页头：标题 + 经文寄语（书法感） ===== */
 .site-page-head { padding: 58px max(32px, calc((100vw - 1090px) / 2)) 44px; color: #f3f6fb; background: #14233f; text-align: center; }
@@ -302,12 +325,34 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-page-body h2 { margin: 0 0 24px; font: 500 24px Georgia, "Songti SC", serif; color: #14233f; letter-spacing: -.02em; }
 
 /* 子栏目 / 主题网格 */
-.site-subgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
-.site-subcard { display: grid; gap: 12px; padding: 24px 24px 22px; border: 1px solid #dce3ee; border-radius: 12px; background: #fff; }
-.site-subcard b { color: #14233f; font: 600 17px/1.4 Georgia, "Songti SC", serif; }
-.site-subcard .site-verse { margin: 0; text-align: left; }
+.site-subgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+.site-subcard { overflow: hidden; display: grid; gap: 12px; padding: 0 0 22px; border: 1px solid #dce3ee; border-radius: 14px; background: #fff; transition: transform .15s ease, box-shadow .15s ease; }
+.site-subcard:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(20,35,63,.1); }
+.site-subcard-photo { display: grid; height: 108px; place-items: center; }
+.site-subcard-photo svg { opacity: .95; }
+.site-subcard b { padding: 0 22px; color: #14233f; font: 600 17px/1.4 Georgia, "Songti SC", serif; }
+.site-subcard .site-verse { margin: 0 22px; text-align: left; }
 .site-subcard .site-verse-text { color: #5a4a2a; font-size: 14px; line-height: 1.9; }
 .site-subcard .site-verse footer { margin-top: 7px; color: #8a7a55; font-size: 11px; }
+.site-subgrid--on-dark .site-subcard { border-color: rgba(255,255,255,.14); background: rgba(255,255,255,.055); }
+.site-subgrid--on-dark .site-subcard:hover { box-shadow: 0 12px 28px rgba(0,0,0,.35); }
+.site-subgrid--on-dark .site-subcard b { color: #f3f6fb; }
+.site-subgrid--on-dark .site-subcard .site-verse-text { color: #dfe0d0; }
+.site-subgrid--on-dark .site-subcard .site-verse footer { color: #9aa7bd; }
+
+/* 子栏目图头配色（tone-* 与 SubCard 的 icon 搭配） */
+.tone-blue { background: linear-gradient(135deg, #3f6e9e, #2c4a6e); }
+.tone-orange { background: linear-gradient(135deg, #c96f3b, #9a4a22); }
+.tone-rose { background: linear-gradient(135deg, #b0789a, #8a5a72); }
+.tone-olive { background: linear-gradient(135deg, #7a8b4f, #54622f); }
+.tone-teal { background: linear-gradient(135deg, #4f8a7a, #2f5f52); }
+.tone-gold { background: linear-gradient(135deg, #b6873c, #8a5a12); }
+.tone-navy { background: linear-gradient(135deg, #3f5d8a, #243a5e); }
+.tone-brown { background: linear-gradient(135deg, #7a6a4f, #54452f); }
+.tone-slate { background: linear-gradient(135deg, #5a7a9a, #3a5a78); }
+.tone-purple { background: linear-gradient(135deg, #8a6a9a, #5a3a6e); }
+.tone-amber { background: linear-gradient(135deg, #c9a052, #8a5a12); }
+.tone-lake { background: linear-gradient(135deg, #3f8a9e, #1f5a6e); }
 
 /* 奉献页：银行账户卡 */
 .site-giving { max-width: 720px; margin: 0 auto; }

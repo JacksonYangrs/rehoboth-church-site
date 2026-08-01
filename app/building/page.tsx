@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import VerseQuote from "../components/VerseQuote";
+import SubCard from "../components/SubCard";
 import { VERSE_COLUMNS, BUILDING_TOPICS } from "../verses";
 
 export const metadata: Metadata = { title: "建堂專題 · 利河伯教會" };
@@ -18,10 +19,7 @@ export default function Page() {
         <h2>建堂主題</h2>
         <div className="site-subgrid">
           {BUILDING_TOPICS.map((topic) => (
-            <article className="site-subcard" key={topic.slug}>
-              <b>{topic.label}</b>
-              <VerseQuote verse={topic.verse} tone="paper" />
-            </article>
+            <SubCard key={topic.slug} label={topic.label} verse={topic.verse} tone={topic.tone} icon={topic.icon} />
           ))}
         </div>
         <p className="site-contact" style={{ marginTop: 40 }}>
