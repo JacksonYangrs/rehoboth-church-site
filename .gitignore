@@ -40,3 +40,9 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# 构建期由 scripts/split-devotion-data.mjs 从 data/daily-walk.json 生成
+/public/devotion/
+
+# 本地助手工作记录，不随仓库发布
+/.workbuddy/

@@ -42,6 +42,8 @@ const PLAN_START_DAY = 1;
 const DAY = 24 * 60 * 60 * 1000;
 const CYCLE_DAYS = 52 * 7;
 const BIBLE_READER_URL = "https://jacksonyangrs.github.io/bible-cuv-phonetic/";
+// 静态部署在 GitHub Pages 子路径下，公共资源需带上 basePath 前缀。
+const ASSET_PREFIX = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const EMPTY_JOURNAL: Journal = { reflection: "", action: "", prayer: "" };
 const STORAGE = {
   progress: "daily-walk-progress-v2",
@@ -185,12 +187,15 @@ export default function Home() {
 
   useEffect(() => {
     const controller = new AbortController();
-    void fetch(`/api/devotion?week=${schedule.week}&day=${schedule.day}`, { signal: controller.signal })
+    void fetch(`${ASSET_PREFIX}/devotion/week-${schedule.week}.json`, { signal: controller.signal })
       .then((response) => {
         if (!response.ok) throw new Error("Unable to load devotion");
-        return response.json() as Promise<{ reading: Reading | null }>;
+        return response.json() as Promise<{ readings: Reading[] }>;
       })
-      .then((payload) => setReadingState({ key: readingKey, reading: payload.reading, status: "ready" }))
+      .then((payload) => {
+        const match = payload.readings.find((item) => item.days.includes(schedule.day)) ?? null;
+        setReadingState({ key: readingKey, reading: match, status: "ready" });
+      })
       .catch((error: unknown) => {
         if (error instanceof DOMException && error.name === "AbortError") return;
         setReadingState({ key: readingKey, reading: null, status: "error" });
