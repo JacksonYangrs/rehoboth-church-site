@@ -13,12 +13,14 @@ const exists = (p) => access(p).then(() => true, () => false);
 const PLACEHOLDER_COLUMNS = [
   "worship", "growth", "bible-study", "building", "giving", "care", "about",
 ];
-
 test("静态导出产出教会首页", async () => {
   assert.ok(await exists(join(CLIENT, "index.html")), "缺少 index.html —— 首页未被预渲染");
   const html = await readFile(join(CLIENT, "index.html"), "utf8");
   assert.match(html, /利河伯教会/);
   assert.match(html, /<script|modulepreload/, "首页未挂载客户端脚本");
+  // 首页栏目卡片标题下方应显示经文寄语（繁体）
+  assert.match(html, /來啊，我們要屈身敬拜/, "首页缺少线上敬拜栏目经文寄语");
+  assert.match(html, /若不是耶和華建造房屋/, "首页缺少建堂专题栏目经文寄语");
 });
 
 test("灵修栏目已拆分为独立路由 /devotion", async () => {
@@ -44,10 +46,46 @@ test("首页不再依赖服务端 API", async () => {
   assert.match(page, /devotion\/week-/, "灵修 page.tsx 未改为读取静态周数据");
 });
 
-test("其余栏目占位页已生成", async () => {
-  for (const col of PLACEHOLDER_COLUMNS) {
-    assert.ok(await exists(join(CLIENT, col, "index.html")), `缺少占位页 ${col}/index.html`);
+test("其余栏目页已生成且挂载经文寄语", async () => {
+  const verseExpectations = [
+    ["worship", "來啊，我們要屈身敬拜"],
+    ["bible-study", "聖經都是神所默示的"],
+    ["care", "你們各人的重擔要互相擔當"],
+    ["about", "你們若有彼此相愛的心"],
+  ];
+  for (const [col, verseFragment] of verseExpectations) {
+    const path = join(CLIENT, col, "index.html");
+    assert.ok(await exists(path), `缺少页面 ${col}/index.html`);
+    const html = await readFile(path, "utf8");
+    assert.match(html, new RegExp(verseFragment), `${col} 页缺少经文寄语：${verseFragment}`);
   }
+});
+
+test("教会成长页展示子栏目经文寄语", async () => {
+  const path = join(CLIENT, "growth", "index.html");
+  assert.ok(await exists(path), "缺少 growth/index.html");
+  const html = await readFile(path, "utf8");
+  for (const fragment of ["教養孩童", "不可叫人小看你年輕", "兩個人總比一個人好", "這些事你們既作在我這弟兄中"]) {
+    assert.match(html, new RegExp(fragment), `教会成长页缺少子栏目经文：${fragment}`);
+  }
+});
+
+test("建堂专题页展示主题经文寄语", async () => {
+  const path = join(CLIENT, "building", "index.html");
+  assert.ok(await exists(path), "缺少 building/index.html");
+  const html = await readFile(path, "utf8");
+  for (const fragment of ["你當擴張你帳幕之地", "不要藐視這日的事為小", "耶和華以便以謝"]) {
+    assert.match(html, new RegExp(fragment), `建堂专题页缺少主题经文：${fragment}`);
+  }
+});
+
+test("奉献页为银行账户展示页（账户信息待教会确认）", async () => {
+  const path = join(CLIENT, "giving", "index.html");
+  assert.ok(await exists(path), "缺少 giving/index.html");
+  const html = await readFile(path, "utf8");
+  assert.match(html, /捐得樂意的人，是神所喜愛的/, "奉献页缺少经文寄语");
+  assert.match(html, /銀行賬號/, "奉献页缺少银行账号字段");
+  assert.match(html, /待教會確認/, "奉献页账户信息未标注待确认");
 });
 
 test("灵修数据已按周拆分并随产物发布", async () => {

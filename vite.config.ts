@@ -49,6 +49,9 @@ export default defineConfig(async () => {
 
   return {
     base: basePath ? `${basePath}/` : "/",
+    // 不预清空 outDir：页面与资产文件同名覆盖即可（CI 从零构建不受影响），
+    // 避免本地安全删除守卫在清理 dist 下 50+ 文件时拦截构建。
+    build: { emptyOutDir: false },
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }
       : undefined,

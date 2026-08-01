@@ -1,13 +1,33 @@
 import type { Metadata } from "next";
-import PlaceholderPage from "../components/PlaceholderPage";
+import VerseQuote from "../components/VerseQuote";
+import { VERSE_COLUMNS, BUILDING_TOPICS } from "../verses";
 
-export const metadata: Metadata = { title: "建堂专题 · 利河伯教会" };
+export const metadata: Metadata = { title: "建堂專題 · 利河伯教會" };
 
 export default function Page() {
   return (
-    <PlaceholderPage
-      title="建堂专题"
-      description="建堂异象、历程、祷告记念、设计与工程进度，以及建堂照片与见证，正在筹备中。若不是耶和华建造房屋，建造的人就枉然劳力。"
-    />
+    <main className="site-page">
+      <header className="site-page-head">
+        <p className="eyebrow-light">BUILDING · 建堂專題</p>
+        <h1>建堂專題</h1>
+        <VerseQuote verse={VERSE_COLUMNS.building} />
+        <p>若不是耶和華建造房屋，建造的人就枉然勞力。與我們一同記念建堂的每一步。</p>
+      </header>
+
+      <section className="site-page-body">
+        <h2>建堂主題</h2>
+        <div className="site-subgrid">
+          {BUILDING_TOPICS.map((topic) => (
+            <article className="site-subcard" key={topic.slug}>
+              <b>{topic.label}</b>
+              <VerseQuote verse={topic.verse} tone="paper" />
+            </article>
+          ))}
+        </div>
+        <p className="site-contact" style={{ marginTop: 40 }}>
+          建堂異象、歷程、工程進度與見證將陸續在此展開，邀請你以禱告與奉獻一同參與。
+        </p>
+      </section>
+    </main>
   );
 }

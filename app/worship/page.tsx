@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import PlaceholderPage from "../components/PlaceholderPage";
+import { VERSE_COLUMNS } from "../verses";
 
-export const metadata: Metadata = { title: "线上敬拜 · 利河伯教会" };
+export const metadata: Metadata = { title: "線上敬拜 · 利河伯教會" };
 
 export default function Page() {
   return (
     <PlaceholderPage
-      title="线上敬拜"
-      description="主日敬拜、讲道主题、诗歌敬拜与特别聚会的影音与讲义，正在筹备中。愿我们线上也能一同敬拜。"
+      eyebrow="WORSHIP · 線上敬拜"
+      title="線上敬拜"
+      verse={VERSE_COLUMNS.worship}
+      description="主日敬拜、講道主題、詩歌敬拜與特別聚會的影音與講義，正在籌備中。願我們線上也能一同敬拜。"
     />
   );
 }

@@ -257,7 +257,9 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(20,35,63,.1); }
 .site-card-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 10px; color: #14233f; background: #eaf0f8; font-size: 20px; }
 .site-card b { color: #14233f; font-size: 17px; }
-.site-card small { color: #5a6b84; font-size: 13px; line-height: 1.6; }
+.site-card-verse { color: #6a5a33; font: 400 12px/1.8 "Songti TC", "Noto Serif CJK TC", "Kaiti SC", "KaiTi", "STKaiti", Georgia, serif; letter-spacing: .03em; }
+.site-card-verse i { display: block; margin-top: 2px; color: #9a8a5f; font-size: 11px; font-style: normal; letter-spacing: .05em; }
+.site-card-desc { color: #5a6b84; font-size: 13px; line-height: 1.6; }
 
 .site-contact { padding: 30px 34px; border-radius: 12px; background: #14233f; color: #c7d3e6; }
 .site-contact .site-section-title { color: #f3f6fb; }
@@ -272,4 +274,49 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 @media (max-width: 720px) {
   .site-cta { flex-direction: column; align-items: start; }
   .site-hero { min-height: 380px; padding-top: 60px; padding-bottom: 56px; }
+}
+
+/* ===== 栏目页头：标题 + 经文寄语（书法感） ===== */
+.site-page-head { padding: 58px max(32px, calc((100vw - 1090px) / 2)) 44px; color: #f3f6fb; background: #14233f; text-align: center; }
+.site-page-head .eyebrow-light { display: block; }
+.site-page-head h1 { margin: 13px auto 0; font: 500 clamp(32px, 4.4vw, 48px)/1.2 Georgia, "Songti SC", serif; letter-spacing: -.03em; }
+.site-page-head > p:not(.eyebrow-light):not(.site-verse) { margin: 14px auto 0; max-width: 620px; color: #c7d3e6; font: 15px/1.85 Georgia, "Songti SC", serif; }
+
+.site-verse { margin: 24px auto 0; max-width: 680px; padding: 0; border: 0; text-align: center; }
+.site-verse-text { margin: 0; color: #e9c878; font: 400 17px/2 "Songti TC", "Noto Serif CJK TC", "Kaiti SC", "KaiTi", "STKaiti", Georgia, serif; letter-spacing: .05em; }
+.site-verse footer { margin-top: 9px; color: #9fb0cc; font: 12px/1.6 Georgia, "Songti SC", serif; letter-spacing: .08em; }
+.site-verse--paper { padding: 26px 30px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.site-verse--paper .site-verse-text { color: #5a4a2a; }
+.site-verse--paper footer { color: #8a7a55; }
+
+/* ===== 栏目页正文容器 ===== */
+.site-page-body { width: min(1090px, calc(100% - 48px)); margin: 48px auto 72px; }
+.site-page-body h2 { margin: 0 0 24px; font: 500 24px Georgia, "Songti SC", serif; color: #14233f; letter-spacing: -.02em; }
+
+/* 子栏目 / 主题网格 */
+.site-subgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+.site-subcard { display: grid; gap: 12px; padding: 24px 24px 22px; border: 1px solid #dce3ee; border-radius: 12px; background: #fff; }
+.site-subcard b { color: #14233f; font: 600 17px/1.4 Georgia, "Songti SC", serif; }
+.site-subcard .site-verse { margin: 0; text-align: left; }
+.site-subcard .site-verse-text { color: #5a4a2a; font-size: 14px; line-height: 1.9; }
+.site-subcard .site-verse footer { margin-top: 7px; color: #8a7a55; font-size: 11px; }
+
+/* 奉献页：银行账户卡 */
+.site-giving { max-width: 720px; margin: 0 auto; }
+.site-giving-note { margin: 0 0 26px; padding: 15px 18px; border-left: 3px solid var(--gold); color: #4a5a72; background: #f7f9fc; font: 14px/1.8 Georgia, "Songti SC", serif; }
+.site-givcard { display: grid; gap: 0; overflow: hidden; border: 1px solid #dce3ee; border-radius: 12px; background: #fff; }
+.site-givcard-row { display: grid; grid-template-columns: 150px 1fr; gap: 14px; padding: 17px 22px; border-top: 1px solid #edf0f6; }
+.site-givcard-row:first-child { border-top: 0; background: #f4f7fc; }
+.site-givcard-row dt { color: #5a6b84; font-size: 12px; font-weight: 800; letter-spacing: .05em; }
+.site-givcard-row dd { margin: 0; color: #14233f; font: 500 16px/1.6 Georgia, "Songti SC", serif; word-break: break-all; }
+.site-givcard-row--accent { background: #fdf9ee; }
+.site-givcard-row--accent dd { color: #8a5a12; font-weight: 700; }
+.site-giving-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; justify-content: center; }
+.site-giving-actions .site-btn-ghost { color: #14233f; border-color: #b9c6dc; }
+.site-giving-actions .site-btn-ghost:hover { background: #eef3fb; }
+
+@media (max-width: 720px) {
+  .site-page-head { padding-top: 44px; padding-bottom: 36px; }
+  .site-page-body { width: calc(100% - 32px); margin-top: 34px; }
+  .site-givcard-row { grid-template-columns: 1fr; gap: 5px; }
 }

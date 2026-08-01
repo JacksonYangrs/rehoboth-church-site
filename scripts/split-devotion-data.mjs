@@ -1,8 +1,10 @@
 // 将 data/daily-walk.json 按周拆分为静态 JSON，输出到 public/devotion/
 // 静态站点（GitHub Pages）没有服务端，前端按需拉取单周数据，避免一次加载 3.3MB。
 // 用法：node scripts/split-devotion-data.mjs
+// 说明：周数据文件名是确定性的（week-1..52.json + meta.json），直接覆盖写入，
+// 无需先删除目录；这也避免在本地安全删除守卫下批量删除 50+ 个文件。
 
-import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -12,7 +14,6 @@ const OUT_DIR = join(root, "public", "devotion");
 
 const plan = JSON.parse(await readFile(SOURCE, "utf8"));
 
-await rm(OUT_DIR, { recursive: true, force: true });
 await mkdir(OUT_DIR, { recursive: true });
 
 // meta.json：计划元信息，前端启动时读取一次

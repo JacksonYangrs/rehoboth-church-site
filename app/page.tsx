@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { HOME_COLUMNS } from "./nav";
+import { VERSE_COLUMNS } from "./verses";
 
 export const metadata: Metadata = {
   title: "利河伯教会",
@@ -45,13 +46,19 @@ export default function Home() {
       <section className="site-section">
         <h2 className="site-section-title">教会栏目</h2>
         <div className="site-grid">
-          {HOME_COLUMNS.map((col) => (
-            <a className="site-card" key={col.href} href={col.href}>
-              <span className="site-card-icon" aria-hidden="true">{col.icon}</span>
-              <b>{col.label}</b>
-              <small>{col.desc}</small>
-            </a>
-          ))}
+          {HOME_COLUMNS.map((col) => {
+            const verse = VERSE_COLUMNS[col.verseKey];
+            return (
+              <a className="site-card" key={col.href} href={col.href}>
+                <span className="site-card-icon" aria-hidden="true">{col.icon}</span>
+                <b>{col.label}</b>
+                {verse ? (
+                  <small className="site-card-verse">「{verse.text}」<i>——{verse.ref}</i></small>
+                ) : null}
+                <small className="site-card-desc">{col.desc}</small>
+              </a>
+            );
+          })}
         </div>
       </section>
 
