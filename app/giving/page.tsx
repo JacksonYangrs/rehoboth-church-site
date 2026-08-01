@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import VerseQuote from "../components/VerseQuote";
 import { VERSE_COLUMNS } from "../verses";
 
-export const metadata: Metadata = { title: "奉獻 · 利河伯教會" };
+export const metadata: Metadata = { title: "線上奉獻指南 · 利河伯教會" };
 
-// 银行账户信息由教会确认后填入。留空字段显示「待教會確認」。
-// 字段结构：账户名称 / 开户银行 / 银行账号 / SWIFT / 币种 / 用途说明。
+// 银行账户信息（2026-08 由教会确认）
+// 字段：账户名称 / 开户银行 / 银行账号 / SWIFT / 币种
+// 留空字段显示「待教會確認」。
 const ACCOUNT = {
-  name: "",
-  bank: "",
-  number: "",
+  name: "REHOBOTH CHURCH INC.",
+  bank: "UNION BANK",
+  number: "001900004401",
   swift: "",
   currency: "",
 };
@@ -25,11 +26,14 @@ export default function Page() {
 
   return (
     <main className="site-page">
-      <header className="site-page-head">
-        <p className="eyebrow-light">GIVING · 奉獻</p>
-        <h1>奉獻</h1>
-        <VerseQuote verse={VERSE_COLUMNS.giving} />
-        <p>你的奉獻支持教會的日常事工、建堂與各項關懷服侍。捐得樂意的人，是神所喜愛的。</p>
+      <header className="site-hero site-hero--column" style={{ backgroundImage: "url(/giving-box.png)" }}>
+        <div className="site-hero-overlay" />
+        <div className="site-hero-inner">
+          <p className="eyebrow-light">GIVING · 線上奉獻指南</p>
+          <h1>線上奉獻指南</h1>
+          <VerseQuote verse={VERSE_COLUMNS.giving} />
+          <p className="site-hero-copy">你的奉獻支持教會的日常事工、建堂與各項關懷服侍。捐得樂意的人，是神所喜愛的。</p>
+        </div>
       </header>
 
       <section className="site-page-body">
