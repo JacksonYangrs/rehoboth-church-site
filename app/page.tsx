@@ -1,62 +1,258 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
 
-const media = [
-  { label: "主日敬拜", title: "在旷野中看见恩典", meta: "2026.07.26 · 林牧师", color: "blue" },
-  { label: "讲道主题", title: "成为祝福的器皿", meta: "2026.07.19 · 周传道", color: "gold" },
-  { label: "特别聚会", title: "年中感恩敬拜", meta: "2026.06.28 · 利河伯教会", color: "teal" },
+type Reading = {
+  id: number;
+  week: number;
+  days: number[];
+  dayLabel: string;
+  title: string;
+  scripture: string;
+  keyVerse: string;
+  paragraphs: string[];
+  reflectionPrompts: string[];
+};
+
+type Journal = { reflection: string; action: string; prayer: string };
+type Progress = Record<string, number[]>;
+type Journals = Record<string, Journal>;
+
+const PLAN_START = new Date(2026, 6, 27);
+const DAY = 24 * 60 * 60 * 1000;
+const CYCLE_DAYS = 52 * 7;
+const EMPTY_JOURNAL: Journal = { reflection: "", action: "", prayer: "" };
+const STORAGE = {
+  progress: "daily-walk-progress-v2",
+  journals: "daily-walk-journals-v2",
+  fontSize: "daily-walk-font-size-v2",
+};
+
+const STEPS = [
+  { title: "安静祷告", note: "安静片刻，将心转向主。", icon: "1" },
+  { title: "读经", note: "按今日经文一同诵读。", icon: "2" },
+  { title: "每日摘要", note: "阅读今天的原文内容。", icon: "3" },
+  { title: "思想讨论", note: "彼此聆听，分享领受。", icon: "4" },
+  { title: "同行行动", note: "回应神，定下可实行的一步。", icon: "5" },
+  { title: "代祷结束", note: "收集代祷，一同交托。", icon: "6" },
 ];
 
-const growth = [
-  ["儿童主日学", "12岁以下", "教养孩童，使他走当行的道。", "箴言 22:6", "child"],
-  ["青少年团契", "13—18岁", "总要在言语、行为、爱心、信心上作榜样。", "提摩太前书 4:12", "youth"],
-  ["姊妹团契", "彼此相伴", "最要紧的是彼此切实相爱。", "彼得前书 4:8", "sister"],
-  ["弟兄团契", "一起建造", "两个人总比一个人好。", "传道书 4:9", "brother"],
-  ["教会探访", "爱的行动", "作在我这弟兄中一个最小的身上。", "马太福音 25:40", "visit", "访"],
-];
+function readStored<T>(key: string, fallback: T): T {
+  if (typeof window === "undefined") return fallback;
+  try {
+    const value = window.localStorage.getItem(key);
+    return value ? (JSON.parse(value) as T) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function clampFontSize(value: number) {
+  return Math.max(18, Math.min(28, value));
+}
+
+function getSchedule(date: Date) {
+  const start = new Date(PLAN_START);
+  const current = new Date(date);
+  start.setHours(0, 0, 0, 0);
+  current.setHours(0, 0, 0, 0);
+  const elapsed = Math.floor((current.getTime() - start.getTime()) / DAY);
+  const index = ((elapsed % CYCLE_DAYS) + CYCLE_DAYS) % CYCLE_DAYS;
+  const week = Math.floor(index / 7) + 1;
+  const day = (index % 7) + 1;
+  const dateKey = `${current.getFullYear()}-${String(current.getMonth() + 1).padStart(2, "0")}-${String(current.getDate()).padStart(2, "0")}`;
+  const dateLabel = `${current.getFullYear()} 年 ${current.getMonth() + 1} 月 ${current.getDate()} 日`;
+  return { week, day, dateKey, dateLabel };
+}
+
+function isSectionLine(text: string) {
+  return /^(?:注释：|\d+[.．、]\s*[^，。；]{0,28}$|[一二三四五六七八九十]+[、．.])/.test(text.trim());
+}
 
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [selected, setSelected] = useState<typeof media[number] | null>(null);
-  const [sent, setSent] = useState(false);
+  const [schedule] = useState(() => getSchedule(new Date()));
+  const [reading, setReading] = useState<Reading | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
+  const [fontSize, setFontSize] = useState(() => clampFontSize(readStored(STORAGE.fontSize, 21)));
+  const [progress, setProgress] = useState<Progress>(() => readStored(STORAGE.progress, {}));
+  const [journals, setJournals] = useState<Journals>(() => readStored(STORAGE.journals, {}));
+  const [activeStep, setActiveStep] = useState(0);
+  const [showGuide, setShowGuide] = useState(false);
 
-  const go = () => setMenuOpen(false);
-  const submitLove = (e: FormEvent<HTMLFormElement>) => { e.preventDefault(); setSent(true); };
+  useEffect(() => {
+    const controller = new AbortController();
+    void fetch(`/api/devotion?week=${schedule.week}&day=${schedule.day}`, { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error("Unable to load devotion");
+        return response.json() as Promise<{ reading: Reading | null }>;
+      })
+      .then((payload) => setReading(payload.reading))
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        setLoadError(true);
+      })
+      .finally(() => setIsLoading(false));
+    return () => controller.abort();
+  }, [schedule.day, schedule.week]);
+
+  useEffect(() => {
+    window.localStorage.setItem(STORAGE.fontSize, String(fontSize));
+  }, [fontSize]);
+
+  useEffect(() => {
+    window.localStorage.setItem(STORAGE.progress, JSON.stringify(progress));
+  }, [progress]);
+
+  useEffect(() => {
+    window.localStorage.setItem(STORAGE.journals, JSON.stringify(journals));
+  }, [journals]);
+
+  const completedSteps = progress[schedule.dateKey] ?? [];
+  const journal = journals[schedule.dateKey] ?? EMPTY_JOURNAL;
+  const discussionPrompts = useMemo(() => {
+    if (!reading) return [];
+    const questions = reading.reflectionPrompts.filter((item) => /[？?]/.test(item));
+    return (questions.length ? questions : reading.reflectionPrompts).slice(-3);
+  }, [reading]);
+
+  const completeStep = (index: number) => {
+    setActiveStep(index);
+    setProgress((current) => {
+      const today = current[schedule.dateKey] ?? [];
+      if (today.includes(index)) return current;
+      return { ...current, [schedule.dateKey]: [...today, index].sort((a, b) => a - b) };
+    });
+  };
+
+  const updateJournal = (field: keyof Journal, value: string) => {
+    setJournals((current) => ({
+      ...current,
+      [schedule.dateKey]: { ...(current[schedule.dateKey] ?? EMPTY_JOURNAL), [field]: value },
+    }));
+  };
+
+  const readerStyle = { "--reader-font-size": `${fontSize}px` } as CSSProperties;
+  const allStepsDone = completedSteps.length === STEPS.length;
 
   return (
-    <main className="site">
-      <header className="topbar">
-        <a className="brand" href="#top" onClick={go}><img src="/church-logo.jpeg" alt="利河伯教会 Logo" /><span><b>利河伯教会</b><small>REHOBOTH CHURCH</small></span></a>
-        <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="打开导航">☰</button>
-        <nav className={menuOpen ? "nav open" : "nav"}>
-          {[["首页", "top"], ["线上敬拜", "worship"], ["教会成长", "growth"], ["查经公告", "bible-study"], ["建堂专题", "building"], ["奉献", "offering"], ["爱心窗口", "love"], ["认识教会", "about"]].map(([name, id]) => <a href={`#${id}`} key={id} onClick={go}>{name}</a>)}
-        </nav>
+    <main className="devotion-page">
+      <header className="site-header">
+        <a className="wordmark" href="#today" aria-label="回到今日灵修">
+          <span className="wordmark-mark">十</span>
+          <span><b>每日与主同行</b><small>WALK WITH THE LORD</small></span>
+        </a>
+        <p className="header-note">无需登录 · 进度保存在本机</p>
       </header>
 
-      <section className="hero" id="top">
-        <div className="hero-inner"><p className="eyebrow">WELCOME TO REHOBOTH</p><h1>在这里敬拜，<br /><em>在这里见证。</em></h1><p className="hero-lead">利河伯，意为“宽阔之地”。这里记录神在我们中间的工作，也邀请每一个人来到祂面前，得着安慰、盼望与新的开始。</p><div className="hero-buttons"><a className="btn gold" href="#worship">进入线上敬拜 <span>→</span></a><a className="btn outline" href="#about">认识利河伯</a></div></div>
-        <div className="hero-mark" aria-hidden="true"><div className="hero-circle"></div><div className="hero-cross">✝</div><div className="hero-wave wave-one"></div><div className="hero-wave wave-two"></div><p>神在这里<br />为我们开了宽阔之地</p></div>
-        <div className="hero-strip"><span>本周主日崇拜</span><b>每周日 · 上午 10:00</b><i></i><span>线上同步更新</span></div>
+      <section className="today-intro" id="today">
+        <p className="eyebrow">TODAY&apos;S DEVOTION · {schedule.dateLabel}</p>
+        <div className="intro-content">
+          <div>
+            <p className="week-label">第 {schedule.week} 周 · 第 {schedule.day === 7 ? "6、7" : schedule.day} 日</p>
+            <h1>{isLoading ? "正在打开今天的灵修…" : reading?.title ?? "复习与祷告日"}</h1>
+            <p className="intro-copy">打开即可进入今天的内容，安静聆听、思想、回应，与弟兄姊妹一同前行。</p>
+          </div>
+          <div className="host-card">
+            <span>本周主持人</span>
+            <b>苏牧师</b>
+            <small>领读摘要 · 引导分享 · 收集代祷</small>
+          </div>
+        </div>
       </section>
 
-      <section className="welcome section" id="about"><div><p className="label">OUR HEART</p><h2>一群在恩典中<br />彼此同行的人。</h2></div><div><p className="serif-copy">我们渴望成为一间以基督为中心、以圣经为根基、以爱彼此连接的教会。在敬拜、团契、服事与宣教中，一起经历神的同在。</p><p className="verse">“你们若有彼此相爱的心，众人因此就认出你们是我的门徒了。”<br /><small>约翰福音 13:35</small></p></div></section>
+      <section className="content-shell">
+        <aside className="meeting-card" aria-label="今日聚会流程">
+          <div className="meeting-heading">
+            <div><p className="eyebrow">GATHER TOGETHER</p><h2>今日聚会</h2></div>
+            <span>{completedSteps.length}/6</span>
+          </div>
+          <ol className="steps-list">
+            {STEPS.map((step, index) => {
+              const done = completedSteps.includes(index);
+              return (
+                <li key={step.title} className={`${activeStep === index ? "active" : ""} ${done ? "done" : ""}`}>
+                  <button type="button" onClick={() => { setActiveStep(index); if (!done) completeStep(index); }}>
+                    <span className="step-number">{done ? "✓" : step.icon}</span>
+                    <span><b>{step.title}</b><small>{step.note}</small></span>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+          <p className={`completion-note ${allStepsDone ? "finished" : ""}`}>{allStepsDone ? "今天的同行已完成，愿主赐平安。" : "点击每一步，记录今天的同行。"}</p>
+        </aside>
 
-      <section className="section" id="worship"><div className="heading"><div><p className="label">WORSHIP & MESSAGE</p><h2>线上敬拜</h2><p className="heading-note">来啊，我们要屈身敬拜，在造我们的耶和华面前跪下。<small>诗篇 95:6</small></p></div><a className="link" href="#worship">查看全部资料 →</a></div><div className="feature" onClick={() => setSelected(media[0])} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && setSelected(media[0])}><div className="feature-art"><span className="play">▶</span><small>主日敬拜 · 2026.07.26</small></div><div className="feature-info"><p className="label">LATEST MESSAGE</p><h3>在旷野中看见恩典</h3><p>“我要向山举目；我的帮助从何而来？我的帮助从造天地的耶和华而来。”</p><div className="meta">诗篇 121 篇　·　林牧师　·　约 42 分钟</div><button className="btn gold small">开始观看 →</button></div></div><div className="media-grid">{media.slice(1).map(item => <article className="media-card" key={item.title} onClick={() => setSelected(item)}><div className={`media-thumb ${item.color}`}><span className="play tiny">▶</span><b>{item.label}</b></div><div className="media-body"><small>{item.meta}</small><h3>{item.title}</h3><p>一起在神的话语中学习、思想与回应。</p><span className="link">观看信息 →</span></div></article>)}</div></section>
+        <div className="reader-column">
+          <div className="reader-toolbar" aria-label="阅读设置">
+            <span>舒适阅读</span>
+            <div className="font-controls">
+              <button type="button" onClick={() => setFontSize((size) => clampFontSize(size - 1))} aria-label="缩小字体">A−</button>
+              <output>{fontSize}px</output>
+              <button type="button" onClick={() => setFontSize((size) => clampFontSize(size + 1))} aria-label="放大字体">A+</button>
+            </div>
+          </div>
 
-      <section className="dark-section" id="growth"><div className="section"><div className="heading light"><div><p className="label">LIFE TOGETHER</p><h2>教会成长</h2><p className="heading-note">记录每一次相聚，纪念神在我们中间的工作。<small>诗篇 126:3</small></p></div><a className="link light-link" href="#growth">查看成长记录 →</a></div><div className="growth-grid">{growth.map(([title, sub, quote, ref, cls, mark]) => <article className={`growth-card ${cls}`} key={title}><div className="growth-visual"><span>{sub}</span><b>{mark || title.slice(0, 1)}</b></div><div><h3>{title}</h3><p>“{quote}”</p><small>{ref}</small><a href="#growth">照片与视频 →</a></div></article>)}</div></div></section>
+          {isLoading && <div className="loading-card"><span></span><p>正在预备今天的灵修内容…</p></div>}
+          {loadError && <div className="message-card error"><h2>内容暂时没有打开</h2><p>请检查网络后刷新页面。今天的聚会流程仍可继续记录。</p></div>}
 
-      <section className="section study" id="bible-study"><div className="study-box"><div className="study-date"><b>每周五</b><span>7:30 PM</span></div><div><p className="label">BIBLE STUDY NOTICE</p><h2>每周查经公告</h2><p>本周五，我们继续在线上一起查考圣经。欢迎提前阅读经文，带着问题和期待参加 Zoom 查经。</p><div className="study-meta"><span>本周主题：约翰福音中的生命</span><span>形式：Zoom 同步</span></div></div><a className="btn dark" href="#bible-study">查看公告 →</a></div></section>
+          {!isLoading && !loadError && reading && (
+            <article className="reader-card" style={readerStyle}>
+              <header className="reading-header">
+                <p>《每日与主同行》 · 苏颖智</p>
+                <h2>{reading.title}</h2>
+                <div className="scripture-row"><span>今日经文</span><b>{reading.scripture}</b></div>
+                {reading.keyVerse && <blockquote><span>钥节</span>{reading.keyVerse}</blockquote>}
+              </header>
+              <div className="reading-body">
+                {reading.paragraphs.map((paragraph, index) => (
+                  <p className={isSectionLine(paragraph) ? "section-line" : ""} key={`${index}-${paragraph.slice(0, 12)}`}>{paragraph}</p>
+                ))}
+              </div>
+              <div className="reading-complete">
+                <span>读完原文后，带着所领受的进入分享。</span>
+                <button type="button" className="primary-button" onClick={() => completeStep(2)}>{completedSteps.includes(2) ? "已完成阅读 ✓" : "完成今日阅读"}</button>
+              </div>
+              <footer className="source-credit">内容：苏颖智《每日与主同行》 · 资料来源：WellsOfGrace.com</footer>
+            </article>
+          )}
 
-      <section className="building section" id="building"><div className="building-visual"><div className="building-disc">✝</div><span>REHOBOTH<br /><b>宽阔之地</b></span></div><div><p className="label">BUILDING THE HOUSE</p><h2>建堂专题<br /><em>一步一步，见证恩典。</em></h2><p className="serif-copy">从异象开始，到一砖一瓦；我们记录建堂的每一个脚步，也邀请你一起祷告、参与、见证神在利河伯教会所做的新事。</p><div className="steps"><div><b>01</b><span>异象与祷告</span></div><div className="active"><b>02</b><span>寻找场地</span></div><div><b>03</b><span>建造与奉献</span></div></div><a className="btn dark" href="#building">进入建堂专题 →</a></div></section>
+          {!isLoading && !loadError && !reading && (
+            <article className="message-card review-card">
+              <p className="eyebrow">第 {schedule.week} 周 · 第 {schedule.day} 日</p>
+              <h2>复习与祷告日</h2>
+              <p>源文件没有提供今天独立的篇章。可复习本周前一篇经文，安静祷告，并在小组中分享神的提醒。</p>
+              <button type="button" className="primary-button" onClick={() => completeStep(2)}>完成复习</button>
+            </article>
+          )}
 
-      <section className="offering-band" id="offering"><div className="section offering"><div><p className="label">GIVING WITH JOY</p><h2>奉献</h2><p className="offering-verse">“捐得乐意的人，是神所喜爱的。”<small>哥林多后书 9:7</small></p><p>愿我们的奉献成为敬拜，也成为教会继续牧养、传福音和建造的祝福。</p></div><div className="bank-card"><p>奉献账户</p><div><span>账户名称</span><b>利河伯教会</b></div><div><span>开户银行</span><b className="placeholder">待教会填写</b></div><div><span>银行账号</span><b className="placeholder">待教会填写</b></div><small>奉献时请备注：日常奉献 / 建堂奉献 / 特别事工</small><button className="btn gold small">复制账户信息</button></div></div></section>
+          <section className="sharing-card" id="sharing">
+            <button className="sharing-heading" type="button" onClick={() => setShowGuide((shown) => !shown)} aria-expanded={showGuide}>
+              <span><p className="eyebrow">SHARE & RESPOND</p><h2>思想与同行分享</h2></span>
+              <span className="expand-icon">{showGuide ? "−" : "+"}</span>
+            </button>
+            {showGuide && <div className="sharing-content">
+              <div className="prompt-panel">
+                <h3>可由主持人选读</h3>
+                {discussionPrompts.length > 0 ? <ul>{discussionPrompts.map((prompt) => <li key={prompt}>{prompt}</li>)}</ul> : <p>今天的经文带给你什么提醒？</p>}
+              </div>
+              <label>我今天的思想与领受<textarea value={journal.reflection} onChange={(event) => updateJournal("reflection", event.target.value)} placeholder="写下一句让你停下来的话，或一个愿意分享的领受…" /></label>
+              <label>我要同行的一步<textarea value={journal.action} onChange={(event) => updateJournal("action", event.target.value)} placeholder="这周我愿意具体怎样回应神？" /></label>
+              <button type="button" className="soft-button" onClick={() => completeStep(4)}>记录同行行动</button>
+            </div>}
+          </section>
 
-      <section className="section love" id="love"><div><p className="label">A CARING WINDOW</p><h2>爱心窗口</h2><p className="serif-copy">如果你正面对家庭、人际关系、教育或信仰上的困惑，可以把心里的话写给我们。你可以选择匿名，教会同工会以尊重和关怀的态度回应。</p><p className="privacy-note">你的信息只会交给授权的关怀同工查看。这里不是紧急医疗或危机服务渠道。</p></div><form className="love-form" onSubmit={submitLove}><label>我想说说 <span>可匿名</span><textarea placeholder="请写下你愿意分享的事情……" required /></label><label className="check"><input type="checkbox" /> 我愿意留下联系方式，方便教会回复我</label><button className="btn dark" type="submit">{sent ? "我们已经收到，谢谢你" : "送出我的心声 →"}</button></form></section>
+          <section className="prayer-card">
+            <div><p className="eyebrow">PRAY TOGETHER</p><h2>代祷事项</h2><p>将每个人的需要带到主面前；这些文字只保存在你的这台设备。</p></div>
+            <div>
+              <textarea value={journal.prayer} onChange={(event) => updateJournal("prayer", event.target.value)} placeholder="例如：为家人、工作、健康、福音对象祷告…" />
+              <button type="button" className="primary-button" onClick={() => completeStep(5)}>交托并结束祷告</button>
+            </div>
+          </section>
+        </div>
+      </section>
 
-      <footer className="footer"><div className="footer-brand"><img src="/church-logo.jpeg" alt="" /><span><b>利河伯教会</b><small>REHOBOTH CHURCH</small></span></div><p>在这里敬拜，在这里见证。<br />© 2026 利河伯教会 · 与我们一起同行</p><a href="#top">回到顶部 ↑</a></footer>
-
-      {selected && <div className="modal"><button className="mask" onClick={() => setSelected(null)} aria-label="关闭"></button><div className="modal-card"><button className="close" onClick={() => setSelected(null)}>×</button><div className="modal-screen"><span className="play">▶</span><p>视频播放演示区</p><small>接入真实视频链接后即可播放</small></div><p className="label">{selected.label}</p><h2>{selected.title}</h2><p>这里将播放教会上传的视频、敬拜记录或讲道信息。</p><button className="btn gold" onClick={() => setSelected(null)}>返回资料库</button></div></div>}
+      <footer className="site-footer"><span>每日与主同行 · 今日自动定位</span><span>愿你在神的话语中得力</span></footer>
     </main>
   );
 }

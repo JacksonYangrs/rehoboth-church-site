@@ -10,17 +10,17 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL(origin),
-    title: "利河伯教会｜Rehoboth Church",
-    description: "在这里，看见神的信实。利河伯教会的敬拜信息、教会活动与建堂见证。",
+    title: "每日与主同行",
+    description: "今天自动定位的灵修阅读、共读分享与代祷同行。",
     openGraph: {
-      title: "利河伯教会｜Rehoboth Church",
-      description: "在这里，看见神的信实。",
+      title: "每日与主同行",
+      description: "今天，一起安静聆听、思想、回应。",
       images: [{ url: "/og.png", width: 1728, height: 972, alt: "每日与主同行" }],
     },
     twitter: {
       card: "summary_large_image",
       title: "每日与主同行",
-      description: "今天，一起安静聆听、思想、回应。",
+      description: "今天自动定位的灵修阅读、共读分享与代祷同行。",
       images: ["/og.png"],
     },
     icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
