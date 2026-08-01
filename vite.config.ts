@@ -43,7 +43,12 @@ export default defineConfig(async () => {
   // Wrangler snapshots its log path while the Cloudflare plugin is imported.
   const { cloudflare } = await import("@cloudflare/vite-plugin");
 
+  // GitHub Pages 子路径部署：必须在这里设 base，否则运行时动态 import 的
+  // chunk 会按根路径 "/assets/..." 请求而 404。仅改 HTML 属性是不够的。
+  const basePath = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/+$/, "");
+
   return {
+    base: basePath ? `${basePath}/` : "/",
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }
       : undefined,
