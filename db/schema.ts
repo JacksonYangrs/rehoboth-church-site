@@ -26,11 +26,13 @@ export const media = sqliteTable("media", {
 export const bibleStudy = sqliteTable("bible_study", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   week: text("week").notNull(), // 周次，如 2026-W32
-  date: text("date").notNull(), // 周五日期 YYYY-MM-DD
+  date: text("date").notNull(), // 日期 YYYY-MM-DD
+  time: text("time").default(""), // 时间，如 20:00
+  venue: text("venue").default(""), // 地点（线上 Zoom / 线下地址）
   topic: text("topic").notNull(), // 查经主题
   passage: text("passage").default(""), // 查考经文
   zoomUrl: text("zoom_url").default(""), // Zoom 链接
-  leader: text("leader").default(""), // 带领同工
+  leader: text("leader").default(""), // 主持/带领同工
   notes: text("notes").default(""),
   createdAt: text("created_at").default(sql`(datetime('now'))`),
 });

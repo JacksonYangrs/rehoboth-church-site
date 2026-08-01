@@ -17,6 +17,8 @@ export type BibleStudyItem = {
   id: number;
   week: string;
   date: string;
+  time: string;
+  venue: string;
   topic: string;
   passage: string;
   zoomUrl: string;
