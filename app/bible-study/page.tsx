@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import VerseQuote from "../components/VerseQuote";
+import BibleStudyList from "../components/BibleStudyList";
 import { VERSE_COLUMNS } from "../verses";
 
 export const metadata: Metadata = { title: "查經公告 · 利河伯教會" };
@@ -7,24 +8,19 @@ export const metadata: Metadata = { title: "查經公告 · 利河伯教會" };
 export default function Page() {
   return (
     <main className="site-page">
-      <header className="site-hero site-hero--column" style={{ backgroundImage: "url(/bible-study-hero.png)" }}>
+      <header className="site-hero site-hero--column" style={{ backgroundImage: "url(/bible-study-film.png)" }}>
         <div className="site-hero-overlay" />
         <div className="site-hero-inner">
           <p className="eyebrow-light">BIBLE STUDY · 查經公告</p>
           <h1>查經公告</h1>
           <VerseQuote verse={VERSE_COLUMNS["bible-study"]} />
-          <p className="site-hero-copy">每週查經主題、查考經文、日期時間與 Zoom 連結，正在籌備中。歡迎帶著渴慕的心一同查考神的話語。</p>
+          <p className="site-hero-copy">每週五晚 Zoom 同步查經。每週公告在此發布：主題、查考經文、連結與帶領同工。</p>
         </div>
       </header>
-      <section className="site-page-body site-placeholder" style={{ minHeight: 0, padding: "0 0 60px" }}>
-        <div className="site-placeholder-inner">
-          <p className="eyebrow-light">籌備中 · COMING SOON</p>
-          <p style={{ marginTop: 14 }}>查經主題、經文閱讀、Zoom 連結與帶領同工信息將在此公布，請時常回來。</p>
-          <div className="site-placeholder-actions">
-            <a className="site-btn-primary" href="/">返回首頁</a>
-            <a className="site-btn-ghost" href="/devotion/">進入每日靈修</a>
-          </div>
-        </div>
+
+      <section className="site-page-body">
+        <h2>每週查經</h2>
+        <BibleStudyList />
       </section>
     </main>
   );

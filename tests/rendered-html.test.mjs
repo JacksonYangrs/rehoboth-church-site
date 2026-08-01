@@ -70,6 +70,40 @@ test("教会成长页展示子栏目经文寄语", async () => {
   }
 });
 
+test("教会成长 6 个专栏页已生成", async () => {
+  const columns = ["sunday-school", "youth", "sisters", "brothers", "visitation", "festivals"];
+  for (const col of columns) {
+    const path = join(CLIENT, "growth", col, "index.html");
+    assert.ok(await exists(path), `缺少专栏页 growth/${col}/index.html`);
+    const html = await readFile(path, "utf8");
+    assert.match(html, /活動回顧/, `专栏页 growth/${col} 缺少活动回顾区`);
+  }
+});
+
+test("查经公告页含公告列表与经文", async () => {
+  const path = join(CLIENT, "bible-study", "index.html");
+  assert.ok(await exists(path), "缺少 bible-study/index.html");
+  const html = await readFile(path, "utf8");
+  assert.match(html, /聖經都是神所默示的/, "查经公告页缺少经文寄语");
+  assert.match(html, /每週查經/, "查经公告页缺少公告区块");
+});
+
+test("爱心窗口页含匿名表单", async () => {
+  const path = join(CLIENT, "care", "index.html");
+  assert.ok(await exists(path), "缺少 care/index.html");
+  const html = await readFile(path, "utf8");
+  assert.match(html, /想說的話/, "爱心窗口页缺少诉说输入框");
+  assert.match(html, /類別/, "爱心窗口页缺少分类选择");
+});
+
+test("认识教会页含会员接纳表单", async () => {
+  const path = join(CLIENT, "about", "index.html");
+  assert.ok(await exists(path), "缺少 about/index.html");
+  const html = await readFile(path, "utf8");
+  assert.match(html, /會員發展與接納/, "认识教会页缺少会员接纳区块");
+  assert.match(html, /你的心願/, "认识教会页缺少意愿选择");
+});
+
 test("建堂专题页展示主题经文寄语", async () => {
   const path = join(CLIENT, "building", "index.html");
   assert.ok(await exists(path), "缺少 building/index.html");

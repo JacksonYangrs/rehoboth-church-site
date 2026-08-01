@@ -379,3 +379,82 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
   .site-page-body { width: calc(100% - 32px); margin-top: 34px; }
   .site-givcard-row { grid-template-columns: 1fr; gap: 5px; }
 }
+
+/* ===== 活动记录流（专栏页） ===== */
+.site-feed { display: grid; gap: 30px; }
+.site-feed-empty { display: grid; gap: 12px; place-items: center; min-height: 180px; padding: 34px 20px; border: 1px dashed #cfd8e4; border-radius: 12px; color: #5a6b84; text-align: center; background: #fbfcfd; }
+.site-feed-empty p { margin: 0; font: 15px/1.8 Georgia, "Songti SC", serif; }
+.site-feed-spinner { width: 26px; height: 26px; border: 3px solid #dbe4ee; border-top-color: #14233f; border-radius: 50%; animation: spin .85s linear infinite; }
+.site-feed-item { overflow: hidden; border: 1px solid #dce3ee; border-radius: 14px; background: #fff; }
+.site-feed-head { display: flex; align-items: baseline; gap: 14px; padding: 22px 26px 6px; }
+.site-feed-head time { flex: 0 0 auto; color: #b6873c; font-size: 12px; font-weight: 800; letter-spacing: .05em; }
+.site-feed-head h3 { margin: 0; font: 600 20px/1.35 Georgia, "Songti SC", serif; color: #14233f; }
+.site-feed-content { margin: 0; padding: 8px 26px 4px; color: #425148; font: 15px/1.85 Georgia, "Songti SC", serif; white-space: pre-wrap; }
+.site-feed-media { display: grid; gap: 14px; padding: 16px 26px 24px; }
+.site-feed-photo { margin: 0; }
+.site-feed-photo img { display: block; width: 100%; max-height: 460px; border-radius: 10px; object-fit: cover; }
+.site-feed-photo figcaption { margin-top: 7px; color: #7c8a9c; font-size: 12px; }
+.site-feed-video { width: 100%; border-radius: 10px; background: #0d1a2e; }
+
+/* 聚会信息卡 */
+.site-meta-card { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 34px; }
+.site-meta-card div { padding: 16px 18px; border: 1px solid #dce3ee; border-radius: 12px; background: #f6f8fc; }
+.site-meta-card dt { color: #5a6b84; font-size: 11px; font-weight: 800; letter-spacing: .08em; }
+.site-meta-card dd { margin: 6px 0 0; color: #14233f; font: 500 15px/1.6 Georgia, "Songti SC", serif; }
+
+/* ===== 查经公告 ===== */
+.site-bs-current { padding: 30px 32px; border: 1px solid #d9e1ee; border-left: 4px solid #b6873c; border-radius: 14px; background: #fdfaf2; }
+.site-bs-current .eyebrow { color: #b6873c; }
+.site-bs-current h3 { margin: 10px 0 18px; font: 600 26px/1.3 Georgia, "Songti SC", serif; color: #14233f; }
+.site-bs-current dl { display: grid; gap: 10px; margin: 0 0 20px; }
+.site-bs-current dl > div { display: grid; grid-template-columns: 64px 1fr; gap: 10px; }
+.site-bs-current dt { color: #5a6b84; font-size: 12px; font-weight: 800; }
+.site-bs-current dd { margin: 0; color: #2c3a52; font: 15px/1.7 Georgia, "Songti SC", serif; }
+.site-bs-history { display: grid; gap: 0; margin-top: 26px; }
+.site-bs-history h4 { margin: 0 0 10px; color: #5a6b84; font-size: 12px; font-weight: 800; letter-spacing: .1em; }
+.site-bs-row { display: grid; grid-template-columns: 92px 1fr auto; align-items: center; gap: 12px; padding: 13px 4px; border-top: 1px solid #e6eaf1; }
+.site-bs-row time { color: #8a97a8; font-size: 12px; }
+.site-bs-row b { color: #14233f; font-size: 14px; }
+.site-bs-row span { color: #5a6b84; font-size: 13px; }
+.site-bs-row small { color: #9aa7bd; font-size: 12px; }
+
+/* ===== 表单（爱心窗口 / 会员接纳） ===== */
+.site-form { display: grid; gap: 16px; }
+.site-form label { display: grid; gap: 8px; color: #14233f; font-size: 13px; font-weight: 800; }
+.site-form input, .site-form select, .site-form textarea { width: 100%; padding: 12px 14px; border: 1px solid #cfd8e4; border-radius: 10px; color: #20382f; background: #fff; font: 15px/1.7 Georgia, "Songti SC", serif; }
+.site-form textarea { resize: vertical; }
+.site-form input:focus, .site-form select:focus, .site-form textarea:focus { outline: 3px solid rgba(182,135,60,.25); border-color: #b6873c; }
+.site-form-note { margin: 0; color: #7c8a9c; font-size: 12px; line-height: 1.7; }
+.site-form .site-btn-primary { justify-self: start; min-width: 130px; }
+.site-form .site-btn-primary:disabled { cursor: default; opacity: .5; }
+.site-form-done { display: grid; justify-items: center; gap: 12px; padding: 40px 26px; border: 1px solid #d9e6da; border-radius: 14px; text-align: center; background: #f4faf5; }
+.site-form-done-icon { display: grid; width: 52px; height: 52px; margin: 0; place-items: center; border-radius: 50%; color: #fff; background: var(--sage-deep); font-size: 24px; }
+.site-form-done h3 { margin: 0; color: #14233f; font: 600 22px Georgia, "Songti SC", serif; }
+.site-form-done p { margin: 0; max-width: 420px; color: #425148; font: 15px/1.85 Georgia, "Songti SC", serif; }
+
+/* ===== 爱心窗口页 ===== */
+.site-care-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 460px); gap: 40px; align-items: start; }
+.site-care-list { display: grid; gap: 10px; margin: 18px 0 20px; padding: 0; list-style: none; }
+.site-care-list li { position: relative; padding-left: 22px; color: #2c3a52; font: 15px/1.8 Georgia, "Songti SC", serif; }
+.site-care-list li::before { position: absolute; top: .5em; left: 4px; color: #b6873c; content: "✦"; }
+.site-care-promise { padding: 18px 20px; border-left: 3px solid var(--gold); color: #4a5a72; background: #f7f9fc; font: 14px/1.85 Georgia, "Songti SC", serif; }
+.site-care-promise b { color: var(--sage-deep); }
+.site-care-form { padding: 26px 26px 28px; border: 1px solid #dce3ee; border-radius: 14px; background: #fafbfd; }
+
+/* ===== 认识教会页 ===== */
+.site-about { display: grid; gap: 44px; }
+.site-about-copy p { margin: 0 0 14px; color: #2c3a52; font: 16px/2 Georgia, "Songti SC", serif; }
+.site-membership { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 460px); gap: 34px; align-items: start; padding: 30px 32px; border-radius: 16px; background: linear-gradient(120deg, #12203c, #1b2f52); }
+.site-membership-head .eyebrow { color: #e9c878; }
+.site-membership-head h2 { margin: 10px 0 0; color: #f3f6fb; font: 600 26px/1.3 Georgia, "Songti SC", serif; }
+.site-membership-head p:last-child { margin: 14px 0 0; color: #c7d3e6; font: 15px/1.9 Georgia, "Songti SC", serif; }
+.site-membership .site-form { padding: 22px; border-radius: 12px; background: #fff; }
+.site-membership .site-form label { color: #14233f; }
+
+@media (max-width: 860px) {
+  .site-care-grid, .site-membership { grid-template-columns: 1fr; gap: 26px; }
+  .site-bs-row { grid-template-columns: 1fr; gap: 4px; }
+  .site-bs-current { padding: 24px 20px; }
+  .site-feed-head { padding: 18px 18px 4px; flex-direction: column; gap: 4px; }
+  .site-feed-content, .site-feed-media { padding-right: 18px; padding-left: 18px; }
+}
