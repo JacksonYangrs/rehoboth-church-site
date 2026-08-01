@@ -125,9 +125,19 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .bible-actions button { cursor: pointer; }
 .reading-header blockquote { margin: 17px 0 0; padding: 13px 16px; border-left: 2px solid #dfc781; color: #f8f2dc; background: rgba(10,39,26,.18); font: 16px/1.7 Georgia, "Songti SC", serif; }
 .reading-header blockquote span { display: block; margin-bottom: 4px; }
-.reading-body { padding: 43px 50px 27px; }
-.reading-body p { margin: 0 0 1.15em; color: #293a31; font-family: Georgia, "Songti SC", "STSong", serif; font-size: var(--reader-font-size); line-height: 2.04; letter-spacing: .015em; text-wrap: pretty; }
-.reading-body .section-line { margin-top: 1.8em; color: var(--forest); font-weight: 700; }
+.reading-body { display: grid; gap: 30px; padding: 43px 50px 27px; }
+.reading-section { display: grid; gap: 19px; }
+.reading-section:not(:last-child) { padding-bottom: 28px; border-bottom: 1px solid #e7e1d5; }
+.reading-section-heading { display: grid; gap: 8px; }
+.reading-section-heading span { width: max-content; padding: 5px 9px; color: #fffdf8; background: var(--sage-deep); font-size: 11px; font-weight: 800; letter-spacing: .1em; }
+.reading-section-heading h3 { margin: 0; color: var(--forest); font: 500 25px/1.25 Georgia, "Songti SC", serif; letter-spacing: -.03em; }
+.reading-section-body p { margin: 0 0 1.15em; color: #293a31; font-family: Georgia, "Songti SC", "STSong", serif; font-size: var(--reader-font-size); line-height: 2.04; letter-spacing: .015em; text-wrap: pretty; }
+.reading-section-body p:last-child { margin-bottom: 0; }
+.reading-section-body .section-line { margin-top: 1.8em; color: var(--forest); font-weight: 700; }
+.devotion-table-wrap { max-width: 100%; margin: 18px 0 22px; overflow-x: auto; border: 1px solid #d7d2c7; background: #fbf8ef; }
+.devotion-table { width: 100%; min-width: 420px; border-collapse: collapse; font-family: Georgia, "Songti SC", "STSong", serif; font-size: clamp(14px, calc(var(--reader-font-size) - 3px), 18px); line-height: 1.65; }
+.devotion-table td { min-width: 118px; padding: 11px 12px; border: 1px solid #d7d2c7; color: #2d3d33; vertical-align: top; background: #fffdf8; }
+.devotion-table tr:first-child td { color: var(--forest); background: #edf4ec; font-weight: 700; }
 .reading-complete { display: flex; align-items: center; justify-content: space-between; gap: 17px; margin: 5px 50px 25px; padding: 18px 0 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.55; }
 .primary-button, .soft-button { min-height: 43px; padding: 0 17px; border: 0; font-size: 12px; font-weight: 800; white-space: nowrap; }
 .primary-button { color: #fff; background: var(--forest); }
@@ -203,8 +213,12 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
   .reading-header h2 { margin: 13px 0 20px; }
   .scripture-row { display: grid; gap: 5px; }
   .reading-header blockquote { font-size: 15px; }
-  .reading-body { padding: 30px 23px 18px; }
-  .reading-body p { line-height: 1.94; }
+  .reading-body { gap: 24px; padding: 30px 23px 18px; }
+  .reading-section-heading h3 { font-size: 23px; }
+  .reading-section-body p { line-height: 1.94; }
+  .devotion-table-wrap { margin-right: -7px; margin-left: -7px; }
+  .devotion-table { min-width: 360px; }
+  .devotion-table td { min-width: 105px; padding: 10px; }
   .reading-complete { display: grid; margin: 5px 23px 21px; }
   .reading-complete .primary-button { justify-self: start; }
   .source-credit { padding: 14px 23px; }

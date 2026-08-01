@@ -2,6 +2,16 @@
 
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 
+type ReadingBlock =
+  | { type: "text"; text: string }
+  | { type: "table"; rows: string[][] };
+
+type ReadingSections = {
+  summary: ReadingBlock[];
+  thought: ReadingBlock[];
+  practice: ReadingBlock[];
+};
+
 type Reading = {
   id: number;
   week: number;
@@ -10,6 +20,8 @@ type Reading = {
   title: string;
   scripture: string;
   keyVerse: string;
+  blocks: ReadingBlock[];
+  sections: ReadingSections;
   paragraphs: string[];
   reflectionPrompts: string[];
 };
@@ -112,6 +124,44 @@ function getDayState(schedule: Schedule, today: Date, progress: Progress, dayRec
 
 function isSectionLine(text: string) {
   return /^(?:注释：|\d+[.．、]\s*[^，。；]{0,28}$|[一二三四五六七八九十]+[、．.])/.test(text.trim());
+}
+
+function renderReadingBlock(block: ReadingBlock, key: string) {
+  if (block.type === "table") {
+    return (
+      <div className="devotion-table-wrap" key={key}>
+        <table className="devotion-table">
+          <tbody>
+            {block.rows.map((row, rowIndex) => (
+              <tr key={`${key}-row-${rowIndex}`}>
+                {row.map((cell, cellIndex) => (
+                  <td key={`${key}-cell-${rowIndex}-${cellIndex}`}>{cell}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
+  return <p className={isSectionLine(block.text) ? "section-line" : ""} key={key}>{block.text}</p>;
+}
+
+function ReadingSection({ blocks, label, title }: { blocks: ReadingBlock[]; label: string; title: string }) {
+  if (blocks.length === 0) return null;
+
+  return (
+    <section className="reading-section">
+      <div className="reading-section-heading">
+        <span>{label}</span>
+        <h3>{title}</h3>
+      </div>
+      <div className="reading-section-body">
+        {blocks.map((block, index) => renderReadingBlock(block, `${label}-${index}`))}
+      </div>
+    </section>
+  );
 }
 
 export default function Home() {
@@ -328,9 +378,9 @@ export default function Home() {
                 {reading.keyVerse && <blockquote><span>钥节</span>{reading.keyVerse}</blockquote>}
               </header>
               <div className="reading-body">
-                {reading.paragraphs.map((paragraph, index) => (
-                  <p className={isSectionLine(paragraph) ? "section-line" : ""} key={`${index}-${paragraph.slice(0, 12)}`}>{paragraph}</p>
-                ))}
+                <ReadingSection blocks={reading.sections.summary} label="摘要" title="今日内容概要" />
+                <ReadingSection blocks={reading.sections.thought} label="思想" title="需要思想的部分" />
+                <ReadingSection blocks={reading.sections.practice} label="同行" title="与主同行的实践" />
               </div>
               <div className="reading-complete">
                 <span>读完原文后，带着所领受的进入分享。</span>
