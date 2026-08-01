@@ -17,15 +17,25 @@ type Reading = {
 type Journal = { reflection: string; action: string; prayer: string };
 type Progress = Record<string, number[]>;
 type Journals = Record<string, Journal>;
+type DayRecords = Record<string, { skipped?: boolean }>;
+type Schedule = ReturnType<typeof getSchedule>;
+type ReadingState = {
+  key: string;
+  reading: Reading | null;
+  status: "loading" | "ready" | "error";
+};
 
-const PLAN_START = new Date(2026, 6, 27);
+const PLAN_START_MONTH = 0;
+const PLAN_START_DAY = 1;
 const DAY = 24 * 60 * 60 * 1000;
 const CYCLE_DAYS = 52 * 7;
+const BIBLE_READER_URL = "https://jacksonyangrs.github.io/bible-cuv-phonetic/";
 const EMPTY_JOURNAL: Journal = { reflection: "", action: "", prayer: "" };
 const STORAGE = {
   progress: "daily-walk-progress-v2",
   journals: "daily-walk-journals-v2",
   fontSize: "daily-walk-font-size-v2",
+  dayRecords: "daily-walk-day-records-v1",
 };
 
 const STEPS = [
@@ -51,8 +61,12 @@ function clampFontSize(value: number) {
   return Math.max(18, Math.min(28, value));
 }
 
+function formatDateKey(date: Date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+}
+
 function getSchedule(date: Date) {
-  const start = new Date(PLAN_START);
+  const start = new Date(date.getFullYear(), PLAN_START_MONTH, PLAN_START_DAY);
   const current = new Date(date);
   start.setHours(0, 0, 0, 0);
   current.setHours(0, 0, 0, 0);
@@ -60,9 +74,40 @@ function getSchedule(date: Date) {
   const index = ((elapsed % CYCLE_DAYS) + CYCLE_DAYS) % CYCLE_DAYS;
   const week = Math.floor(index / 7) + 1;
   const day = (index % 7) + 1;
-  const dateKey = `${current.getFullYear()}-${String(current.getMonth() + 1).padStart(2, "0")}-${String(current.getDate()).padStart(2, "0")}`;
+  const dateKey = formatDateKey(current);
   const dateLabel = `${current.getFullYear()} 年 ${current.getMonth() + 1} 月 ${current.getDate()} 日`;
   return { week, day, dateKey, dateLabel };
+}
+
+function addDays(date: Date, amount: number) {
+  const next = new Date(date);
+  next.setDate(next.getDate() + amount);
+  return next;
+}
+
+function startOfDay(date: Date) {
+  const next = new Date(date);
+  next.setHours(0, 0, 0, 0);
+  return next;
+}
+
+function getMonthDates(anchor: Date) {
+  const daysInMonth = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 0).getDate();
+  return Array.from({ length: daysInMonth }, (_, index) => new Date(anchor.getFullYear(), anchor.getMonth(), index + 1));
+}
+
+function isSameDate(left: Date, right: Date) {
+  return formatDateKey(left) === formatDateKey(right);
+}
+
+function getDayState(schedule: Schedule, today: Date, progress: Progress, dayRecords: DayRecords) {
+  const completed = progress[schedule.dateKey]?.length ?? 0;
+  const skipped = Boolean(dayRecords[schedule.dateKey]?.skipped);
+  const isPast = startOfDay(new Date(schedule.dateKey)).getTime() < startOfDay(today).getTime();
+  if (completed === STEPS.length) return "done";
+  if (skipped) return "skipped";
+  if (isPast) return "missed";
+  return "open";
 }
 
 function isSectionLine(text: string) {
@@ -70,15 +115,23 @@ function isSectionLine(text: string) {
 }
 
 export default function Home() {
-  const [schedule] = useState(() => getSchedule(new Date()));
-  const [reading, setReading] = useState<Reading | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadError, setLoadError] = useState(false);
+  const [today] = useState(() => startOfDay(new Date()));
+  const [selectedDate, setSelectedDate] = useState(() => startOfDay(new Date()));
+  const [readingState, setReadingState] = useState<ReadingState>({ key: "", reading: null, status: "loading" });
   const [fontSize, setFontSize] = useState(() => clampFontSize(readStored(STORAGE.fontSize, 21)));
   const [progress, setProgress] = useState<Progress>(() => readStored(STORAGE.progress, {}));
   const [journals, setJournals] = useState<Journals>(() => readStored(STORAGE.journals, {}));
+  const [dayRecords, setDayRecords] = useState<DayRecords>(() => readStored(STORAGE.dayRecords, {}));
   const [activeStep, setActiveStep] = useState(0);
   const [showGuide, setShowGuide] = useState(false);
+
+  const schedule = useMemo(() => getSchedule(selectedDate), [selectedDate]);
+  const monthDates = useMemo(() => getMonthDates(selectedDate), [selectedDate]);
+  const isTodaySelected = isSameDate(selectedDate, today);
+  const readingKey = `${schedule.week}-${schedule.day}`;
+  const reading = readingState.key === readingKey ? readingState.reading : null;
+  const isLoading = readingState.key !== readingKey || readingState.status === "loading";
+  const loadError = readingState.key === readingKey && readingState.status === "error";
 
   useEffect(() => {
     const controller = new AbortController();
@@ -87,14 +140,13 @@ export default function Home() {
         if (!response.ok) throw new Error("Unable to load devotion");
         return response.json() as Promise<{ reading: Reading | null }>;
       })
-      .then((payload) => setReading(payload.reading))
+      .then((payload) => setReadingState({ key: readingKey, reading: payload.reading, status: "ready" }))
       .catch((error: unknown) => {
         if (error instanceof DOMException && error.name === "AbortError") return;
-        setLoadError(true);
-      })
-      .finally(() => setIsLoading(false));
+        setReadingState({ key: readingKey, reading: null, status: "error" });
+      });
     return () => controller.abort();
-  }, [schedule.day, schedule.week]);
+  }, [readingKey, schedule.day, schedule.week]);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE.fontSize, String(fontSize));
@@ -108,8 +160,19 @@ export default function Home() {
     window.localStorage.setItem(STORAGE.journals, JSON.stringify(journals));
   }, [journals]);
 
+  useEffect(() => {
+    window.localStorage.setItem(STORAGE.dayRecords, JSON.stringify(dayRecords));
+  }, [dayRecords]);
+
   const completedSteps = progress[schedule.dateKey] ?? [];
   const journal = journals[schedule.dateKey] ?? EMPTY_JOURNAL;
+  const currentDayState = getDayState(schedule, today, progress, dayRecords);
+  const missedCount = useMemo(() => {
+    const start = new Date(today.getFullYear(), PLAN_START_MONTH, PLAN_START_DAY);
+    const dayCount = Math.max(0, Math.floor((today.getTime() - start.getTime()) / DAY));
+    return Array.from({ length: dayCount }, (_, index) => getSchedule(addDays(start, index)))
+      .filter((item) => getDayState(item, today, progress, dayRecords) === "missed").length;
+  }, [dayRecords, progress, today]);
   const discussionPrompts = useMemo(() => {
     if (!reading) return [];
     const questions = reading.reflectionPrompts.filter((item) => /[？?]/.test(item));
@@ -132,8 +195,16 @@ export default function Home() {
     }));
   };
 
+  const toggleSkipped = () => {
+    setDayRecords((current) => ({
+      ...current,
+      [schedule.dateKey]: { skipped: !current[schedule.dateKey]?.skipped },
+    }));
+  };
+
   const readerStyle = { "--reader-font-size": `${fontSize}px` } as CSSProperties;
   const allStepsDone = completedSteps.length === STEPS.length;
+  const bibleReaderHref = `${BIBLE_READER_URL}?reference=${encodeURIComponent(reading?.scripture ?? "")}`;
 
   return (
     <main className="devotion-page">
@@ -149,9 +220,9 @@ export default function Home() {
         <p className="eyebrow">TODAY&apos;S DEVOTION · {schedule.dateLabel}</p>
         <div className="intro-content">
           <div>
-            <p className="week-label">第 {schedule.week} 周 · 第 {schedule.day === 7 ? "6、7" : schedule.day} 日</p>
+            <p className="week-label">{isTodaySelected ? "今天" : "补读"} · 第 {schedule.week} 周 · 第 {schedule.day === 7 ? "6、7" : schedule.day} 日</p>
             <h1>{isLoading ? "正在打开今天的灵修…" : reading?.title ?? "复习与祷告日"}</h1>
-            <p className="intro-copy">打开即可进入今天的内容，安静聆听、思想、回应，与弟兄姊妹一同前行。</p>
+            <p className="intro-copy">年度计划从每年 1 月 1 日开始。打开先看今天，也可以从日历补上过去没有完成的灵修。</p>
           </div>
           <div className="host-card">
             <span>本周主持人</span>
@@ -162,7 +233,8 @@ export default function Home() {
       </section>
 
       <section className="content-shell">
-        <aside className="meeting-card" aria-label="今日聚会流程">
+        <aside className="side-column" aria-label="灵修进度与聚会流程">
+        <section className="meeting-card">
           <div className="meeting-heading">
             <div><p className="eyebrow">GATHER TOGETHER</p><h2>今日聚会</h2></div>
             <span>{completedSteps.length}/6</span>
@@ -181,6 +253,53 @@ export default function Home() {
             })}
           </ol>
           <p className={`completion-note ${allStepsDone ? "finished" : ""}`}>{allStepsDone ? "今天的同行已完成，愿主赐平安。" : "点击每一步，记录今天的同行。"}</p>
+        </section>
+
+        <section className="calendar-card" aria-label="灵修日历">
+          <div className="calendar-heading">
+            <div>
+              <p className="eyebrow">YEAR PLAN</p>
+              <h2>{selectedDate.getMonth() + 1} 月日历</h2>
+            </div>
+            <button type="button" onClick={() => setSelectedDate(today)} disabled={isTodaySelected}>今天</button>
+          </div>
+          <p className="calendar-advice">
+            {currentDayState === "done" && "这一天已完成，可继续复习或查看记录。"}
+            {currentDayState === "skipped" && "这一天已记为未领修，不计入待补提醒。"}
+            {currentDayState === "missed" && "这一天还没有完成，建议今天补读后再进入今日内容。"}
+            {currentDayState === "open" && `建议阅读第 ${schedule.week} 周第 ${schedule.day === 7 ? "6、7" : schedule.day} 日${reading?.scripture ? `：${reading.scripture}` : "。"} `}
+          </p>
+          <div className="calendar-grid">
+            {monthDates.map((date) => {
+              const item = getSchedule(date);
+              const state = getDayState(item, today, progress, dayRecords);
+              const selected = item.dateKey === schedule.dateKey;
+              return (
+                <button
+                  type="button"
+                  key={item.dateKey}
+                  className={`${state} ${selected ? "selected" : ""} ${isSameDate(date, today) ? "today" : ""}`}
+                  onClick={() => setSelectedDate(startOfDay(date))}
+                  aria-label={`${item.dateLabel}，第 ${item.week} 周第 ${item.day} 日`}
+                >
+                  <span>{date.getDate()}</span>
+                  <small>{state === "done" ? "✓" : state === "skipped" ? "休" : state === "missed" ? "补" : ""}</small>
+                </button>
+              );
+            })}
+          </div>
+          <div className="calendar-legend">
+            <span><i className="legend-done"></i>已完成</span>
+            <span><i className="legend-missed"></i>待补</span>
+            <span><i className="legend-skipped"></i>未领修</span>
+          </div>
+          <div className="calendar-actions">
+            <button type="button" className="soft-button" onClick={toggleSkipped}>
+              {dayRecords[schedule.dateKey]?.skipped ? "取消未领修记录" : "这天没有领修"}
+            </button>
+            {missedCount > 0 && <span>今年还有 {missedCount} 天待补</span>}
+          </div>
+        </section>
         </aside>
 
         <div className="reader-column">
@@ -202,6 +321,10 @@ export default function Home() {
                 <p>《每日与主同行》 · 苏颖智</p>
                 <h2>{reading.title}</h2>
                 <div className="scripture-row"><span>今日经文</span><b>{reading.scripture}</b></div>
+                <div className="bible-actions">
+                  <a className="scripture-link" href={bibleReaderHref}>打开圣经电子书读经</a>
+                  <button type="button" onClick={() => completeStep(1)}>我已读完经文</button>
+                </div>
                 {reading.keyVerse && <blockquote><span>钥节</span>{reading.keyVerse}</blockquote>}
               </header>
               <div className="reading-body">

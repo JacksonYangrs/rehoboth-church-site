@@ -60,10 +60,11 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .host-card b { display: block; margin: 9px 0 7px; color: #fffdf8; font: 500 24px Georgia, "Songti SC", serif; }
 .host-card small { line-height: 1.55; }
 
-.content-shell { display: grid; grid-template-columns: 278px minmax(0, 720px); align-items: start; gap: 38px; width: min(1036px, calc(100% - 64px)); margin: 47px auto 90px; }
-.meeting-card { position: sticky; top: 22px; padding: 23px 20px 19px; border: 1px solid var(--line); background: #f3f0e7; box-shadow: 0 9px 28px rgba(53, 66, 48, .05); }
+.content-shell { display: grid; grid-template-columns: 306px minmax(0, 720px); align-items: start; gap: 38px; width: min(1080px, calc(100% - 64px)); margin: 47px auto 90px; }
+.side-column { position: sticky; top: 22px; display: grid; gap: 18px; min-width: 0; }
+.meeting-card, .calendar-card { padding: 23px 20px 19px; border: 1px solid var(--line); background: #f3f0e7; box-shadow: 0 9px 28px rgba(53, 66, 48, .05); }
 .meeting-heading { display: flex; align-items: end; justify-content: space-between; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
-.meeting-heading h2, .sharing-heading h2, .prayer-card h2, .message-card h2 { margin: 5px 0 0; font: 500 25px Georgia, "Songti SC", serif; letter-spacing: -.04em; }
+.meeting-heading h2, .calendar-heading h2, .sharing-heading h2, .prayer-card h2, .message-card h2 { margin: 5px 0 0; font: 500 25px Georgia, "Songti SC", serif; letter-spacing: -.04em; }
 .meeting-heading > span { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 50%; color: #fff; background: var(--sage-deep); font-size: 11px; font-weight: 800; }
 .steps-list { margin: 10px 0 8px; padding: 0; list-style: none; }
 .steps-list li { position: relative; }
@@ -77,6 +78,32 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .steps-list .done .step-number { border-color: var(--sage-deep); color: #fff; background: var(--sage-deep); }
 .completion-note { margin: 13px 0 0; padding: 12px 10px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; line-height: 1.6; }
 .completion-note.finished { color: var(--sage-deep); font-weight: 700; }
+
+.calendar-card { background: #fffaf0; }
+.calendar-heading { display: flex; align-items: end; justify-content: space-between; gap: 13px; }
+.calendar-heading button { min-height: 32px; padding: 0 12px; border: 1px solid #cfd7ca; color: var(--forest); background: #f8f5ec; font-size: 11px; font-weight: 800; }
+.calendar-heading button:disabled { cursor: default; opacity: .45; }
+.calendar-advice { min-height: 58px; margin: 15px 0 14px; padding: 12px 13px; color: #465a4f; background: #f2eadc; font: 13px/1.65 Georgia, "Songti SC", serif; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+.calendar-grid button { display: grid; min-width: 0; min-height: 34px; place-items: center; gap: 1px; padding: 3px 0; border: 1px solid transparent; color: #425148; background: #fffdf8; }
+.calendar-grid button:hover, .calendar-grid .selected { border-color: var(--forest); }
+.calendar-grid .today { box-shadow: inset 0 0 0 2px #dfc781; }
+.calendar-grid span { font-size: 12px; font-weight: 800; }
+.calendar-grid small { min-height: 11px; color: var(--muted); font-size: 9px; font-weight: 800; line-height: 1; }
+.calendar-grid .done { color: #fff; background: var(--sage-deep); }
+.calendar-grid .done small { color: #e9f2e8; }
+.calendar-grid .missed { color: #6a4b1d; background: #f2dfb9; }
+.calendar-grid .skipped { color: #f8f5ec; background: #6d746f; }
+.calendar-grid .skipped small { color: #f8f5ec; }
+.calendar-legend { display: flex; flex-wrap: wrap; gap: 10px 13px; margin-top: 13px; color: var(--muted); font-size: 10px; }
+.calendar-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.calendar-legend i { display: inline-block; width: 9px; height: 9px; }
+.legend-done { background: var(--sage-deep); }
+.legend-missed { background: #f2dfb9; }
+.legend-skipped { background: #6d746f; }
+.calendar-actions { display: grid; gap: 9px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.calendar-actions .soft-button { width: 100%; }
+.calendar-actions span { color: #785d2e; font-size: 11px; line-height: 1.5; }
 
 .reader-column { min-width: 0; }
 .reader-toolbar { display: flex; align-items: center; justify-content: space-between; min-height: 49px; margin-bottom: 13px; padding: 0 6px 0 2px; color: var(--muted); font-size: 12px; }
@@ -92,6 +119,10 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .scripture-row { display: flex; gap: 15px; align-items: baseline; padding-top: 15px; border-top: 1px solid rgba(255,255,255,.24); }
 .scripture-row span, blockquote span { color: #d4dfc9; font-size: 11px; font-weight: 800; letter-spacing: .08em; }
 .scripture-row b { font: 500 15px Georgia, "Songti SC", serif; }
+.bible-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.scripture-link, .bible-actions button { display: inline-grid; min-height: 38px; place-items: center; padding: 0 14px; border: 1px solid rgba(255,255,255,.28); color: #fffdf8; text-decoration: none; background: rgba(9, 35, 24, .18); font-size: 12px; font-weight: 800; }
+.scripture-link:hover, .bible-actions button:hover { background: rgba(255,255,255,.12); }
+.bible-actions button { cursor: pointer; }
 .reading-header blockquote { margin: 17px 0 0; padding: 13px 16px; border-left: 2px solid #dfc781; color: #f8f2dc; background: rgba(10,39,26,.18); font: 16px/1.7 Georgia, "Songti SC", serif; }
 .reading-header blockquote span { display: block; margin-bottom: 4px; }
 .reading-body { padding: 43px 50px 27px; }
@@ -145,7 +176,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
   .today-intro { padding-right: 26px; padding-left: 26px; }
   .intro-content { align-items: start; flex-direction: column; gap: 27px; }
   .content-shell { grid-template-columns: 1fr; width: min(680px, calc(100% - 40px)); margin-top: 29px; }
-  .meeting-card { position: static; }
+  .side-column { position: static; }
   .steps-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
   .steps-list li:not(:last-child)::after { display: none; }
   .steps-list button { min-height: 72px; padding: 9px 4px; }
@@ -164,8 +195,9 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
   .host-card { width: 100%; min-width: 0; }
   .content-shell { width: calc(100% - 32px); gap: 19px; margin-bottom: 53px; }
   .meeting-card { padding: 19px 15px 16px; }
-  .meeting-heading h2, .sharing-heading h2, .prayer-card h2, .message-card h2 { font-size: 23px; }
+  .meeting-heading h2, .calendar-heading h2, .sharing-heading h2, .prayer-card h2, .message-card h2 { font-size: 23px; }
   .steps-list { grid-template-columns: repeat(2, 1fr); }
+  .calendar-grid button { min-height: 39px; }
   .reader-toolbar { margin-bottom: 4px; }
   .reading-header { padding: 31px 23px 27px; }
   .reading-header h2 { margin: 13px 0 20px; }
