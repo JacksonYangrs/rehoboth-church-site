@@ -375,9 +375,9 @@ export default function DevotionPage() {
                 {reading.keyVerse && <blockquote><span>钥节</span>{reading.keyVerse}</blockquote>}
               </header>
               <div className="reading-body">
-                <ReadingSection blocks={reading.sections.summary} label="摘要" title="今日内容概要" />
-                <ReadingSection blocks={reading.sections.thought} label="思想" title="需要思想的部分" />
-                <ReadingSection blocks={reading.sections.practice} label="同行" title="与主同行的实践" />
+                <ReadingSection blocks={reading.sections.summary} label="第一段 · 摘要" title="今日内容摘要" />
+                <ReadingSection blocks={reading.sections.thought} label="第二段 · 思想" title="需要思想的部分" />
+                <ReadingSection blocks={reading.sections.practice} label="第三段 · 与主同行" title="与主同行的实践" />
               </div>
               <div className="reading-complete">
                 <span>读完原文后，带着所领受的进入分享。</span>
