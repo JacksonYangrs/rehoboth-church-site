@@ -161,16 +161,20 @@ export default function Home() {
       </DarkBlock>
 
       {/* 7. 奉献 */}
-      <PhotoBlock
-        eyebrow="GIVING · 奉献"
-        title="奉献"
-        verse={VERSE_COLUMNS.giving}
-        desc="日常奉献、建堂奉献与特别事工奉献，支持教会各项服侍。捐得乐意的人，是神所喜爱的。"
-        photo="/church-hero.jpg"
-        actionHref="/giving/"
-        actionLabel="查看奉献方式"
-        align="center"
-      />
+      <section className="site-block site-block--gold">
+        <div className="site-block-inner site-block-inner--center">
+          <p className="eyebrow">GIVING · 奉献</p>
+          <h2>奉献</h2>
+          <blockquote className="site-verse site-verse--paper">
+            <p className="site-verse-text">「{VERSE_COLUMNS.giving.text}」</p>
+            <footer>——{VERSE_COLUMNS.giving.ref}</footer>
+          </blockquote>
+          <p className="site-block-copy">日常奉献、建堂奉献与特别事工奉献，支持教会各项服侍。捐得乐意的人，是神所喜爱的。</p>
+          <div className="site-block-actions">
+            <a className="site-btn-primary" href="/giving/">查看奉献方式</a>
+          </div>
+        </div>
+      </section>
 
       {/* 8. 爱心窗口 */}
       <PhotoBlock

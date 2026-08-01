@@ -68,7 +68,7 @@ export default function SubCard({
   return (
     <article className="site-subcard">
       <div className={`site-subcard-photo ${tone}`} aria-hidden="true">
-        <svg viewBox="0 0 48 48" width="34" height="34" fill="none" stroke="rgba(255,255,255,.92)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <svg viewBox="0 0 48 48" width="36" height="36" fill="none" stroke="rgba(255,255,255,.94)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
           {ICONS[icon] ?? ICONS.star}
         </svg>
       </div>

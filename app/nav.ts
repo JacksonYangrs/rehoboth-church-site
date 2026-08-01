@@ -3,6 +3,7 @@
 // 导航标签仍显示中文。访问地址示例：/devotion、/worship。
 export const NAV_ITEMS = [
   { label: "首页", href: "/" },
+  { label: "认识教会", href: "/about/" },
   { label: "每日灵修", href: "/devotion/" },
   { label: "线上敬拜", href: "/worship/" },
   { label: "教会成长", href: "/growth/" },
@@ -10,7 +11,6 @@ export const NAV_ITEMS = [
   { label: "建堂专题", href: "/building/" },
   { label: "奉献", href: "/giving/" },
   { label: "爱心窗口", href: "/care/" },
-  { label: "认识教会", href: "/about/" },
 ] as const;
 
 // 首页栏目网格（排除「首页」与已单独呈现的「每日灵修」）。

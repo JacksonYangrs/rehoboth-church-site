@@ -289,7 +289,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 /* ===== 首页长滚动布局：一栏目一宽幅区块 ===== */
 .site-block { position: relative; display: grid; align-items: center; padding: 86px max(32px, calc((100vw - 1090px) / 2)); }
 .site-block--photo { min-height: 500px; background-size: cover; background-position: center; background-color: #14233f; color: #f3f6fb; }
-.site-block-overlay { position: absolute; inset: 0; background: linear-gradient(115deg, rgba(15,27,50,.93), rgba(20,35,63,.62) 62%, rgba(20,35,63,.74)); }
+.site-block-overlay { position: absolute; inset: 0; background: linear-gradient(105deg, rgba(13,22,44,.94) 0%, rgba(16,29,52,.72) 46%, rgba(16,29,52,.52) 100%); }
 .site-block-inner { position: relative; z-index: 1; width: min(1090px, 100%); margin: auto; }
 .site-block-inner--center { text-align: center; }
 .site-block-inner--center .site-verse, .site-block-inner--center .site-block-copy { margin-left: auto; margin-right: auto; }
@@ -300,6 +300,10 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 
 .site-block--dark { color: #f3f6fb; background: linear-gradient(120deg, #12203c, #1b2f52); }
 .site-block--paper { color: #14233f; background: #f7f3ea; }
+.site-block--gold { color: #4a3410; background: linear-gradient(120deg, #f3e8d1, #ead9b2 55%, #f1e3c6); }
+.site-block--gold .site-block-copy { color: #6b5520; }
+.site-block--gold .site-btn-primary { color: #fff; background: #14233f; }
+.site-block--gold .site-btn-primary:hover { background: #1e3a5f; }
 .site-block-head { max-width: 700px; }
 .site-block-head h2 { color: inherit; }
 .site-block--paper .site-block-copy { color: #4a5a72; }
@@ -328,7 +332,9 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-subgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
 .site-subcard { overflow: hidden; display: grid; gap: 12px; padding: 0 0 22px; border: 1px solid #dce3ee; border-radius: 14px; background: #fff; transition: transform .15s ease, box-shadow .15s ease; }
 .site-subcard:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(20,35,63,.1); }
-.site-subcard-photo { display: grid; height: 108px; place-items: center; }
+.site-subcard-photo { position: relative; display: grid; height: 108px; place-items: center; overflow: hidden; }
+.site-subcard-photo::after { position: absolute; inset: 0; background: radial-gradient(120% 90% at 85% 8%, rgba(255,255,255,.16), transparent 55%); content: ""; pointer-events: none; }
+.site-subcard-photo svg { position: relative; z-index: 1; opacity: .95; }
 .site-subcard-photo svg { opacity: .95; }
 .site-subcard b { padding: 0 22px; color: #14233f; font: 600 17px/1.4 Georgia, "Songti SC", serif; }
 .site-subcard .site-verse { margin: 0 22px; text-align: left; }
@@ -340,19 +346,19 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-subgrid--on-dark .site-subcard .site-verse-text { color: #dfe0d0; }
 .site-subgrid--on-dark .site-subcard .site-verse footer { color: #9aa7bd; }
 
-/* 子栏目图头配色（tone-* 与 SubCard 的 icon 搭配） */
-.tone-blue { background: linear-gradient(135deg, #3f6e9e, #2c4a6e); }
-.tone-orange { background: linear-gradient(135deg, #c96f3b, #9a4a22); }
-.tone-rose { background: linear-gradient(135deg, #b0789a, #8a5a72); }
-.tone-olive { background: linear-gradient(135deg, #7a8b4f, #54622f); }
-.tone-teal { background: linear-gradient(135deg, #4f8a7a, #2f5f52); }
-.tone-gold { background: linear-gradient(135deg, #b6873c, #8a5a12); }
-.tone-navy { background: linear-gradient(135deg, #3f5d8a, #243a5e); }
-.tone-brown { background: linear-gradient(135deg, #7a6a4f, #54452f); }
-.tone-slate { background: linear-gradient(135deg, #5a7a9a, #3a5a78); }
-.tone-purple { background: linear-gradient(135deg, #8a6a9a, #5a3a6e); }
-.tone-amber { background: linear-gradient(135deg, #c9a052, #8a5a12); }
-.tone-lake { background: linear-gradient(135deg, #3f8a9e, #1f5a6e); }
+/* 子栏目图头配色（tone-* 与 SubCard 的 icon 搭配）——低饱和、同明度，与深夜蓝/金/纸色主系统协调 */
+.tone-blue { background: linear-gradient(135deg, #4a6a93, #2f4564); }
+.tone-orange { background: linear-gradient(135deg, #b07a3f, #7d5227); }
+.tone-rose { background: linear-gradient(135deg, #a97f8f, #7a5768); }
+.tone-olive { background: linear-gradient(135deg, #7a8854, #525e38); }
+.tone-teal { background: linear-gradient(135deg, #4e8474, #325c50); }
+.tone-gold { background: linear-gradient(135deg, #a8893f, #6f5a26); }
+.tone-navy { background: linear-gradient(135deg, #41608f, #26395a); }
+.tone-brown { background: linear-gradient(135deg, #806a4d, #57452f); }
+.tone-slate { background: linear-gradient(135deg, #5c7591, #3d4f64); }
+.tone-purple { background: linear-gradient(135deg, #7d6791, #54405f); }
+.tone-amber { background: linear-gradient(135deg, #b08a45, #75591f); }
+.tone-lake { background: linear-gradient(135deg, #3f7f96, #2a5565); }
 
 /* 奉献页：银行账户卡 */
 .site-giving { max-width: 720px; margin: 0 auto; }
