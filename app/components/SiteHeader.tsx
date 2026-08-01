@@ -8,7 +8,7 @@ export default function SiteHeader() {
     <header className="site-nav">
       <div className="site-nav-inner">
         <a className="site-brand" href="/">
-          <span className="site-brand-mark">十</span>
+          <img className="site-brand-logo" src="/church-logo.jpeg" alt="利河伯教会 REHOBOTH CHURCH" />
           <span>
             <b>利河伯教会</b>
             <small>REHOBOTH CHURCH</small>

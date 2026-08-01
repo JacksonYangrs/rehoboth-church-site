@@ -36,6 +36,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; width: min(1180px, calc(100% - 48px)); min-height: 64px; margin: auto; }
 .site-brand { display: inline-flex; align-items: center; gap: 10px; color: #f3f6fb; text-decoration: none; }
 .site-brand-mark { display: grid; width: 32px; height: 32px; place-items: center; color: #14233f; background: #e9c878; font: 22px/1 Georgia, "Songti SC", serif; border-radius: 4px; }
+.site-brand-logo { width: 36px; height: 36px; border-radius: 4px; object-fit: contain; background: #fbf5e7; }
 .site-brand b { font: 600 17px/1.05 Georgia, "Songti SC", serif; letter-spacing: .06em; }
 .site-brand small { display: block; margin-top: 3px; color: #9fb0cc; font-size: 8px; font-weight: 800; letter-spacing: .18em; }
 .site-nav-links { display: flex; flex-wrap: wrap; gap: 4px 6px; margin: 0; padding: 0; list-style: none; }
@@ -233,6 +234,13 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-home { display: block; }
 
 .site-hero { position: relative; min-height: 460px; display: grid; align-items: center; padding: 80px max(32px, calc((100vw - 1090px) / 2)); background-size: cover; background-position: center; background-color: #14233f; }
+.site-hero--column { min-height: 380px; padding: 64px max(32px, calc((100vw - 1090px) / 2)) 60px; background-position: center 30%; }
+.site-hero--column .site-hero-inner { text-align: center; }
+.site-hero--column .site-hero-inner > * { margin-left: auto; margin-right: auto; }
+.site-hero--column .site-hero-copy { margin-left: auto; margin-right: auto; }
+.site-hero--column h1 { margin: 13px auto 0; font: 500 clamp(30px, 4vw, 42px)/1.2 Georgia, "Songti SC", serif; letter-spacing: -.03em; }
+.site-hero--column .site-verse { margin-top: 20px; }
+.site-hero--column .site-verse-text { color: #f3d693; }
 .site-hero-overlay { position: absolute; inset: 0; background: linear-gradient(120deg, rgba(15,27,50,.92), rgba(20,35,63,.62) 60%, rgba(20,35,63,.78)); }
 .site-hero-inner { position: relative; z-index: 1; max-width: 1090px; margin: auto; color: #f3f6fb; }
 .site-hero h1 { margin: 14px 0 16px; font: 500 clamp(32px, 4.6vw, 56px)/1.18 Georgia, "Songti SC", serif; letter-spacing: -.03em; }

@@ -10,20 +10,10 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="site-home">
-      <section className="site-hero" style={{ backgroundImage: "url(/church-hero.png)" }}>
+      <section className="site-hero" style={{ backgroundImage: "url(/church-hero.jpg)" }}>
         <div className="site-hero-overlay" />
         <div className="site-hero-inner">
           <p className="eyebrow-light">REHOBOTH CHURCH · 利河伯教会</p>
-          <h1>
-            在这里敬拜，
-            <br />
-            在这里同行，
-            <br />
-            在这里见证神的信实
-          </h1>
-          <p className="site-hero-copy">
-            一个现代、真实、有秩序的教会网站：线上敬拜、教会成长、建堂记念，与你一路同行。
-          </p>
           <div className="site-hero-actions">
             <a className="site-btn-primary" href="/devotion/">进入每日灵修</a>
             <a className="site-btn-ghost" href="/about/">认识我们</a>
