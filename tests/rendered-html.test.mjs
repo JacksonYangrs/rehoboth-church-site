@@ -93,7 +93,7 @@ test("爱心窗口页含匿名表单", async () => {
   assert.ok(await exists(path), "缺少 care/index.html");
   const html = await readFile(path, "utf8");
   assert.match(html, /想說的話/, "爱心窗口页缺少诉说输入框");
-  assert.match(html, /類別/, "爱心窗口页缺少分类选择");
+  assert.match(html, /送出傾訴/, "爱心窗口页缺少提交按钮");
 });
 
 test("认识教会页含会员接纳表单", async () => {
