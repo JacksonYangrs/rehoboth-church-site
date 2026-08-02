@@ -150,14 +150,13 @@ function renderReadingBlock(block: ReadingBlock, key: string) {
   return <p className={isSectionLine(block.text) ? "section-line" : ""} key={key}>{block.text}</p>;
 }
 
-function ReadingSection({ blocks, label, title }: { blocks: ReadingBlock[]; label: string; title: string }) {
+function ReadingSection({ blocks, label }: { blocks: ReadingBlock[]; label: string }) {
   if (blocks.length === 0) return null;
 
   return (
     <section className="reading-section">
       <div className="reading-section-heading">
         <span>{label}</span>
-        <h3>{title}</h3>
       </div>
       <div className="reading-section-body">
         {blocks.map((block, index) => renderReadingBlock(block, `${label}-${index}`))}
@@ -375,9 +374,9 @@ export default function DevotionPage() {
                 {reading.keyVerse && <blockquote><span>钥节</span>{reading.keyVerse}</blockquote>}
               </header>
               <div className="reading-body">
-                <ReadingSection blocks={reading.sections.summary} label="第一段 · 摘要" title="今日内容摘要" />
-                <ReadingSection blocks={reading.sections.thought} label="第二段 · 思想" title="需要思想的部分" />
-                <ReadingSection blocks={reading.sections.practice} label="第三段 · 与主同行" title="与主同行的实践" />
+                <ReadingSection blocks={reading.sections.summary} label="第一段 · 摘要" />
+                <ReadingSection blocks={reading.sections.thought} label="第二段 · 思想" />
+                <ReadingSection blocks={reading.sections.practice} label="第三段 · 与主同行" />
               </div>
               <div className="reading-complete">
                 <span>读完原文后，带着所领受的进入分享。</span>
