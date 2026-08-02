@@ -20,6 +20,7 @@ const ACCOUNT = {
 
 // 一级栏目：图片型宽幅区块（照片 + 深色叠层 + 经文寄语）
 function PhotoBlock({
+  index,
   eyebrow,
   title,
   verse,
@@ -29,6 +30,7 @@ function PhotoBlock({
   actionLabel,
   align = "left",
 }: {
+  index: string;
   eyebrow: string;
   title: string;
   verse?: Verse;
@@ -42,6 +44,7 @@ function PhotoBlock({
     <section className="site-block site-block--photo" style={{ backgroundImage: `url(${photo})` }}>
       <div className="site-block-overlay" />
       <div className={`site-block-inner site-block-inner--${align}`}>
+        <span className="site-block-index">{index}</span>
         <p className="eyebrow-light">{eyebrow}</p>
         <h2>{title}</h2>
         {verse ? <blockquote className="site-verse"><p className="site-verse-text">「{verse.text}」</p><footer>——{verse.ref}</footer></blockquote> : null}
@@ -58,12 +61,14 @@ function PhotoBlock({
 
 // 一级栏目：深色区块（无照片，子栏目网格）
 function DarkBlock({
+  index,
   eyebrow,
   title,
   verse,
   desc,
   children,
 }: {
+  index: string;
   eyebrow: string;
   title: string;
   verse?: Verse;
@@ -74,6 +79,7 @@ function DarkBlock({
     <section className="site-block site-block--dark">
       <div className="site-block-inner site-block-inner--full">
         <div className="site-block-head">
+          <span className="site-block-index">{index}</span>
           <p className="eyebrow-light">{eyebrow}</p>
           <h2>{title}</h2>
           {verse ? <blockquote className="site-verse"><p className="site-verse-text">「{verse.text}」</p><footer>——{verse.ref}</footer></blockquote> : null}
@@ -123,6 +129,7 @@ export default function Home() {
 
       {/* 3. 线上敬拜 */}
       <PhotoBlock
+        index="01"
         eyebrow="WORSHIP · 线上敬拜"
         title="线上敬拜"
         verse={VERSE_COLUMNS.worship}
@@ -134,6 +141,7 @@ export default function Home() {
       <section className="site-block site-block--paper">
         <div className="site-block-inner site-block-inner--full">
           <div className="site-block-head">
+            <span className="site-block-index">02</span>
             <p className="eyebrow">GROWTH · 教会成长</p>
             <h2>教会成长</h2>
             {VERSE_COLUMNS.growth ? (
@@ -156,6 +164,7 @@ export default function Home() {
       <section className="site-block site-block--paper">
         <div className="site-block-inner site-block-inner--full">
           <div className="site-block-head">
+            <span className="site-block-index">03</span>
             <p className="eyebrow">BIBLE STUDY · 查經公告</p>
             <h2>查經公告</h2>
             <blockquote className="site-verse site-verse--paper">
@@ -172,6 +181,7 @@ export default function Home() {
       <section className="site-block site-block--paper">
         <div className="site-block-inner site-block-inner--full">
           <div className="site-block-head">
+            <span className="site-block-index">04</span>
             <p className="eyebrow">BUILDING · 建堂专题</p>
             <h2>建堂专题</h2>
             {VERSE_COLUMNS.building ? (
@@ -193,6 +203,7 @@ export default function Home() {
       {/* 7. 奉献（首页直接展示银行账户卡） */}
       <section className="site-block site-block--gold">
         <div className="site-block-inner site-block-inner--center">
+          <span className="site-block-index">05</span>
           <p className="eyebrow">GIVING · 奉獻</p>
           <h2>線上奉獻</h2>
           <blockquote className="site-verse site-verse--paper">
@@ -217,6 +228,7 @@ export default function Home() {
       <section className="site-block site-block--paper">
         <div className="site-block-inner site-block-inner--full">
           <div className="site-block-head">
+            <span className="site-block-index">06</span>
             <p className="eyebrow">CARE · 愛心窗口</p>
             <h2>愛心窗口</h2>
             <blockquote className="site-verse site-verse--paper">
@@ -249,6 +261,7 @@ export default function Home() {
       <section className="site-block site-block--dark">
         <div className="site-block-inner site-block-inner--center">
           <img className="site-block-logo" src="/church-logo.jpeg" alt="利河伯教会" />
+          <span className="site-block-index">07</span>
           <p className="eyebrow-light">ABOUT · 认识教会</p>
           <h2>认识教会</h2>
           <blockquote className="site-verse">
