@@ -169,18 +169,26 @@ export default function Home() {
       </section>
 
       {/* 6. 建堂专题 */}
-      <DarkBlock
-        eyebrow="BUILDING · 建堂专题"
-        title="建堂专题"
-        verse={VERSE_COLUMNS.building}
-        desc="建堂异象、历程、工程进度、祷告与见证——若不是耶和华建造房屋，建造的人就枉然劳力。"
-      >
-        <div className="site-subgrid site-subgrid--on-dark">
-          {BUILDING_TOPICS.map((topic) => (
-            <SubCard key={topic.slug} label={topic.label} verse={topic.verse} tone={topic.tone} icon={topic.icon} />
-          ))}
+      <section className="site-block site-block--paper">
+        <div className="site-block-inner site-block-inner--full">
+          <div className="site-block-head">
+            <p className="eyebrow">BUILDING · 建堂专题</p>
+            <h2>建堂专题</h2>
+            {VERSE_COLUMNS.building ? (
+              <blockquote className="site-verse site-verse--paper">
+                <p className="site-verse-text">「{VERSE_COLUMNS.building.text}」</p>
+                <footer>——{VERSE_COLUMNS.building.ref}</footer>
+              </blockquote>
+            ) : null}
+            <p className="site-block-copy">建堂异象、历程、工程进度、祷告与见证——若不是耶和华建造房屋，建造的人就枉然劳力。</p>
+          </div>
+          <div className="site-subgrid">
+            {BUILDING_TOPICS.map((topic) => (
+              <SubCard key={topic.slug} label={topic.label} verse={topic.verse} tone={topic.tone} icon={topic.icon} />
+            ))}
+          </div>
         </div>
-      </DarkBlock>
+      </section>
 
       {/* 7. 奉献（首页直接展示银行账户卡） */}
       <section className="site-block site-block--gold">
