@@ -32,10 +32,10 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .devotion-page { min-height: 100vh; overflow: hidden; }
 
 /* ===== 全站外壳：导航 / 页脚（教会深夜蓝调性） ===== */
-.site-nav { position: sticky; top: 0; z-index: 50; background: #14233f; border-bottom: 1px solid rgba(255,255,255,.08); }
+.site-nav { position: sticky; top: 0; z-index: 50; background: #205088; border-bottom: 1px solid rgba(255,255,255,.08); }
 .site-nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; width: min(1180px, calc(100% - 48px)); min-height: 64px; margin: auto; }
 .site-brand { display: inline-flex; align-items: center; gap: 10px; color: #f3f6fb; text-decoration: none; }
-.site-brand-mark { display: grid; width: 32px; height: 32px; place-items: center; color: #14233f; background: #e9c878; font: 22px/1 Georgia, "Songti SC", serif; border-radius: 4px; }
+.site-brand-mark { display: grid; width: 32px; height: 32px; place-items: center; color: #205088; background: #e9c878; font: 22px/1 Georgia, "Songti SC", serif; border-radius: 4px; }
 .site-brand-logo { width: 36px; height: 36px; border-radius: 4px; object-fit: contain; background: #fbf5e7; }
 .site-brand b { font: 600 17px/1.05 Georgia, "Songti SC", serif; letter-spacing: .06em; }
 .site-brand small { display: block; margin-top: 3px; color: #9fb0cc; font-size: 8px; font-weight: 800; letter-spacing: .18em; }
@@ -178,7 +178,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .prayer-card .primary-button { float: right; margin-top: 13px; color: #25452f; background: #ecdfbd; }
 .prayer-card .primary-button:hover { background: #f9ebc7; }
 
-.site-footer { display: flex; justify-content: space-between; gap: 20px; padding: 24px max(32px, calc((100vw - 1090px) / 2)); color: #aebed8; background: #0f1b32; font-size: 11px; }
+.site-footer { display: flex; justify-content: space-between; gap: 20px; padding: 24px max(32px, calc((100vw - 1090px) / 2)); color: #aebed8; background: #1a4574; font-size: 11px; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -233,7 +233,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 
 .site-home { display: block; }
 
-.site-hero { position: relative; min-height: 460px; display: grid; align-items: center; padding: 80px max(32px, calc((100vw - 1090px) / 2)); background-size: cover; background-position: center; background-color: #14233f; }
+.site-hero { position: relative; min-height: 460px; display: grid; align-items: center; padding: 80px max(32px, calc((100vw - 1090px) / 2)); background-size: cover; background-position: center; background-color: #205088; }
 .site-hero--column { min-height: 380px; padding: 64px max(32px, calc((100vw - 1090px) / 2)) 60px; background-position: center 30%; }
 .site-hero--column .site-hero-inner { text-align: center; }
 .site-hero--column .site-hero-inner > * { margin-left: auto; margin-right: auto; }
@@ -248,34 +248,34 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 
 .site-btn-primary, .site-btn-ghost { display: inline-grid; min-height: 44px; place-items: center; padding: 0 22px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 800; }
-.site-btn-primary { color: #14233f; background: #e9c878; }
+.site-btn-primary { color: #205088; background: #e9c878; }
 .site-btn-primary:hover { background: #f3d693; }
 .site-btn-ghost { color: #f3f6fb; border: 1px solid rgba(255,255,255,.4); }
 .site-btn-ghost:hover { background: rgba(255,255,255,.1); }
 
 .site-section { width: min(1090px, calc(100% - 48px)); margin: 56px auto; }
-.site-section-title { margin: 0 0 22px; font: 500 26px Georgia, "Songti SC", serif; letter-spacing: -.03em; color: #14233f; }
+.site-section-title { margin: 0 0 22px; font: 500 26px Georgia, "Songti SC", serif; letter-spacing: -.03em; color: #205088; }
 
 .site-cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 30px 34px; border: 1px solid #d9e1ee; border-left: 4px solid #e9c878; background: #f7f9fc; border-radius: 12px; }
-.site-cta h3 { margin: 8px 0 8px; font: 500 28px Georgia, "Songti SC", serif; color: #14233f; }
+.site-cta h3 { margin: 8px 0 8px; font: 500 28px Georgia, "Songti SC", serif; color: #205088; }
 .site-cta p { margin: 0; max-width: 560px; color: #4a5a72; font: 15px/1.7 Georgia, "Songti SC", serif; }
 
 .site-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
 .site-card { display: grid; gap: 9px; padding: 24px 22px; border: 1px solid #dce3ee; border-radius: 12px; background: #fff; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
 .site-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(20,35,63,.1); }
-.site-card-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 10px; color: #14233f; background: #eaf0f8; font-size: 20px; }
-.site-card b { color: #14233f; font-size: 17px; }
+.site-card-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 10px; color: #205088; background: #eaf0f8; font-size: 20px; }
+.site-card b { color: #205088; font-size: 17px; }
 .site-card-verse { color: #6a5a33; font: 400 12px/1.8 "Songti TC", "Noto Serif CJK TC", "Kaiti SC", "KaiTi", "STKaiti", Georgia, serif; letter-spacing: .03em; }
 .site-card-verse i { display: block; margin-top: 2px; color: #9a8a5f; font-size: 11px; font-style: normal; letter-spacing: .05em; }
 .site-card-desc { color: #5a6b84; font-size: 13px; line-height: 1.6; }
 
-.site-contact { padding: 30px 34px; border-radius: 12px; background: #14233f; color: #c7d3e6; }
+.site-contact { padding: 30px 34px; border-radius: 12px; background: #205088; color: #c7d3e6; }
 .site-contact .site-section-title { color: #f3f6fb; }
 .site-contact p { margin: 6px 0 0; }
 
 .site-placeholder { display: grid; min-height: 70vh; place-items: center; padding: 60px 24px; }
 .site-placeholder-inner { max-width: 560px; text-align: center; }
-.site-placeholder h1 { margin: 12px 0 14px; font: 500 36px Georgia, "Songti SC", serif; color: #14233f; }
+.site-placeholder h1 { margin: 12px 0 14px; font: 500 36px Georgia, "Songti SC", serif; color: #205088; }
 .site-placeholder p { margin: 0 0 26px; color: #4a5a72; font: 15px/1.8 Georgia, "Songti SC", serif; }
 .site-placeholder-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
@@ -288,7 +288,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 
 /* ===== 首页长滚动布局：一栏目一宽幅区块 ===== */
 .site-block { position: relative; display: grid; align-items: center; padding: 86px max(32px, calc((100vw - 1090px) / 2)); }
-.site-block--photo { min-height: 500px; background-size: cover; background-position: center; background-color: #14233f; color: #f3f6fb; }
+.site-block--photo { min-height: 500px; background-size: cover; background-position: center; background-color: #205088; color: #f3f6fb; }
 .site-block-overlay { position: absolute; inset: 0; background: linear-gradient(105deg, rgba(13,22,44,.94) 0%, rgba(16,29,52,.72) 46%, rgba(16,29,52,.52) 100%); }
 .site-block-inner { position: relative; z-index: 1; width: min(1090px, 100%); margin: auto; }
 .site-block-inner--center { text-align: center; }
@@ -298,11 +298,11 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-block-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
 .site-block-inner--center .site-block-actions { justify-content: center; }
 
-.site-block--dark { color: #f3f6fb; background: linear-gradient(120deg, #12203c, #1b2f52); }
-.site-block--paper { color: #14233f; background: #f7f3ea; }
+.site-block--dark { color: #f3f6fb; background: linear-gradient(120deg, #1a4574, #29629a); }
+.site-block--paper { color: #205088; background: #f7f3ea; }
 .site-block--gold { color: #4a3410; background: linear-gradient(120deg, #f3e8d1, #ead9b2 55%, #f1e3c6); }
 .site-block--gold .site-block-copy { color: #6b5520; }
-.site-block--gold .site-btn-primary { color: #fff; background: #14233f; }
+.site-block--gold .site-btn-primary { color: #fff; background: #205088; }
 .site-block--gold .site-btn-primary:hover { background: #1e3a5f; }
 .site-block-head { max-width: 700px; }
 .site-block-head h2 { color: inherit; }
@@ -312,7 +312,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-block-inner--left .site-verse { margin-left: 0; text-align: left; }
 
 /* ===== 栏目页头：标题 + 经文寄语（书法感） ===== */
-.site-page-head { padding: 58px max(32px, calc((100vw - 1090px) / 2)) 44px; color: #f3f6fb; background: #14233f; text-align: center; }
+.site-page-head { padding: 58px max(32px, calc((100vw - 1090px) / 2)) 44px; color: #f3f6fb; background: #205088; text-align: center; }
 .site-page-head .eyebrow-light { display: block; }
 .site-page-head h1 { margin: 13px auto 0; font: 500 clamp(32px, 4.4vw, 48px)/1.2 Georgia, "Songti SC", serif; letter-spacing: -.03em; }
 .site-page-head > p:not(.eyebrow-light):not(.site-verse) { margin: 14px auto 0; max-width: 620px; color: #c7d3e6; font: 15px/1.85 Georgia, "Songti SC", serif; }
@@ -326,7 +326,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 
 /* ===== 栏目页正文容器 ===== */
 .site-page-body { width: min(1090px, calc(100% - 48px)); margin: 48px auto 72px; }
-.site-page-body h2 { margin: 0 0 24px; font: 500 24px Georgia, "Songti SC", serif; color: #14233f; letter-spacing: -.02em; }
+.site-page-body h2 { margin: 0 0 24px; font: 500 24px Georgia, "Songti SC", serif; color: #205088; letter-spacing: -.02em; }
 
 /* 子栏目 / 主题网格 */
 .site-subgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
@@ -336,7 +336,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-subcard-photo::after { position: absolute; inset: 0; background: radial-gradient(120% 90% at 85% 8%, rgba(255,255,255,.16), transparent 55%); content: ""; pointer-events: none; }
 .site-subcard-photo svg { position: relative; z-index: 1; opacity: .95; }
 .site-subcard-photo svg { opacity: .95; }
-.site-subcard b { padding: 0 22px; color: #14233f; font: 600 17px/1.4 Georgia, "Songti SC", serif; }
+.site-subcard b { padding: 0 22px; color: #205088; font: 600 17px/1.4 Georgia, "Songti SC", serif; }
 .site-subcard .site-verse { margin: 0 22px; text-align: left; }
 .site-subcard .site-verse-text { color: #5a4a2a; font-size: 14px; line-height: 1.9; }
 .site-subcard .site-verse footer { margin-top: 7px; color: #8a7a55; font-size: 11px; }
@@ -367,11 +367,11 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-givcard-row { display: grid; grid-template-columns: 150px 1fr; gap: 14px; padding: 17px 22px; border-top: 1px solid #edf0f6; }
 .site-givcard-row:first-child { border-top: 0; background: #f4f7fc; }
 .site-givcard-row dt { color: #5a6b84; font-size: 12px; font-weight: 800; letter-spacing: .05em; }
-.site-givcard-row dd { margin: 0; color: #14233f; font: 500 16px/1.6 Georgia, "Songti SC", serif; word-break: break-all; }
+.site-givcard-row dd { margin: 0; color: #205088; font: 500 16px/1.6 Georgia, "Songti SC", serif; word-break: break-all; }
 .site-givcard-row--accent { background: #fdf9ee; }
 .site-givcard-row--accent dd { color: #8a5a12; font-weight: 700; }
 .site-giving-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; justify-content: center; }
-.site-giving-actions .site-btn-ghost { color: #14233f; border-color: #b9c6dc; }
+.site-giving-actions .site-btn-ghost { color: #205088; border-color: #b9c6dc; }
 .site-giving-actions .site-btn-ghost:hover { background: #eef3fb; }
 
 @media (max-width: 720px) {
@@ -384,11 +384,11 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-feed { display: grid; gap: 30px; }
 .site-feed-empty { display: grid; gap: 12px; place-items: center; min-height: 180px; padding: 34px 20px; border: 1px dashed #cfd8e4; border-radius: 12px; color: #5a6b84; text-align: center; background: #fbfcfd; }
 .site-feed-empty p { margin: 0; font: 15px/1.8 Georgia, "Songti SC", serif; }
-.site-feed-spinner { width: 26px; height: 26px; border: 3px solid #dbe4ee; border-top-color: #14233f; border-radius: 50%; animation: spin .85s linear infinite; }
+.site-feed-spinner { width: 26px; height: 26px; border: 3px solid #dbe4ee; border-top-color: #205088; border-radius: 50%; animation: spin .85s linear infinite; }
 .site-feed-item { overflow: hidden; border: 1px solid #dce3ee; border-radius: 14px; background: #fff; }
 .site-feed-head { display: flex; align-items: baseline; gap: 14px; padding: 22px 26px 6px; }
 .site-feed-head time { flex: 0 0 auto; color: #b6873c; font-size: 12px; font-weight: 800; letter-spacing: .05em; }
-.site-feed-head h3 { margin: 0; font: 600 20px/1.35 Georgia, "Songti SC", serif; color: #14233f; }
+.site-feed-head h3 { margin: 0; font: 600 20px/1.35 Georgia, "Songti SC", serif; color: #205088; }
 .site-feed-content { margin: 0; padding: 8px 26px 4px; color: #425148; font: 15px/1.85 Georgia, "Songti SC", serif; white-space: pre-wrap; }
 .site-feed-media { display: grid; gap: 14px; padding: 16px 26px 24px; }
 .site-feed-photo { margin: 0; }
@@ -400,12 +400,12 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-meta-card { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 34px; }
 .site-meta-card div { padding: 16px 18px; border: 1px solid #dce3ee; border-radius: 12px; background: #f6f8fc; }
 .site-meta-card dt { color: #5a6b84; font-size: 11px; font-weight: 800; letter-spacing: .08em; }
-.site-meta-card dd { margin: 6px 0 0; color: #14233f; font: 500 15px/1.6 Georgia, "Songti SC", serif; }
+.site-meta-card dd { margin: 6px 0 0; color: #205088; font: 500 15px/1.6 Georgia, "Songti SC", serif; }
 
 /* ===== 查经公告 ===== */
 .site-bs-current { padding: 30px 32px; border: 1px solid #d9e1ee; border-left: 4px solid #b6873c; border-radius: 14px; background: #fdfaf2; }
 .site-bs-current .eyebrow { color: #b6873c; }
-.site-bs-current h3 { margin: 10px 0 18px; font: 600 26px/1.3 Georgia, "Songti SC", serif; color: #14233f; }
+.site-bs-current h3 { margin: 10px 0 18px; font: 600 26px/1.3 Georgia, "Songti SC", serif; color: #205088; }
 .site-bs-current dl { display: grid; gap: 10px; margin: 0 0 20px; }
 .site-bs-current dl > div { display: grid; grid-template-columns: 64px 1fr; gap: 10px; }
 .site-bs-current dt { color: #5a6b84; font-size: 12px; font-weight: 800; }
@@ -414,13 +414,13 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-bs-history h4 { margin: 0 0 10px; color: #5a6b84; font-size: 12px; font-weight: 800; letter-spacing: .1em; }
 .site-bs-row { display: grid; grid-template-columns: 92px 1fr auto; align-items: center; gap: 12px; padding: 13px 4px; border-top: 1px solid #e6eaf1; }
 .site-bs-row time { color: #8a97a8; font-size: 12px; }
-.site-bs-row b { color: #14233f; font-size: 14px; }
+.site-bs-row b { color: #205088; font-size: 14px; }
 .site-bs-row span { color: #5a6b84; font-size: 13px; }
 .site-bs-row small { color: #9aa7bd; font-size: 12px; }
 
 /* ===== 表单（爱心窗口 / 会员接纳） ===== */
 .site-form { display: grid; gap: 16px; }
-.site-form label { display: grid; gap: 8px; color: #14233f; font-size: 13px; font-weight: 800; }
+.site-form label { display: grid; gap: 8px; color: #205088; font-size: 13px; font-weight: 800; }
 .site-form input, .site-form select, .site-form textarea { width: 100%; padding: 12px 14px; border: 1px solid #cfd8e4; border-radius: 10px; color: #20382f; background: #fff; font: 15px/1.7 Georgia, "Songti SC", serif; }
 .site-form textarea { resize: vertical; }
 .site-form input:focus, .site-form select:focus, .site-form textarea:focus { outline: 3px solid rgba(182,135,60,.25); border-color: #b6873c; }
@@ -429,7 +429,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-form .site-btn-primary:disabled { cursor: default; opacity: .5; }
 .site-form-done { display: grid; justify-items: center; gap: 12px; padding: 40px 26px; border: 1px solid #d9e6da; border-radius: 14px; text-align: center; background: #f4faf5; }
 .site-form-done-icon { display: grid; width: 52px; height: 52px; margin: 0; place-items: center; border-radius: 50%; color: #fff; background: var(--sage-deep); font-size: 24px; }
-.site-form-done h3 { margin: 0; color: #14233f; font: 600 22px Georgia, "Songti SC", serif; }
+.site-form-done h3 { margin: 0; color: #205088; font: 600 22px Georgia, "Songti SC", serif; }
 .site-form-done p { margin: 0; max-width: 420px; color: #425148; font: 15px/1.85 Georgia, "Songti SC", serif; }
 
 /* ===== 爱心窗口页 ===== */
@@ -444,12 +444,12 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 /* ===== 认识教会页 ===== */
 .site-about { display: grid; gap: 44px; }
 .site-about-copy p { margin: 0 0 14px; color: #2c3a52; font: 16px/2 Georgia, "Songti SC", serif; }
-.site-membership { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 460px); gap: 34px; align-items: start; padding: 30px 32px; border-radius: 16px; background: linear-gradient(120deg, #12203c, #1b2f52); }
+.site-membership { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 460px); gap: 34px; align-items: start; padding: 30px 32px; border-radius: 16px; background: linear-gradient(120deg, #1a4574, #29629a); }
 .site-membership-head .eyebrow { color: #e9c878; }
 .site-membership-head h2 { margin: 10px 0 0; color: #f3f6fb; font: 600 26px/1.3 Georgia, "Songti SC", serif; }
 .site-membership-head p:last-child { margin: 14px 0 0; color: #c7d3e6; font: 15px/1.9 Georgia, "Songti SC", serif; }
 .site-membership .site-form { padding: 22px; border-radius: 12px; background: #fff; }
-.site-membership .site-form label { color: #14233f; }
+.site-membership .site-form label { color: #205088; }
 
 @media (max-width: 860px) {
   .site-care-grid, .site-membership { grid-template-columns: 1fr; gap: 26px; }
