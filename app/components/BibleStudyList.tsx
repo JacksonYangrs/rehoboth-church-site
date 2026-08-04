@@ -22,41 +22,46 @@ export default function BibleStudyList() {
     return (
       <div className="site-feed-empty">
         <span className="site-feed-spinner" aria-hidden="true" />
-        <p>正在載入查經公告…</p>
+        <p>正在载入查经公告…</p>
       </div>
     );
   }
 
   if (list.length === 0) {
     return (
-      <div className="site-feed-empty">
-        <p>📖 新的查經計劃準備中。請稍後回來，我們會在每週查經前於此公布時間、地點與查考經文。</p>
+      <div className="site-feed-empty site-feed-empty--bs">
+        <svg className="site-feed-empty-icon" viewBox="0 0 48 48" width="46" height="46" fill="none" stroke="#205088" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M24 10c-4.5-2.6-10-3-14-1.8V38c4-1.2 9.5-.8 14 1.8 4.5-2.6 10-3 14-1.8V8.2C34 7 28.5 7.4 24 10z" />
+          <path d="M24 10v29.8" />
+          <path d="M12 25h6M12 30h6M30 25h6M30 30h6" />
+        </svg>
+        <p>新的查经计划准备中。请稍后回来，我们会在每周查经前于此公布时间、地点与查考经文。</p>
       </div>
     );
   }
 
   const [current, ...history] = list;
-  const when = current.time ? `${current.date}（週五）· ${current.time}` : `${current.date}（週五）`;
+  const when = current.time ? `${current.date}（周五）· ${current.time}` : `${current.date}（周五）`;
   return (
     <div className="site-feed">
       <article className="site-bs-current">
-        <p className="eyebrow">本週查經 · {current.week}</p>
+        <p className="eyebrow">本周查经 · {current.week}</p>
         <h3>{current.topic}</h3>
         <dl>
-          <div><dt>時間</dt><dd>{when}</dd></div>
-          <div><dt>地點</dt><dd>{current.venue || "線上 Zoom（連結見下）"}</dd></div>
-          {current.passage ? <div><dt>查經經文</dt><dd>{current.passage}</dd></div> : null}
+          <div><dt>时间</dt><dd>{when}</dd></div>
+          <div><dt>地点</dt><dd>{current.venue || "线上 Zoom（连结见下）"}</dd></div>
+          {current.passage ? <div><dt>查经经文</dt><dd>{current.passage}</dd></div> : null}
           {current.leader ? <div><dt>主持人</dt><dd>{current.leader}</dd></div> : null}
-          {current.notes ? <div><dt>備註</dt><dd>{current.notes}</dd></div> : null}
+          {current.notes ? <div><dt>备注</dt><dd>{current.notes}</dd></div> : null}
         </dl>
         {current.zoomUrl ? (
-          <a className="site-btn-primary" href={current.zoomUrl} target="_blank" rel="noreferrer">加入 Zoom 查經</a>
+          <a className="site-btn-primary" href={current.zoomUrl} target="_blank" rel="noreferrer">加入 Zoom 查经</a>
         ) : null}
       </article>
 
       {history.length > 0 ? (
         <div className="site-bs-history">
-          <h4>往期查經</h4>
+          <h4>往期查经</h4>
           {history.map((item) => (
             <article className="site-bs-row" key={item.id}>
               <time>{item.date}{item.time ? ` ${item.time}` : ""}</time>

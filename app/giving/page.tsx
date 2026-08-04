@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import VerseQuote from "../components/VerseQuote";
 import { VERSE_COLUMNS } from "../verses";
 
-export const metadata: Metadata = { title: "線上奉獻指南 · 利河伯教會" };
+export const metadata: Metadata = { title: "线上奉献指南 · 利河伯教会" };
 
 // 银行账户信息（2026-08 由教会确认）
 // 字段：账户名称 / 开户银行 / 银行账号 / SWIFT / 币种
@@ -17,11 +17,11 @@ const ACCOUNT = {
 
 export default function Page() {
   const rows: { label: string; value: string; accent?: boolean }[] = [
-    { label: "账户名稱", value: ACCOUNT.name || "待教會確認" },
-    { label: "開戶銀行", value: ACCOUNT.bank || "待教會確認" },
-    { label: "銀行賬號", value: ACCOUNT.number || "待教會確認", accent: true },
-    { label: "SWIFT / BIC", value: ACCOUNT.swift || "待教會確認" },
-    { label: "幣種", value: ACCOUNT.currency || "待教會確認" },
+    { label: "账户名称", value: ACCOUNT.name || "待教会确认" },
+    { label: "开户银行", value: ACCOUNT.bank || "待教会确认" },
+    { label: "银行账号", value: ACCOUNT.number || "待教会确认", accent: true },
+    { label: "SWIFT / BIC", value: ACCOUNT.swift || "待教会确认" },
+    { label: "币种", value: ACCOUNT.currency || "待教会确认" },
   ];
 
   return (
@@ -29,18 +29,18 @@ export default function Page() {
       <header className="site-hero site-hero--column" style={{ backgroundImage: "url(/giving-box.png)" }}>
         <div className="site-hero-overlay" />
         <div className="site-hero-inner">
-          <p className="eyebrow-light">GIVING · 線上奉獻指南</p>
-          <h1>線上奉獻指南</h1>
+          <p className="eyebrow-light">GIVING · 线上奉献指南</p>
+          <h1>线上奉献指南</h1>
           <VerseQuote verse={VERSE_COLUMNS.giving} />
-          <p className="site-hero-copy">你的奉獻支持教會的日常事工、建堂與各項關懷服侍。捐得樂意的人，是神所喜愛的。</p>
+          <p className="site-hero-copy">你的奉献支持教会的日常事工、建堂与各项关怀服侍。捐得乐意的人，是神所喜爱的。</p>
         </div>
       </header>
 
       <section className="site-page-body">
         <div className="site-giving">
           <p className="site-giving-note">
-            奉獻可分為：<b>日常奉獻</b>（教會經常費）、<b>建堂奉獻</b>（建堂專款）與
-            <b>特別事工奉獻</b>。匯款時請註明用途，若有疑問歡迎聯繫教會同工。
+            奉献可分为：<b>日常奉献</b>（教会经常费）、<b>建堂奉献</b>（建堂专款）与
+            <b>特别事工奉献</b>。汇款时请注明用途，若有疑问欢迎联系教会同工。
           </p>
           <dl className="site-givcard">
             {rows.map((row) => (
@@ -51,8 +51,8 @@ export default function Page() {
             ))}
           </dl>
           <div className="site-giving-actions">
-            <a className="site-btn-primary" href="/building/">建堂專題</a>
-            <a className="site-btn-ghost" href="/">返回首頁</a>
+            <a className="site-btn-primary" href="/building/">建堂专题</a>
+            <a className="site-btn-ghost" href="/">返回首页</a>
           </div>
         </div>
       </section>

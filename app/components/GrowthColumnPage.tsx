@@ -30,8 +30,8 @@ export default function GrowthColumnPage({
       </header>
 
       <section className="site-page-body">
-        <h2>活動回顧</h2>
-        <ColumnFeed columnSlug={column} emptyText="暫無活動記錄，敬請期待。" />
+        <h2>活动回顾</h2>
+        <ColumnFeed columnSlug={column} emptyText="暂无活动记录，敬请期待。" />
 
         {meta && meta.length > 0 ? (
           <dl className="site-meta-card">

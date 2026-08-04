@@ -76,7 +76,7 @@ test("教会成长 6 个专栏页已生成", async () => {
     const path = join(CLIENT, "growth", col, "index.html");
     assert.ok(await exists(path), `缺少专栏页 growth/${col}/index.html`);
     const html = await readFile(path, "utf8");
-    assert.match(html, /活動回顧/, `专栏页 growth/${col} 缺少活动回顾区`);
+    assert.match(html, /活动回顾/, `专栏页 growth/${col} 缺少活动回顾区`);
   }
 });
 
@@ -85,30 +85,30 @@ test("查经公告页含公告列表与经文", async () => {
   assert.ok(await exists(path), "缺少 bible-study/index.html");
   const html = await readFile(path, "utf8");
   assert.match(html, /聖經都是神所默示的/, "查经公告页缺少经文寄语");
-  assert.match(html, /每週查經/, "查经公告页缺少公告区块");
+  assert.match(html, /每周查经/, "查经公告页缺少公告区块");
 });
 
 test("爱心窗口页含匿名表单", async () => {
   const path = join(CLIENT, "care", "index.html");
   assert.ok(await exists(path), "缺少 care/index.html");
   const html = await readFile(path, "utf8");
-  assert.match(html, /想說的話/, "爱心窗口页缺少诉说输入框");
-  assert.match(html, /送出傾訴/, "爱心窗口页缺少提交按钮");
+  assert.match(html, /想说的话/, "爱心窗口页缺少诉说输入框");
+  assert.match(html, /送出倾诉/, "爱心窗口页缺少提交按钮");
 });
 
 test("认识教会页含会员接纳表单", async () => {
   const path = join(CLIENT, "about", "index.html");
   assert.ok(await exists(path), "缺少 about/index.html");
   const html = await readFile(path, "utf8");
-  assert.match(html, /會員發展與接納/, "认识教会页缺少会员接纳区块");
-  assert.match(html, /你的心願/, "认识教会页缺少意愿选择");
+  assert.match(html, /会员发展与接纳/, "认识教会页缺少会员接纳区块");
+  assert.match(html, /你的心愿/, "认识教会页缺少意愿选择");
 });
 
 test("建堂专题页展示主题经文寄语", async () => {
   const path = join(CLIENT, "building", "index.html");
   assert.ok(await exists(path), "缺少 building/index.html");
   const html = await readFile(path, "utf8");
-  for (const fragment of ["你當擴張你帳幕之地", "不要藐視這日的事為小", "耶和華以便以謝"]) {
+  for (const fragment of ["你當擴張你帳幕之地", "不要藐視這日的事爲小", "耶和華以便以謝"]) {
     assert.match(html, new RegExp(fragment), `建堂专题页缺少主题经文：${fragment}`);
   }
 });
@@ -117,9 +117,9 @@ test("奉献页为银行账户展示页（账户信息待教会确认）", async
   const path = join(CLIENT, "giving", "index.html");
   assert.ok(await exists(path), "缺少 giving/index.html");
   const html = await readFile(path, "utf8");
-  assert.match(html, /捐得樂意的人，是神所喜愛的/, "奉献页缺少经文寄语");
-  assert.match(html, /銀行賬號/, "奉献页缺少银行账号字段");
-  assert.match(html, /待教會確認/, "奉献页账户信息未标注待确认");
+  assert.match(html, /捐得樂意的人是神所喜愛的/, "奉献页缺少经文寄语");
+  assert.match(html, /银行账号/, "奉献页缺少银行账号字段");
+  assert.match(html, /待教会确认/, "奉献页账户信息未标注待确认");
 });
 
 test("灵修数据已按周拆分并随产物发布", async () => {

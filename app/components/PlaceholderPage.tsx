@@ -17,18 +17,18 @@ export default function PlaceholderPage({
   return (
     <main className="site-page">
       <header className="site-page-head">
-        <p className="eyebrow-light">{eyebrow ?? "REHOBOTH CHURCH · 利河伯教會"}</p>
+        <p className="eyebrow-light">{eyebrow ?? "REHOBOTH CHURCH · 利河伯教会"}</p>
         <h1>{title}</h1>
         {verse ? <VerseQuote verse={verse} /> : null}
         <p>{description}</p>
       </header>
       <section className="site-page-body site-placeholder" style={{ minHeight: 0, padding: "0 0 60px" }}>
         <div className="site-placeholder-inner">
-          <p className="eyebrow-light">籌備中 · COMING SOON</p>
-          <p style={{ marginTop: 14 }}>本欄目內容正在籌備中，歡迎先逛逛其他欄目。</p>
+          <p className="eyebrow-light">筹备中 · COMING SOON</p>
+          <p style={{ marginTop: 14 }}>本栏目内容正在筹备中，欢迎先逛逛其他栏目。</p>
           <div className="site-placeholder-actions">
-            <a className="site-btn-primary" href="/">返回首頁</a>
-            <a className="site-btn-ghost" href="/devotion/">進入每日靈修</a>
+            <a className="site-btn-primary" href="/">返回首页</a>
+            <a className="site-btn-ghost" href="/devotion/">进入每日灵修</a>
           </div>
         </div>
       </section>

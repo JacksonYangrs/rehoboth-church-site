@@ -21,7 +21,7 @@ export default function CareForm() {
     const res = await submitCareMessage(payload);
     if (res.ok) {
       setState("ok");
-      setMsg("已收到你的傾訴，教會不會公開。教會同工會盡快與你聯繫（如需遠程輔導，請留下聯繫方式）。願神的平安與你同在。");
+      setMsg("已收到你的倾诉，教会不会公开。教会同工会尽快与你联系（如需远程辅导，请留下联系方式）。愿神的平安与你同在。");
       return;
     }
     try {
@@ -32,16 +32,16 @@ export default function CareForm() {
       /* ignore */
     }
     setState("local");
-    setMsg("暫時無法連上後台，你的傾訴已保存到本機（教會同工可協助導出）。你也可以稍後重試，或直接聯繫教會同工。");
+    setMsg("暂时无法连上后台，你的倾诉已保存到本机（教会同工可协助导出）。你也可以稍后重试，或直接联系教会同工。");
   }
 
   if (state === "ok" || state === "local") {
     return (
       <div className="site-form-done">
         <p className="site-form-done-icon" aria-hidden="true">✉</p>
-        <h3>{state === "ok" ? "已收到" : "已保存到本機"}</h3>
+        <h3>{state === "ok" ? "已收到" : "已保存到本机"}</h3>
         <p>{msg}</p>
-        <button className="site-btn-ghost" onClick={() => { setState("idle"); setContent(""); setMsg(""); }}>再寫一條</button>
+        <button className="site-btn-ghost" onClick={() => { setState("idle"); setContent(""); setMsg(""); }}>再写一条</button>
       </div>
     );
   }
@@ -49,16 +49,16 @@ export default function CareForm() {
   return (
     <form className="site-form site-form--care" onSubmit={onSubmit}>
       <label>
-        <span>想說的話</span>
-        <textarea value={content} onChange={(e) => setContent(e.target.value)} rows={9} maxLength={4000} placeholder="請放心傾訴，教會會以溫柔與保密的心聆聽…" />
+        <span>想说的话</span>
+        <textarea value={content} onChange={(e) => setContent(e.target.value)} rows={9} maxLength={4000} placeholder="请放心倾诉，教会会以温柔与保密的心聆听…" />
       </label>
       <label>
-        <span>聯繫方式（選填，供教會遠程輔導聯繫）</span>
-        <input value={contact} onChange={(e) => setContact(e.target.value)} placeholder="微信 / 郵箱 / 電話" maxLength={120} />
+        <span>联系方式（选填，供教会远程辅导联系）</span>
+        <input value={contact} onChange={(e) => setContact(e.target.value)} placeholder="微信 / 邮箱 / 电话" maxLength={120} />
       </label>
-      <p className="site-form-note">＊ 內容僅教會同工可見，不會公開。提交即表示你同意教會同工閱覽並（在你留下聯繫方式時）聯繫你。</p>
+      <p className="site-form-note">＊ 内容仅教会同工可见，不会公开。提交即表示你同意教会同工阅览并（在你留下联系方式时）联系你。</p>
       <button className="site-btn-primary" type="submit" disabled={!canSubmit}>
-        {state === "sending" ? "送出中…" : "送出傾訴"}
+        {state === "sending" ? "送出中…" : "送出倾诉"}
       </button>
     </form>
   );

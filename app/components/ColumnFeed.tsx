@@ -22,7 +22,7 @@ export default function ColumnFeed({ columnSlug, emptyText }: { columnSlug: stri
     return (
       <div className="site-feed-empty">
         <span className="site-feed-spinner" aria-hidden="true" />
-        <p>正在載入活動記錄…</p>
+        <p>正在载入活动记录…</p>
       </div>
     );
   }
@@ -50,7 +50,7 @@ export default function ColumnFeed({ columnSlug, emptyText }: { columnSlug: stri
                 m.kind === "video" ? (
                   <video key={m.id} controls preload="metadata" poster={post.cover || undefined} className="site-feed-video">
                     <source src={m.url} />
-                    你的瀏覽器不支援影片播放。
+                    你的浏览器不支援影片播放。
                   </video>
                 ) : (
                   <figure key={m.id} className="site-feed-photo">

@@ -49,7 +49,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-brand b { font: 600 17px/1.05 Georgia, "Songti SC", serif; letter-spacing: .06em; }
 .site-brand small { display: block; margin-top: 3px; color: #9fb0cc; font-size: 8px; font-weight: 800; letter-spacing: .18em; }
 .site-nav-links { display: flex; flex-wrap: wrap; gap: 4px 6px; margin: 0; padding: 0; list-style: none; }
-.site-nav-links a { display: inline-block; padding: 7px 11px; border-radius: 6px; color: #c7d3e6; text-decoration: none; font-size: 13px; font-weight: 600; }
+.site-nav-links a { display: inline-block; padding: 7px 10px; border-radius: 6px; color: #c7d3e6; text-decoration: none; font-size: 12.5px; font-weight: 600; }
 .site-nav-links a:hover { color: #fff; background: rgba(255,255,255,.08); }
 
 .site-breadcrumb { display: flex; align-items: center; gap: 9px; width: min(1180px, calc(100% - 48px)); margin: 18px auto 0; color: #6c776e; font-size: 12px; }
@@ -62,7 +62,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .eyebrow { margin: 0; color: var(--gold); font-size: 10px; font-weight: 800; letter-spacing: .17em; }
 .today-intro .eyebrow { position: relative; z-index: 1; color: #d9e5c9; }
 .intro-content { position: relative; z-index: 1; display: flex; align-items: end; justify-content: space-between; gap: 54px; max-width: 1090px; margin: 20px auto 0; }
-.week-label { margin: 0; color: #d7e5d7; font-size: 13px; font-weight: 700; }
+.week-label { margin: 0; color: #d7e5d7; font-size: 15px; font-weight: 700; }
 .today-intro h1 { max-width: 720px; margin: 12px 0 13px; font: 500 clamp(39px, 5vw, 63px)/1.15 Georgia, "Songti SC", serif; letter-spacing: -.05em; }
 .intro-copy { max-width: 530px; margin: 0; color: #dfe9e0; font: 16px/1.8 Georgia, "Songti SC", serif; }
 .host-card { min-width: 200px; padding: 19px 22px; border: 1px solid rgba(255,255,255,.23); background: rgba(14, 47, 33, .22); backdrop-filter: blur(5px); }
@@ -138,8 +138,8 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .reading-body { display: grid; gap: 30px; padding: 43px 50px 27px; }
 .reading-section { display: grid; gap: 19px; }
 .reading-section:not(:last-child) { padding-bottom: 28px; border-bottom: 1px solid #e7e1d5; }
-.reading-section-heading { display: grid; gap: 8px; }
-.reading-section-heading span { width: max-content; padding: 5px 9px; color: #fffdf8; background: var(--sage-deep); font-size: 11px; font-weight: 800; letter-spacing: .1em; }
+.reading-section-heading { display: grid; gap: 8px; padding-bottom: 14px; border-bottom: 1px solid #ede7da; }
+.reading-section-heading span { width: max-content; padding: 5px 10px; color: #fffdf8; background: var(--sage-deep); font-size: 11px; font-weight: 800; letter-spacing: .1em; }
 .reading-section-heading h3 { margin: 0; color: var(--forest); font: 500 25px/1.25 Georgia, "Songti SC", serif; letter-spacing: -.03em; }
 .reading-section-body p { margin: 0 0 1.15em; color: #293a31; font-family: Georgia, "Songti SC", "STSong", serif; font-size: var(--reader-font-size); line-height: 2.04; letter-spacing: .015em; text-wrap: pretty; }
 .reading-section-body p:last-child { margin-bottom: 0; }
@@ -205,9 +205,12 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 }
 
 @media (max-width: 560px) {
-  .site-nav-inner { min-height: 56px; width: calc(100% - 24px); }
+  .site-nav-inner { min-height: 54px; width: calc(100% - 20px); gap: 10px; }
   .site-brand-mark { width: 28px; height: 28px; font-size: 19px; }
   .site-brand b { font-size: 15px; }
+  .site-brand small { font-size: 7px; letter-spacing: .12em; }
+  .site-nav-links { gap: 2px; }
+  .site-nav-links a { padding: 5px 8px; font-size: 12px; }
   .today-intro { padding: 45px 16px 48px; }
   .today-intro h1 { margin-top: 10px; font-size: 39px; }
   .intro-copy { font-size: 14px; }
@@ -254,7 +257,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-hero--column h1 { margin: 13px auto 0; font: 500 clamp(30px, 4vw, 42px)/1.2 Georgia, "Songti SC", serif; letter-spacing: -.03em; }
 .site-hero--column .site-verse { margin-top: 20px; }
 .site-hero--column .site-verse-text { color: #f3d693; }
-.site-hero-overlay { position: absolute; inset: 0; background: linear-gradient(120deg, rgba(13,29,51,.94) 0%, rgba(22,55,92,.66) 55%, rgba(32,80,136,.62) 100%); }
+.site-hero-overlay { position: absolute; inset: 0; background: linear-gradient(120deg, rgba(13,29,51,.97) 0%, rgba(22,55,92,.86) 46%, rgba(32,80,136,.78) 100%); }
 .site-hero-inner { position: relative; z-index: 1; max-width: 1090px; margin: auto; color: #f3f6fb; }
 .site-hero h1 { margin: 14px 0 16px; font: 500 clamp(34px, 5vw, 64px)/1.16 Georgia, "Songti SC", serif; letter-spacing: -.04em; }
 .site-hero-copy { max-width: 560px; margin: 0; color: #c7d3e6; font: 16px/1.8 Georgia, "Songti SC", serif; }
@@ -285,6 +288,12 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-contact { padding: 30px 34px; border-radius: 12px; background: var(--navy-grad); color: #c7d3e6; }
 .site-contact .site-section-title { color: #f3f6fb; }
 .site-contact p { margin: 6px 0 0; }
+.site-contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 6px; }
+.site-contact-card { display: grid; gap: 8px; padding: 26px 26px 24px; border: 1px solid rgba(255,255,255,.12); border-radius: 14px; background: rgba(255,255,255,.06); }
+.site-contact-icon { display: grid; width: 40px; height: 40px; margin: 0; place-items: center; border-radius: 50%; color: #f3d693; background: rgba(233,200,120,.12); font-size: 18px; }
+.site-contact-card b { color: #f3f6fb; font: 600 18px/1.3 Georgia, "Songti SC", serif; }
+.site-contact-card span { color: #c7d3e6; font: 14px/1.7 Georgia, "Songti SC", serif; }
+.site-contact-welcome { margin: 20px 0 0; color: #9fb0cc; font: 13px/1.8 Georgia, "Songti SC", serif; text-align: center; }
 
 .site-placeholder { display: grid; min-height: 70vh; place-items: center; padding: 60px 24px; }
 .site-placeholder-inner { max-width: 560px; text-align: center; }
@@ -325,7 +334,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-block-head h2 { color: inherit; }
 .site-block--paper .site-block-copy { color: #4a5a72; }
 .site-block-head .site-verse { margin: 20px 0 0; text-align: left; }
-.site-block-logo { display: block; width: 86px; height: 86px; margin: 0 auto 24px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+.site-block-logo { display: block; width: 112px; height: 112px; margin: 0 auto 24px; border-radius: 14px; box-shadow: 0 14px 36px rgba(0,0,0,.4); }
 .site-block-inner--left .site-verse { margin-left: 0; text-align: left; }
 
 /* 区块序号徽标（学习灵修页步骤圆点语言） */
@@ -360,7 +369,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-subcard-photo svg { position: relative; z-index: 1; opacity: .98; }
 .site-subcard b { padding: 0 22px; color: #205088; font: 600 17px/1.4 Georgia, "Songti SC", serif; }
 .site-subcard .site-verse { margin: 0 22px; text-align: left; }
-.site-subcard .site-verse-text { color: #5a4a2a; font-size: 14px; line-height: 1.9; }
+.site-subcard .site-verse-text { color: #5a4a2a; font-size: 14px; line-height: 1.9; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .site-subcard .site-verse footer { margin-top: 7px; color: #8a7a55; font-size: 11px; }
 .site-subgrid--on-dark .site-subcard { border-color: rgba(255,255,255,.14); background: rgba(255,255,255,.055); }
 .site-subgrid--on-dark .site-subcard:hover { box-shadow: 0 12px 28px rgba(0,0,0,.35); }
@@ -404,8 +413,10 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 
 /* ===== 活动记录流（专栏页） ===== */
 .site-feed { display: grid; gap: 30px; }
-.site-feed-empty { display: grid; gap: 12px; place-items: center; min-height: 180px; padding: 34px 20px; border: 1px dashed #cfd8e4; border-radius: 12px; color: #5a6b84; text-align: center; background: #fbfcfd; }
-.site-feed-empty p { margin: 0; font: 15px/1.8 Georgia, "Songti SC", serif; }
+.site-feed-empty { display: grid; gap: 14px; place-items: center; min-height: 180px; padding: 38px 24px; border: 1px dashed #cfd8e4; border-radius: 14px; color: #5a6b84; text-align: center; background: #fbfcfd; }
+.site-feed-empty p { margin: 0; max-width: 420px; font: 15px/1.85 Georgia, "Songti SC", serif; }
+.site-feed-empty--bs { padding: 52px 24px; }
+.site-feed-empty-icon { opacity: .85; }
 .site-feed-spinner { width: 26px; height: 26px; border: 3px solid #dbe4ee; border-top-color: #205088; border-radius: 50%; animation: spin .85s linear infinite; }
 .site-feed-item { overflow: hidden; border: 1px solid #e4e8f0; border-radius: 16px; background: #fff; box-shadow: 0 10px 30px rgba(22,55,92,.06); }
 .site-feed-head { display: flex; align-items: baseline; gap: 14px; padding: 22px 26px 6px; }
@@ -470,6 +481,9 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-membership-head .eyebrow { color: #e9c878; }
 .site-membership-head h2 { margin: 10px 0 0; color: #f3f6fb; font: 600 26px/1.3 Georgia, "Songti SC", serif; }
 .site-membership-head p:last-child { margin: 14px 0 0; color: #c7d3e6; font: 15px/1.9 Georgia, "Songti SC", serif; }
+.site-membership-list { display: grid; gap: 12px; margin: 22px 0 0; padding: 0; list-style: none; }
+.site-membership-list li { display: flex; align-items: center; gap: 12px; color: #e6ecf5; font: 15px/1.7 Georgia, "Songti SC", serif; }
+.site-membership-list span { display: grid; flex: 0 0 auto; width: 32px; height: 32px; place-items: center; border: 1px solid rgba(233,200,120,.45); border-radius: 50%; color: #f3d693; font-size: 13px; }
 .site-membership .site-form { padding: 22px; border-radius: 12px; background: #fff; }
 .site-membership .site-form label { color: #205088; }
 

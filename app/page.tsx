@@ -93,11 +93,11 @@ function DarkBlock({
 
 export default function Home() {
   const accountRows: { label: string; value: string; accent?: boolean }[] = [
-    { label: "账户名稱", value: ACCOUNT.name || "待教會確認" },
-    { label: "開戶銀行", value: ACCOUNT.bank || "待教會確認" },
-    { label: "銀行賬號", value: ACCOUNT.number || "待教會確認", accent: true },
-    { label: "SWIFT / BIC", value: ACCOUNT.swift || "待教會確認" },
-    { label: "幣種", value: ACCOUNT.currency || "待教會確認" },
+    { label: "账户名称", value: ACCOUNT.name || "待教会确认" },
+    { label: "开户银行", value: ACCOUNT.bank || "待教会确认" },
+    { label: "银行账号", value: ACCOUNT.number || "待教会确认", accent: true },
+    { label: "SWIFT / BIC", value: ACCOUNT.swift || "待教会确认" },
+    { label: "币种", value: ACCOUNT.currency || "待教会确认" },
   ];
 
   return (
@@ -165,13 +165,13 @@ export default function Home() {
         <div className="site-block-inner site-block-inner--full">
           <div className="site-block-head">
             <span className="site-block-index">03</span>
-            <p className="eyebrow">BIBLE STUDY · 查經公告</p>
-            <h2>查經公告</h2>
+            <p className="eyebrow">BIBLE STUDY · 查经公告</p>
+            <h2>查经公告</h2>
             <blockquote className="site-verse site-verse--paper">
               <p className="site-verse-text">「{VERSE_COLUMNS["bible-study"].text}」</p>
               <footer>——{VERSE_COLUMNS["bible-study"].ref}</footer>
             </blockquote>
-            <p className="site-block-copy">每週五查經，主題、查考經文、主持人、時間與地點在此公布。</p>
+            <p className="site-block-copy">每周五查经，主题、查考经文、主持人、时间与地点在此公布。</p>
           </div>
           <BibleStudyList />
         </div>
@@ -204,13 +204,13 @@ export default function Home() {
       <section className="site-block site-block--gold">
         <div className="site-block-inner site-block-inner--center">
           <span className="site-block-index">05</span>
-          <p className="eyebrow">GIVING · 奉獻</p>
-          <h2>線上奉獻</h2>
+          <p className="eyebrow">GIVING · 奉献</p>
+          <h2>线上奉献</h2>
           <blockquote className="site-verse site-verse--paper">
             <p className="site-verse-text">「{VERSE_COLUMNS.giving.text}」</p>
             <footer>——{VERSE_COLUMNS.giving.ref}</footer>
           </blockquote>
-          <p className="site-block-copy">日常奉獻、建堂奉獻與特別事工奉獻，支持教會各項服侍。匯款時請註明用途。</p>
+          <p className="site-block-copy">日常奉献、建堂奉献与特别事工奉献，支持教会各项服侍。汇款时请注明用途。</p>
           <div className="site-giving" style={{ marginTop: 12, maxWidth: 560 }}>
             <dl className="site-givcard">
               {accountRows.map((row) => (
@@ -229,25 +229,25 @@ export default function Home() {
         <div className="site-block-inner site-block-inner--full">
           <div className="site-block-head">
             <span className="site-block-index">06</span>
-            <p className="eyebrow">CARE · 愛心窗口</p>
-            <h2>愛心窗口</h2>
+            <p className="eyebrow">CARE · 爱心窗口</p>
+            <h2>爱心窗口</h2>
             <blockquote className="site-verse site-verse--paper">
               <p className="site-verse-text">「{VERSE_COLUMNS.care.text}」</p>
               <footer>——{VERSE_COLUMNS.care.ref}</footer>
             </blockquote>
-            <p className="site-block-copy">有些話不方便當面說、不方便線上說，就在這裡寫下來。教會同工會以溫柔、保密的心聆聽，並可為你遠程輔導。</p>
+            <p className="site-block-copy">有些话不方便当面说、不方便线上说，就在这里写下来。教会同工会以温柔、保密的心聆听，并可为你远程辅导。</p>
           </div>
           <div className="site-care-grid">
             <div className="site-care-copy">
-              <h3>可以說些什麼？</h3>
+              <h3>可以说些什么？</h3>
               <ul className="site-care-list">
-                <li>人際關係、家庭、子女教育上的困惑</li>
-                <li>信仰上的疑問與掙扎</li>
-                <li>情緒壓力，需要有人聆聽與代禱</li>
-                <li>任何想讓教會知道、卻不便公開的事</li>
+                <li>人际关系、家庭、子女教育上的困惑</li>
+                <li>信仰上的疑问与挣扎</li>
+                <li>情绪压力，需要有人聆听与代祷</li>
+                <li>任何想让教会知道、却不便公开的事</li>
               </ul>
               <p className="site-care-promise">
-                你的傾訴<b>只會被教會同工看見</b>，不會公開。留下聯繫方式，同工可以為你遠程輔導；不留下也沒有關係，我們依然為你禱告。
+                你的倾诉<b>只会被教会同工看见</b>，不会公开。留下联系方式，同工可以为你远程辅导；不留下也没有关系，我们依然为你祷告。
               </p>
             </div>
             <div className="site-care-form">
@@ -276,10 +276,26 @@ export default function Home() {
       </section>
 
       {/* 10. 聚会时间与联系 */}
-      <section className="site-section site-contact">
+      <section className="site-section">
         <h2 className="site-section-title">聚会时间与联系</h2>
-        <p>主日敬拜 · 每周日 ｜ 查经 · 每周 Zoom 同步</p>
-        <p>欢迎你走进利河伯，在宽阔之地得着安息。</p>
+        <div className="site-contact-grid">
+          <div className="site-contact-card">
+            <p className="site-contact-icon" aria-hidden="true">☀</p>
+            <b>主日敬拜</b>
+            <span>每周日 · 欢迎你一同敬拜</span>
+          </div>
+          <div className="site-contact-card">
+            <p className="site-contact-icon" aria-hidden="true">✎</p>
+            <b>每周查经</b>
+            <span>每周五 · Zoom 同步</span>
+          </div>
+          <div className="site-contact-card">
+            <p className="site-contact-icon" aria-hidden="true">♡</p>
+            <b>周间探访</b>
+            <span>同工安排 · 关怀问候</span>
+          </div>
+        </div>
+        <p className="site-contact-welcome">欢迎你走进利河伯，在宽阔之地得着安息。</p>
       </section>
     </main>
   );
