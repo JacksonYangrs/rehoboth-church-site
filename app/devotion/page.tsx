@@ -40,7 +40,7 @@ type ReadingState = {
 const PLAN_START_MONTH = 0;
 const PLAN_START_DAY = 1;
 const DAY = 24 * 60 * 60 * 1000;
-const CYCLE_DAYS = 52 * 7;
+const TOTAL_WEEKS = 52; // 全年计划共 52 周（每周 6 天 + 主日休息）
 const BIBLE_READER_URL = "https://jacksonyangrs.github.io/bible-cuv-phonetic/";
 // 静态部署在 GitHub Pages 子路径下，公共资源需带上 basePath 前缀。
 const ASSET_PREFIX = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -79,18 +79,28 @@ function formatDateKey(date: Date) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 }
 
+// 年度计划：每年 1 月 1 日开始，每周日（主日）休息，每周读 6 天。
+// date -> 计划索引：自 1 月 1 日（含）数到当天的非周日天数。
 function getSchedule(date: Date) {
   const start = new Date(date.getFullYear(), PLAN_START_MONTH, PLAN_START_DAY);
-  const current = new Date(date);
   start.setHours(0, 0, 0, 0);
+  const current = new Date(date);
   current.setHours(0, 0, 0, 0);
-  const elapsed = Math.floor((current.getTime() - start.getTime()) / DAY);
-  const index = ((elapsed % CYCLE_DAYS) + CYCLE_DAYS) % CYCLE_DAYS;
-  const week = Math.floor(index / 7) + 1;
-  const day = (index % 7) + 1;
+  const isRestDay = current.getDay() === 0; // 主日（周日）休息
+
+  let count = 0;
+  let cursor = new Date(start);
+  while (cursor.getTime() <= current.getTime()) {
+    if (cursor.getDay() !== 0) count++; // 跳过主日
+    cursor = new Date(cursor.getTime() + DAY);
+  }
+  let index = count - 1;
+  if (index < 0) index = 0; // 1 月 1 日恰逢主日时，周一为第 1 篇
+  const week = Math.floor(index / 6) + 1;
+  const day = (index % 6) + 1;
   const dateKey = formatDateKey(current);
   const dateLabel = `${current.getFullYear()} 年 ${current.getMonth() + 1} 月 ${current.getDate()} 日`;
-  return { week, day, dateKey, dateLabel };
+  return { week, day, dateKey, dateLabel, isRestDay };
 }
 
 function addDays(date: Date, amount: number) {
@@ -115,6 +125,7 @@ function isSameDate(left: Date, right: Date) {
 }
 
 function getDayState(schedule: Schedule, today: Date, progress: Progress, dayRecords: DayRecords) {
+  if (schedule.isRestDay) return "rest"; // 主日休息，不安排灵修
   const completed = progress[schedule.dateKey]?.length ?? 0;
   const skipped = Boolean(dayRecords[schedule.dateKey]?.skipped);
   const isPast = startOfDay(new Date(schedule.dateKey)).getTime() < startOfDay(today).getTime();
@@ -132,6 +143,7 @@ function renderReadingBlock(block: ReadingBlock, key: string) {
   if (block.type === "table") {
     return (
       <div className="devotion-table-wrap" key={key}>
+        <span className="devotion-table-hint">← 左右滑动查看完整表格 →</span>
         <table className="devotion-table">
           <tbody>
             {block.rows.map((row, rowIndex) => (
@@ -186,6 +198,11 @@ export default function DevotionPage() {
 
   useEffect(() => {
     const controller = new AbortController();
+    // 主日休息 / 超过 52 周计划之外：不加载篇目，显示复习与祷告日
+    if (schedule.isRestDay || schedule.week > TOTAL_WEEKS) {
+      setReadingState({ key: readingKey, reading: null, status: "ready" });
+      return () => controller.abort();
+    }
     void fetch(`${ASSET_PREFIX}/devotion/week-${schedule.week}.json`, { signal: controller.signal })
       .then((response) => {
         if (!response.ok) throw new Error("Unable to load devotion");
@@ -200,7 +217,7 @@ export default function DevotionPage() {
         setReadingState({ key: readingKey, reading: null, status: "error" });
       });
     return () => controller.abort();
-  }, [readingKey, schedule.day, schedule.week]);
+  }, [readingKey, schedule.day, schedule.week, schedule.isRestDay]);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE.fontSize, String(fontSize));
@@ -266,9 +283,12 @@ export default function DevotionPage() {
         <p className="eyebrow">TODAY&apos;S DEVOTION · {schedule.dateLabel}</p>
         <div className="intro-content">
           <div>
-            <p className="week-label">{isTodaySelected ? "今天" : "补读"} · 第 {schedule.week} 周 · 第 {schedule.day === 7 ? "6、7" : schedule.day} 日</p>
-            <h1>{isLoading ? "正在打开今天的灵修…" : reading?.title ?? "复习与祷告日"}</h1>
-            <p className="intro-copy">年度计划从每年 1 月 1 日开始。打开先看今天，也可以从日历补上过去没有完成的灵修。</p>
+            <p className="week-label">
+              {isTodaySelected ? "今天" : "补读"} · 第 {schedule.week} 周 · 第 {schedule.day} 日
+              {schedule.isRestDay ? " · 主日休息" : ""}
+            </p>
+            <h1>{isLoading ? "正在打开今天的灵修…" : reading?.title ?? (schedule.isRestDay ? "主日 · 休息与祷告" : "复习与祷告日")}</h1>
+            <p className="intro-copy">年度计划从每年 1 月 1 日开始，每周读 6 天、主日休息。打开先看今天，也可以从日历补上过去没有完成的灵修。</p>
           </div>
           <div className="host-card">
             <span>本周主持人</span>
@@ -310,10 +330,11 @@ export default function DevotionPage() {
             <button type="button" onClick={() => setSelectedDate(today)} disabled={isTodaySelected}>今天</button>
           </div>
           <p className="calendar-advice">
+            {currentDayState === "rest" && "主日休息：不安排灵修，愿你在敬拜中得安息。"}
             {currentDayState === "done" && "这一天已完成，可继续复习或查看记录。"}
             {currentDayState === "skipped" && "这一天已记为未领修，不计入待补提醒。"}
             {currentDayState === "missed" && "这一天还没有完成，建议今天补读后再进入今日内容。"}
-            {currentDayState === "open" && `建议阅读第 ${schedule.week} 周第 ${schedule.day === 7 ? "6、7" : schedule.day} 日${reading?.scripture ? `：${reading.scripture}` : "。"} `}
+            {currentDayState === "open" && `建议阅读第 ${schedule.week} 周第 ${schedule.day} 日${reading?.scripture ? `：${reading.scripture}` : "。"}`}
           </p>
           <div className="calendar-grid">
             {monthDates.map((date) => {
@@ -329,7 +350,7 @@ export default function DevotionPage() {
                   aria-label={`${item.dateLabel}，第 ${item.week} 周第 ${item.day} 日`}
                 >
                   <span>{date.getDate()}</span>
-                  <small>{state === "done" ? "✓" : state === "skipped" ? "休" : state === "missed" ? "补" : ""}</small>
+                  <small>{state === "done" ? "✓" : state === "rest" ? "休" : state === "skipped" ? "停" : state === "missed" ? "补" : ""}</small>
                 </button>
               );
             })}
@@ -338,6 +359,7 @@ export default function DevotionPage() {
             <span><i className="legend-done"></i>已完成</span>
             <span><i className="legend-missed"></i>待补</span>
             <span><i className="legend-skipped"></i>未领修</span>
+            <span><i className="legend-rest"></i>主日休息</span>
           </div>
           <div className="calendar-actions">
             <button type="button" className="soft-button" onClick={toggleSkipped}>

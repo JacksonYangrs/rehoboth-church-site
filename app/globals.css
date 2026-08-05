@@ -103,12 +103,16 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .calendar-grid .done { color: #fff; background: var(--sage-deep); }
 .calendar-grid .done small { color: #e9f2e8; }
 .calendar-grid .missed { color: #6a4b1d; background: #f2dfb9; }
+.calendar-grid .rest { color: #8f9aa6; background: #eef1f5; }
+.calendar-grid .rest small { color: #9aa5b0; }
 .calendar-grid .skipped { color: #f8f5ec; background: #6d746f; }
 .calendar-grid .skipped small { color: #f8f5ec; }
 .calendar-legend { display: flex; flex-wrap: wrap; gap: 10px 13px; margin-top: 13px; color: var(--muted); font-size: 10px; }
 .calendar-legend span { display: inline-flex; align-items: center; gap: 5px; }
 .calendar-legend i { display: inline-block; width: 9px; height: 9px; }
 .legend-done { background: var(--sage-deep); }
+.legend-missed { background: #f2dfb9; }
+.legend-rest { background: #eef1f5; border: 1px solid #d4dbe4; }
 .legend-missed { background: #f2dfb9; }
 .legend-skipped { background: #6d746f; }
 .calendar-actions { display: grid; gap: 9px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
@@ -144,7 +148,11 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .reading-section-body p { margin: 0 0 1.15em; color: #293a31; font-family: Georgia, "Songti SC", "STSong", serif; font-size: var(--reader-font-size); line-height: 2.04; letter-spacing: .015em; text-wrap: pretty; }
 .reading-section-body p:last-child { margin-bottom: 0; }
 .reading-section-body .section-line { margin-top: 1.8em; color: var(--forest); font-weight: 700; }
-.devotion-table-wrap { max-width: 100%; margin: 18px 0 22px; overflow-x: auto; border: 1px solid #d7d2c7; background: #fbf8ef; }
+.devotion-table-wrap { position: relative; max-width: 100%; margin: 18px 0 22px; overflow-x: auto; border: 1px solid #d7d2c7; background: #fbf8ef; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: #b9c2b4 transparent; }
+.devotion-table-wrap::-webkit-scrollbar { height: 7px; }
+.devotion-table-wrap::-webkit-scrollbar-track { background: #efe9dc; }
+.devotion-table-wrap::-webkit-scrollbar-thumb { border-radius: 4px; background: #b9c2b4; }
+.devotion-table-hint { display: none; margin-bottom: 7px; color: #8a8f83; font-size: 11px; letter-spacing: .04em; text-align: right; }
 .devotion-table { width: 100%; min-width: 420px; border-collapse: collapse; font-family: Georgia, "Songti SC", "STSong", serif; font-size: clamp(14px, calc(var(--reader-font-size) - 3px), 18px); line-height: 1.65; }
 .devotion-table td { min-width: 118px; padding: 11px 12px; border: 1px solid #d7d2c7; color: #2d3d33; vertical-align: top; background: #fffdf8; }
 .devotion-table tr:first-child td { color: var(--forest); background: #edf4ec; font-weight: 700; }
@@ -229,6 +237,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
   .reading-section-heading h3 { font-size: 23px; }
   .reading-section-body p { line-height: 1.94; }
   .devotion-table-wrap { margin-right: -7px; margin-left: -7px; }
+  .devotion-table-hint { display: block; } /* 移动端显示滑动提示 */
   .devotion-table { min-width: 360px; }
   .devotion-table td { min-width: 105px; padding: 10px; }
   .reading-complete { display: grid; margin: 5px 23px 21px; }
