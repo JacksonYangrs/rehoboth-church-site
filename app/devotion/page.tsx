@@ -292,7 +292,7 @@ export default function DevotionPage() {
           </div>
           <div className="host-card">
             <span>本周主持人</span>
-            <b>苏牧师</b>
+            <b>待公布</b>
             <small>领读摘要 · 引导分享 · 收集代祷</small>
           </div>
         </div>
