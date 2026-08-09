@@ -146,7 +146,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .reading-section-heading { display: grid; gap: 8px; padding-bottom: 14px; border-bottom: 1px solid #ede7da; }
 .reading-section-heading span { width: max-content; padding: 5px 10px; color: #fffdf8; background: var(--sage-deep); font-size: 11px; font-weight: 800; letter-spacing: .1em; }
 .reading-section-heading h3 { margin: 0; color: var(--forest); font: 500 25px/1.25 Georgia, "Songti SC", serif; letter-spacing: -.03em; }
-.reading-section-body p { margin: 0 0 1.15em; color: #293a31; font-family: Georgia, "Songti SC", "STSong", serif; font-size: var(--reader-font-size); line-height: 2.04; letter-spacing: .015em; text-wrap: pretty; overflow-wrap: anywhere; }
+.reading-section-body p { margin: 0 0 1.15em; color: #293a31; font-family: Georgia, "Songti SC", "STSong", serif; font-size: var(--reader-font-size); line-height: 2.04; letter-spacing: .015em; text-wrap: pretty; overflow-wrap: anywhere; word-break: break-word; }
 .reading-section-body p:last-child { margin-bottom: 0; }
 .reading-section-body .section-line { margin-top: 1.8em; color: var(--forest); font-weight: 700; }
 .devotion-table-wrap { position: relative; max-width: 100%; margin: 18px 0 22px; overflow-x: auto; border: 1px solid #d7d2c7; background: #fbf8ef; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: #b9c2b4 transparent; }

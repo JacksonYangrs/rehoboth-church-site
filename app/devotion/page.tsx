@@ -397,7 +397,7 @@ export default function DevotionPage() {
               </header>
               <div className="reading-body">
                 <ReadingSection blocks={reading.sections.summary} label="第一段 · 摘要" />
-                <ReadingSection blocks={reading.sections.thought} label="第二段 · 思想" />
+                <ReadingSection blocks={reading.sections.thought} label="第二段 · 默想" />
                 <ReadingSection blocks={reading.sections.practice} label="第三段 · 与主同行" />
               </div>
               <div className="reading-complete">
@@ -416,22 +416,6 @@ export default function DevotionPage() {
               <button type="button" className="primary-button" onClick={() => completeStep(2)}>完成复习</button>
             </article>
           )}
-
-          <section className="sharing-card" id="sharing">
-            <button className="sharing-heading" type="button" onClick={() => setShowGuide((shown) => !shown)} aria-expanded={showGuide}>
-              <span><p className="eyebrow">SHARE & RESPOND</p><h2>思想与同行分享</h2></span>
-              <span className="expand-icon">{showGuide ? "−" : "+"}</span>
-            </button>
-            {showGuide && <div className="sharing-content">
-              <div className="prompt-panel">
-                <h3>可由主持人选读</h3>
-                {discussionPrompts.length > 0 ? <ul>{discussionPrompts.map((prompt) => <li key={prompt}>{prompt}</li>)}</ul> : <p>今天的经文带给你什么提醒？</p>}
-              </div>
-              <label>我今天的思想与领受<textarea value={journal.reflection} onChange={(event) => updateJournal("reflection", event.target.value)} placeholder="写下一句让你停下来的话，或一个愿意分享的领受…" /></label>
-              <label>我要同行的一步<textarea value={journal.action} onChange={(event) => updateJournal("action", event.target.value)} placeholder="这周我愿意具体怎样回应神？" /></label>
-              <button type="button" className="soft-button" onClick={() => completeStep(4)}>记录同行行动</button>
-            </div>}
-          </section>
 
           <section className="prayer-card">
             <div><p className="eyebrow">PRAY TOGETHER</p><h2>代祷事项</h2><p>将每个人的需要带到主面前；这些文字只保存在你的这台设备。</p></div>
