@@ -141,7 +141,8 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .reading-header blockquote { margin: 17px 0 0; padding: 13px 16px; border-left: 2px solid #dfc781; color: #f8f2dc; background: rgba(10,39,26,.18); font: 16px/1.7 Georgia, "Songti SC", serif; }
 .reading-header blockquote span { display: block; margin-bottom: 4px; }
 .reading-body { display: grid; gap: 30px; padding: 43px 50px 27px; }
-.reading-section { display: grid; gap: 19px; }
+.reading-section { display: grid; gap: 19px; min-width: 0; }
+.reading-section-body { min-width: 0; }
 .reading-section:not(:last-child) { padding-bottom: 28px; border-bottom: 1px solid #e7e1d5; }
 .reading-section-heading { display: grid; gap: 8px; padding-bottom: 14px; border-bottom: 1px solid #ede7da; }
 .reading-section-heading span { width: max-content; padding: 5px 10px; color: #fffdf8; background: var(--sage-deep); font-size: 11px; font-weight: 800; letter-spacing: .1em; }
