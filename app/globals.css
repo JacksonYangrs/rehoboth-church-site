@@ -280,7 +280,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-btn-ghost { color: #f3f6fb; border: 1px solid rgba(255,255,255,.4); }
 .site-btn-ghost:hover { background: rgba(255,255,255,.1); }
 
-.site-section { width: min(1090px, calc(100% - 48px)); margin: 56px auto; }
+.site-section { width: min(1090px, calc(100% - 48px)); margin: 40px auto; }
 .site-section-title { margin: 0 0 22px; font: 500 26px Georgia, "Songti SC", serif; letter-spacing: -.03em; color: #205088; }
 
 .site-cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 30px 34px; border: 1px solid #e2e6ee; border-left: 4px solid #e9c878; background: #fff; border-radius: 14px; box-shadow: 0 10px 30px rgba(22,55,92,.06); }
@@ -322,15 +322,15 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 }
 
 /* ===== 首页长滚动布局：一栏目一宽幅区块 ===== */
-.site-block { position: relative; display: grid; align-items: center; padding: 76px max(32px, calc((100vw - 1090px) / 2)); }
-.site-block--photo { min-height: 480px; background-size: cover; background-position: center; background-color: var(--blue); color: #f3f6fb; }
+.site-block { position: relative; display: grid; align-items: center; padding: 56px max(32px, calc((100vw - 1090px) / 2)); }
+.site-block--photo { min-height: 380px; background-size: cover; background-position: center; background-color: var(--blue); color: #f3f6fb; }
 .site-block-overlay { position: absolute; inset: 0; background: linear-gradient(105deg, rgba(13,29,51,.95) 0%, rgba(22,55,92,.78) 46%, rgba(32,80,136,.58) 100%); }
 .site-block-inner { position: relative; z-index: 1; width: min(1090px, 100%); margin: auto; }
 .site-block-inner--center { text-align: center; }
 .site-block-inner--center .site-verse, .site-block-inner--center .site-block-copy { margin-left: auto; margin-right: auto; }
-.site-block h2 { margin: 13px 0 0; font: 500 clamp(30px, 4vw, 44px)/1.2 Georgia, "Songti SC", serif; letter-spacing: -.03em; }
-.site-block-copy { max-width: 620px; margin: 16px 0 0; color: #c7d3e6; font: 15px/1.85 Georgia, "Songti SC", serif; }
-.site-block-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.site-block h2 { margin: 0; font: 500 clamp(28px, 3.6vw, 40px)/1.2 Georgia, "Songti SC", serif; letter-spacing: -.03em; }
+.site-block-copy { max-width: 620px; margin: 14px 0 0; color: #c7d3e6; font: 15px/1.85 Georgia, "Songti SC", serif; }
+.site-block-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
 .site-block-inner--center .site-block-actions { justify-content: center; }
 
 .site-block--dark { color: #f3f6fb; background: var(--navy-grad); }
@@ -346,13 +346,10 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-block-head { max-width: 700px; }
 .site-block-head h2 { color: inherit; }
 .site-block--paper .site-block-copy { color: #4a5a72; }
-.site-block-head .site-verse { margin: 20px 0 0; text-align: left; }
-.site-block-logo { display: block; width: 112px; height: 112px; margin: 0 auto 24px; border-radius: 14px; box-shadow: 0 14px 36px rgba(0,0,0,.4); }
-.site-block-inner--left .site-verse { margin-left: 0; text-align: left; }
+.site-block-head .site-verse { margin: 16px 0 0; text-align: left; }
+.site-block-logo { display: block; width: 96px; height: 96px; margin: 0 auto 20px; border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,.4); }
 
-/* 区块序号徽标（学习灵修页步骤圆点语言） */
-.site-block-index { display: inline-grid; width: 36px; height: 36px; place-items: center; margin-bottom: 14px; border: 1px solid rgba(233,200,120,.6); border-radius: 50%; color: var(--gold-light); font: 800 11px/1 Georgia, "Songti SC", serif; letter-spacing: .04em; }
-.site-block--paper .site-block-index, .site-block--gold .site-block-index { border-color: rgba(182,135,60,.55); color: var(--gold); }
+/* 区块序号徽标已废弃（重复结构去重） */
 
 /* ===== 栏目页头：标题 + 经文寄语（书法感） ===== */
 .site-page-head { padding: 58px max(32px, calc((100vw - 1090px) / 2)) 44px; color: #f3f6fb; background: var(--navy-grad); text-align: center; }
