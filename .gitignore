@@ -46,3 +46,6 @@ next-env.d.ts
 
 # 本地助手工作记录，不随仓库发布
 /.workbuddy/
+
+# 每日灵修只读归档快照（含版权数据 daily-walk.json），不随仓库发布
+/archive/
