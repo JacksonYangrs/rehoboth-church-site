@@ -393,7 +393,6 @@ export default function DevotionPage() {
                   <a className="scripture-link" href={bibleReaderHref}>打开圣经电子书读经</a>
                   <button type="button" onClick={() => completeStep(1)}>我已读完经文</button>
                 </div>
-                {reading.keyVerse && <blockquote><span>钥节</span>{reading.keyVerse}</blockquote>}
               </header>
               <div className="reading-body">
                 <ReadingSection blocks={reading.sections.summary} label="第一段 · 摘要" />
@@ -404,6 +403,21 @@ export default function DevotionPage() {
                 <span>读完原文后，带着所领受的进入分享。</span>
                 <button type="button" className="primary-button" onClick={() => completeStep(2)}>{completedSteps.includes(2) ? "已完成阅读 ✓" : "完成今日阅读"}</button>
               </div>
+              {reading.keyVerse && (
+                <section className="key-verse-card">
+                  <p className="eyebrow">TODAY&apos;S KEY VERSE · 今日金句</p>
+                  <h3>今日金句</h3>
+                  <p className="key-verse-text">{reading.keyVerse}</p>
+                  <a
+                    className="soft-button"
+                    href={`${BIBLE_READER_URL}?ref=${encodeURIComponent(reading.keyVerse)}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    打开圣经阅读金句
+                  </a>
+                </section>
+              )}
               <footer className="source-credit">内容：苏颖智《每日与主同行》 · 资料来源：WellsOfGrace.com</footer>
             </article>
           )}
