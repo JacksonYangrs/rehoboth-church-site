@@ -72,7 +72,7 @@ function readStored<T>(key: string, fallback: T): T {
 }
 
 function clampFontSize(value: number) {
-  return Math.max(18, Math.min(28, value));
+  return Math.max(20, Math.min(30, value));
 }
 
 function formatDateKey(date: Date) {
@@ -181,7 +181,11 @@ export default function DevotionPage() {
   const [today] = useState(() => startOfDay(new Date()));
   const [selectedDate, setSelectedDate] = useState(() => startOfDay(new Date()));
   const [readingState, setReadingState] = useState<ReadingState>({ key: "", reading: null, status: "loading" });
-  const [fontSize, setFontSize] = useState(() => clampFontSize(readStored(STORAGE.fontSize, 21)));
+  const [fontSize, setFontSize] = useState(() => {
+    // 旧默认（≤21px）统一提升到新默认 23px，解决阅读费眼
+    const stored = readStored<number>(STORAGE.fontSize, 23);
+    return clampFontSize(stored <= 21 ? 23 : stored);
+  });
   const [progress, setProgress] = useState<Progress>(() => readStored(STORAGE.progress, {}));
   const [journals, setJournals] = useState<Journals>(() => readStored(STORAGE.journals, {}));
   const [dayRecords, setDayRecords] = useState<DayRecords>(() => readStored(STORAGE.dayRecords, {}));
