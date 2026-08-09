@@ -42,6 +42,51 @@ const PLAN_START_DAY = 1;
 const DAY = 24 * 60 * 60 * 1000;
 const TOTAL_WEEKS = 52; // 全年计划共 52 周（每周 6 天 + 主日休息）
 const BIBLE_READER_URL = "https://jacksonyangrs.github.io/bible-cuv-phonetic/";
+// 圣经书卷缩写 -> 完整名（与阅读器 ref 解析一致）
+const BOOK_ABBR: Record<string, string> = {
+  创: "创世记", 出: "出埃及记", 利: "利未记", 民: "民数记", 申: "申命记",
+  书: "约书亚记", 士: "士师记", 得: "路得记", 撒上: "撒母耳记上", 撒下: "撒母耳记下",
+  王上: "列王纪上", 王下: "列王纪下", 代上: "历代志上", 代下: "历代志下",
+  拉: "以斯拉记", 尼: "尼希米记", 斯: "以斯帖记", 伯: "约伯记", 诗: "诗篇",
+  箴: "箴言", 传: "传道书", 歌: "雅歌", 赛: "以赛亚书", 耶: "耶利米书",
+  哀: "耶利米哀歌", 结: "以西结书", 但: "但以理书", 何: "何西阿书", 珥: "约珥书",
+  摩: "阿摩司书", 俄: "俄巴底亚书", 拿: "约拿书", 弥: "弥迦书", 鸿: "那鸿书",
+  哈: "哈巴谷书", 番: "西番雅书", 该: "哈该书", 亚: "撒迦利亚书", 玛: "玛拉基书",
+  太: "马太福音", 可: "马可福音", 路: "路加福音", 约: "约翰福音", 徒: "使徒行传",
+  罗: "罗马书", 林前: "哥林多前书", 林后: "哥林多后书", 加: "加拉太书",
+  弗: "以弗所书", 腓: "腓立比书", 西: "歌罗西书", 帖前: "帖撒罗尼迦前书",
+  帖后: "帖撒罗尼迦后书", 提前: "提摩太前书", 提后: "提摩太后书", 多: "提多书",
+  门: "腓利门书", 来: "希伯来书", 雅: "雅各书", 彼前: "彼得前书", 彼后: "彼得后书",
+  约壹: "约翰一书", 约贰: "约翰二书", 约叁: "约翰三书", 犹: "犹大书", 启: "启示录",
+};
+const CN_NUM: Record<string, number> = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10, 廿: 20, 卅: 30, 零: 0 };
+function cnToNum(s: string): number {
+  if (!s) return 0;
+  if (/^[十廿卅零]$/.test(s)) return CN_NUM[s] ?? 0;
+  const m = s.match(/^([一二三四五六七八九])?([十廿卅])([一二三四五六七八九])?$/);
+  if (m) return (m[1] ? CN_NUM[m[1]] ?? 0 : 1) * (CN_NUM[m[2]] ?? 0) + (m[3] ? CN_NUM[m[3]] ?? 0 : 0);
+  // 连续数字：如"一二"=12、"一零三"=103
+  let total = 0;
+  for (const ch of s) {
+    if (ch === "零") { total *= 10; continue; }
+    total = total * 10 + (CN_NUM[ch] ?? 0);
+  }
+  return total || 0;
+}
+// 「创一至二章」「箴言三章」等缩写经文范围 -> 完整书卷名+起始章（阅读器 ref）
+// 按缩写长度降序匹配（"约壹"先于"约"），并容忍"帖前书"这类"书"字
+function scriptureRef(scripture: string): string | null {
+  const abbrs = Object.keys(BOOK_ABBR).sort((a, b) => b.length - a.length);
+  for (const abbr of abbrs) {
+    if (!scripture.startsWith(abbr)) continue;
+    const rest = scripture.slice(abbr.length);
+    const m = rest.match(/^(?:书)?([一二三四五六七八九十廿卅零]+)/);
+    if (!m) return null;
+    if (!cnToNum(m[1])) return null;
+    return `${BOOK_ABBR[abbr]}${m[1]}章`;
+  }
+  return null;
+}
 // 静态部署在 GitHub Pages 子路径下，公共资源需带上 basePath 前缀。
 const ASSET_PREFIX = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const EMPTY_JOURNAL: Journal = { reflection: "", action: "", prayer: "" };
@@ -279,7 +324,6 @@ export default function DevotionPage() {
 
   const readerStyle = { "--reader-font-size": `${fontSize}px` } as CSSProperties;
   const allStepsDone = completedSteps.length === STEPS.length;
-  const bibleReaderHref = `${BIBLE_READER_URL}?reference=${encodeURIComponent(reading?.scripture ?? "")}`;
 
   return (
     <main className="devotion-page">
@@ -392,9 +436,20 @@ export default function DevotionPage() {
               <header className="reading-header">
                 <p>《每日与主同行》 · 苏颖智</p>
                 <h2>{reading.title}</h2>
-                <div className="scripture-row"><span>今日经文</span><b>{reading.scripture}</b></div>
+                <div className="scripture-row">
+                  <span>今日经文</span>
+                  {(() => {
+                    const ref = scriptureRef(reading.scripture);
+                    return ref ? (
+                      <a className="scripture-ref-link" href={`${BIBLE_READER_URL}?ref=${encodeURIComponent(ref)}`} target="_blank" rel="noreferrer">
+                        {reading.scripture}
+                      </a>
+                    ) : (
+                      <b>{reading.scripture}</b>
+                    );
+                  })()}
+                </div>
                 <div className="bible-actions">
-                  <a className="scripture-link" href={bibleReaderHref}>打开圣经电子书读经</a>
                   <button type="button" onClick={() => completeStep(1)}>我已读完经文</button>
                 </div>
               </header>
@@ -411,14 +466,14 @@ export default function DevotionPage() {
                 <section className="key-verse-card">
                   <p className="eyebrow">TODAY&apos;S KEY VERSE · 今日金句</p>
                   <h3>今日金句</h3>
-                  <p className="key-verse-text">{reading.keyVerse}</p>
                   <a
-                    className="soft-button"
+                    className="key-verse-link"
                     href={`${BIBLE_READER_URL}?ref=${encodeURIComponent(reading.keyVerse)}`}
                     target="_blank"
                     rel="noreferrer"
+                    aria-label="在圣经阅读器中打开今日金句"
                   >
-                    打开圣经阅读金句
+                    {reading.keyVerse}
                   </a>
                 </section>
               )}
