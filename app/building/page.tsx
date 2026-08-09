@@ -19,7 +19,7 @@ export default function Page() {
         <h2>建堂主题</h2>
         <div className="site-subgrid">
           {BUILDING_TOPICS.map((topic) => (
-            <SubCard key={topic.slug} label={topic.label} verse={topic.verse} tone={topic.tone} icon={topic.icon} />
+            <SubCard key={topic.slug} label={topic.label} verse={topic.verse} image={topic.image} alt={topic.label} />
           ))}
         </div>
         <p className="site-contact" style={{ marginTop: 40 }}>

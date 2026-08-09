@@ -37,13 +37,12 @@ export const VERSE_COLUMNS: Record<string, Verse> = {
   },
 };
 
-// 子栏目/主题通用字段：tone = 图头渐变配色类；icon = 线稿插画 id（见 SubCard）
+// 子栏目/主题通用字段：image = 写实照片图头（public/subcards/）
 export type SubItem = {
   slug: string;
   label: string;
   verse: Verse;
-  tone: string;
-  icon: string;
+  image: string;
 };
 
 // 教会成长 → 子栏目寄语
@@ -52,8 +51,7 @@ export const GROWTH_SUBCOLUMNS: SubItem[] = [
     slug: "sunday-school",
     label: "儿童主日学",
     verse: { text: "教養孩童，使他走當行的道，就是到老他也不偏離。", ref: "箴言 22:6" },
-    tone: "tone-blue",
-    icon: "book",
+    image: "/subcards/sunday-school.jpg",
   },
   {
     slug: "youth",
@@ -62,22 +60,19 @@ export const GROWTH_SUBCOLUMNS: SubItem[] = [
       text: "不可叫人小看你年輕，總要在言語、行爲、愛心、信心、清潔上，都作信徒的榜樣。",
       ref: "提摩太前書 4:12",
     },
-    tone: "tone-orange",
-    icon: "flame",
+    image: "/subcards/youth.jpg",
   },
   {
     slug: "sisters",
     label: "姊妹团契",
     verse: { text: "最要緊的是彼此切實相愛，因爲愛能遮掩許多的罪。", ref: "彼得前書 4:8" },
-    tone: "tone-rose",
-    icon: "lily",
+    image: "/subcards/sisters.jpg",
   },
   {
     slug: "brothers",
     label: "弟兄团契",
     verse: { text: "兩個人總比一個人好，因爲二人勞碌同得美好的果效。", ref: "傳道書 4:9" },
-    tone: "tone-olive",
-    icon: "wheat",
+    image: "/subcards/brothers.jpg",
   },
   {
     slug: "visitation",
@@ -86,15 +81,13 @@ export const GROWTH_SUBCOLUMNS: SubItem[] = [
       text: "這些事你們既作在我這弟兄中一個最小的身上，就是作在我身上了。",
       ref: "馬太福音 25:40",
     },
-    tone: "tone-teal",
-    icon: "hands",
+    image: "/subcards/visitation.jpg",
   },
   {
     slug: "festivals",
     label: "节日与特别活动",
     verse: { text: "耶和華果然爲我們行了大事，我們就歡喜。", ref: "詩篇 126:3" },
-    tone: "tone-gold",
-    icon: "star",
+    image: "/subcards/festivals.jpg",
   },
 ];
 
@@ -104,22 +97,19 @@ export const BUILDING_TOPICS: SubItem[] = [
     slug: "vision",
     label: "建堂异象",
     verse: { text: "你當擴張你帳幕之地，張大你居所的幔子，不要限止。", ref: "以賽亞書 54:2" },
-    tone: "tone-navy",
-    icon: "tower",
+    image: "/subcards/building-vision.jpg",
   },
   {
     slug: "journey",
     label: "建堂历程",
     verse: { text: "那在你們心裏動了善工的，必成全這工。", ref: "腓立比書 1:6" },
-    tone: "tone-brown",
-    icon: "milestone",
+    image: "/subcards/building-journey.jpg",
   },
   {
     slug: "progress",
     label: "工程进度",
     verse: { text: "不要藐視這日的事爲小。", ref: "撒迦利亞書 4:10" },
-    tone: "tone-slate",
-    icon: "blueprint",
+    image: "/subcards/building-progress.jpg",
   },
   {
     slug: "prayer",
@@ -128,8 +118,7 @@ export const BUILDING_TOPICS: SubItem[] = [
       text: "你求告我，我就應允你，並將你所不知道、又大又難的事指示你。",
       ref: "耶利米書 33:3",
     },
-    tone: "tone-purple",
-    icon: "candle",
+    image: "/subcards/building-prayer.jpg",
   },
   {
     slug: "offering",
@@ -138,14 +127,12 @@ export const BUILDING_TOPICS: SubItem[] = [
       text: "各人要隨本心所酌定的，不要作難，不要勉強，因爲捐得樂意的人是神所喜愛的。",
       ref: "哥林多後書 9:7",
     },
-    tone: "tone-amber",
-    icon: "cross-wheat",
+    image: "/subcards/building-offering.jpg",
   },
   {
     slug: "testimony",
     label: "建堂见证",
     verse: { text: "耶和華以便以謝，到如今耶和華都幫助我們。", ref: "撒母耳記上 7:12" },
-    tone: "tone-lake",
-    icon: "well",
+    image: "/subcards/building-testimony.jpg",
   },
 ];

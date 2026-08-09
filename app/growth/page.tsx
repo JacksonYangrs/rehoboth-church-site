@@ -19,7 +19,7 @@ export default function Page() {
         <h2>事工与团契</h2>
         <div className="site-subgrid">
           {GROWTH_SUBCOLUMNS.map((item) => (
-            <SubCard key={item.slug} label={item.label} verse={item.verse} tone={item.tone} icon={item.icon} />
+            <SubCard key={item.slug} label={item.label} verse={item.verse} image={item.image} alt={item.label} />
           ))}
         </div>
         <p className="site-contact" style={{ marginTop: 40 }}>

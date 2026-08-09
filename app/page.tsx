@@ -154,7 +154,7 @@ export default function Home() {
           </div>
           <div className="site-subgrid">
             {GROWTH_SUBCOLUMNS.map((item) => (
-              <SubCard key={item.slug} label={item.label} verse={item.verse} tone={item.tone} icon={item.icon} />
+              <SubCard key={item.slug} label={item.label} verse={item.verse} image={item.image} alt={item.label} />
             ))}
           </div>
         </div>
@@ -194,7 +194,7 @@ export default function Home() {
           </div>
           <div className="site-subgrid">
             {BUILDING_TOPICS.map((topic) => (
-              <SubCard key={topic.slug} label={topic.label} verse={topic.verse} tone={topic.tone} icon={topic.icon} />
+              <SubCard key={topic.slug} label={topic.label} verse={topic.verse} image={topic.image} alt={topic.label} />
             ))}
           </div>
         </div>
