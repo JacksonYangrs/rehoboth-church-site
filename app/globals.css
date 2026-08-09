@@ -212,6 +212,9 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
   .steps-list button { min-height: 72px; padding: 9px 4px; }
   .steps-list small { display: none; }
   .completion-note { padding-left: 0; }
+  .site-block-inner--worship { grid-template-columns: 1fr; gap: 28px; }
+  .site-worship-photo { max-width: 560px; }
+  .site-hero { min-height: 100vh; padding-top: 80px; padding-bottom: 64px; }
 }
 
 @media (max-width: 560px) {
@@ -256,7 +259,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 
 .site-home { display: block; }
 
-.site-hero { position: relative; min-height: 560px; display: grid; align-items: center; padding: 96px max(32px, calc((100vw - 1090px) / 2)); background-size: cover; background-position: center; background-color: var(--blue); }
+.site-hero { position: relative; min-height: 100vh; display: grid; align-items: center; padding: 96px max(32px, calc((100vw - 1090px) / 2)); background-size: cover; background-position: center; background-color: var(--blue); }
 /* 学习灵修页 today-intro 的装饰圆环语言 */
 .site-hero::before, .site-hero::after { position: absolute; border-radius: 50%; pointer-events: none; content: ""; }
 .site-hero::before { right: -5%; bottom: -26%; width: 46%; aspect-ratio: 1; border: 54px solid rgba(255,255,255,.055); }
@@ -280,7 +283,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-btn-ghost { color: #f3f6fb; border: 1px solid rgba(255,255,255,.4); }
 .site-btn-ghost:hover { background: rgba(255,255,255,.1); }
 
-.site-section { width: min(1090px, calc(100% - 48px)); margin: 40px auto; }
+.site-section { width: min(1090px, calc(100% - 48px)); margin: 40px auto; display: grid; min-height: 100vh; align-content: center; }
 .site-section-title { margin: 0 0 22px; font: 500 26px Georgia, "Songti SC", serif; letter-spacing: -.03em; color: #205088; }
 
 .site-cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 30px 34px; border: 1px solid #e2e6ee; border-left: 4px solid #e9c878; background: #fff; border-radius: 14px; box-shadow: 0 10px 30px rgba(22,55,92,.06); }
@@ -321,8 +324,8 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
   .site-block--photo { min-height: 420px; }
 }
 
-/* ===== 首页长滚动布局：一栏目一宽幅区块 ===== */
-.site-block { position: relative; display: grid; align-items: center; padding: 56px max(32px, calc((100vw - 1090px) / 2)); }
+/* ===== 首页长滚动布局：一主题占一屏 ===== */
+.site-block { position: relative; display: grid; align-items: center; min-height: 100vh; padding: 64px max(32px, calc((100vw - 1090px) / 2)); }
 .site-block--photo { min-height: 380px; background-size: cover; background-position: center; background-color: var(--blue); color: #f3f6fb; }
 .site-block-overlay { position: absolute; inset: 0; background: linear-gradient(105deg, rgba(13,29,51,.95) 0%, rgba(22,55,92,.78) 46%, rgba(32,80,136,.58) 100%); }
 .site-block-inner { position: relative; z-index: 1; width: min(1090px, 100%); margin: auto; }
@@ -350,6 +353,12 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .site-block-logo { display: block; width: 96px; height: 96px; margin: 0 auto 20px; border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,.4); }
 
 /* 区块序号徽标已废弃（重复结构去重） */
+
+/* ===== 线上敬拜：小图卡 + 文字并排（不拉通） ===== */
+.site-block--worship { min-height: 100vh; }
+.site-block-inner--worship { display: grid; grid-template-columns: 1fr minmax(0, 520px); gap: 56px; align-items: center; }
+.site-worship-photo { border-radius: 16px; overflow: hidden; box-shadow: 0 24px 60px rgba(13, 29, 51, .28); }
+.site-worship-photo img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
 
 /* ===== 栏目页头：标题 + 经文寄语（书法感） ===== */
 .site-page-head { padding: 58px max(32px, calc((100vw - 1090px) / 2)) 44px; color: #f3f6fb; background: var(--navy-grad); text-align: center; }

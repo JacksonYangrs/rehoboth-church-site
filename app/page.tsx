@@ -18,44 +18,6 @@ const ACCOUNT = {
   currency: "",
 };
 
-// 一级栏目：照片宽幅（深色叠层 + 经文寄语 + 简介 + 入口）
-function PhotoBlock({
-  title,
-  verse,
-  desc,
-  photo,
-  actionHref,
-  actionLabel,
-}: {
-  title: string;
-  verse?: Verse;
-  desc: string;
-  photo: string;
-  actionHref?: string;
-  actionLabel?: string;
-}) {
-  return (
-    <section className="site-block site-block--photo" style={{ backgroundImage: `url(${photo})` }}>
-      <div className="site-block-overlay" />
-      <div className="site-block-inner">
-        <h2>{title}</h2>
-        {verse ? (
-          <blockquote className="site-verse">
-            <p className="site-verse-text">「{verse.text}」</p>
-            <footer>——{verse.ref}</footer>
-          </blockquote>
-        ) : null}
-        <p className="site-block-copy">{desc}</p>
-        {actionHref ? (
-          <div className="site-block-actions">
-            <a className="site-btn-primary" href={actionHref}>{actionLabel}</a>
-          </div>
-        ) : null}
-      </div>
-    </section>
-  );
-}
-
 // 一级栏目：纸面块（标题 + 经文寄语 + 简介 + 内容区）
 function PaperBlock({
   title,
@@ -161,13 +123,25 @@ export default function Home() {
         </article>
       </section>
 
-      {/* 3. 线上敬拜（照片块） */}
-      <PhotoBlock
-        title="线上敬拜"
-        verse={VERSE_COLUMNS.worship}
-        desc="主日敬拜、讲道主题、诗歌敬拜与特别聚会的影音与讲义。线上与线下，一同屈身敬拜造我们的主。"
-        photo="/worship-documentary.png"
-      />
+      {/* 3. 线上敬拜（小图卡 + 文字并排，不拉通） */}
+      <section className="site-block site-block--worship">
+        <div className="site-block-inner site-block-inner--worship">
+          <div className="site-worship-copy">
+            <h2>线上敬拜</h2>
+            <blockquote className="site-verse">
+              <p className="site-verse-text">「{VERSE_COLUMNS.worship.text}」</p>
+              <footer>——{VERSE_COLUMNS.worship.ref}</footer>
+            </blockquote>
+            <p className="site-block-copy">主日敬拜、讲道主题、诗歌敬拜与特别聚会的影音与讲义。线上与线下，一同屈身敬拜造我们的主。</p>
+            <div className="site-block-actions">
+              <a className="site-btn-primary" href="/worship/">进入线上敬拜</a>
+            </div>
+          </div>
+          <div className="site-worship-photo">
+            <img src="/worship-documentary.png" alt="线上敬拜" loading="lazy" />
+          </div>
+        </div>
+      </section>
 
       {/* 4. 教会成长 */}
       <PaperBlock
