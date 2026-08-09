@@ -49,3 +49,6 @@ next-env.d.ts
 
 # 每日灵修只读归档快照（含版权数据 daily-walk.json），不随仓库发布
 /archive/
+
+# 圣经电子书独立仓库（子目录内自带 .git，与网站仓库完全隔离）
+/bible-cuv-phonetic/
