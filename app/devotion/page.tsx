@@ -426,6 +426,22 @@ export default function DevotionPage() {
           </section>
         </div>
       </section>
+
+      <footer className="devotion-credit" aria-label="版权与致谢">
+        <p className="devotion-credit-title">致谢与版权声明</p>
+        <p>
+          本站每日灵修内容节录自 <b>苏颖智《每日与主同行》</b>（原书，下称「原书」）。
+          <b>《每日与主同行》之全部著作权及邻接权利归作者苏颖智及其出版单位所有。</b>
+        </p>
+        <p>
+          本站所载内容仅为信徒个人灵修、查经及教会内部学习交流之非商业用途，本站不就原书内容主张任何权利，
+          亦不构成对原书权利的转让或授权。未经原著作权人书面许可，请勿将本站内容用于任何商业或公开发行用途。
+        </p>
+        <p>
+          如您认为本站内容存在权利争议，或希望删除相关内容，请与本站联系，我们将在核实后及时处理。
+          资料来源：WellsOfGrace.com。
+        </p>
+      </footer>
     </main>
   );
 }
