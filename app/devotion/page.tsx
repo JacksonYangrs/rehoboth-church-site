@@ -228,8 +228,8 @@ function BookOverview({ overview }: { overview: { title: string; table: ReadingB
   return (
     <section className="reading-section book-overview">
       <div className="reading-section-heading">
-        <span>本书概览</span>
         <h3>{overview.title}</h3>
+        <span>本书概览</span>
       </div>
       <div className="reading-section-body">
         {renderReadingBlock(overview.table, "overview-table")}
