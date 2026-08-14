@@ -24,6 +24,7 @@ type Reading = {
   sections: ReadingSections;
   paragraphs: string[];
   reflectionPrompts: string[];
+  overview?: { title: string; table: ReadingBlock } | null;
 };
 
 type Journal = { reflection: string; action: string; prayer: string };
@@ -217,6 +218,21 @@ function ReadingSection({ blocks, label }: { blocks: ReadingBlock[]; label: stri
       </div>
       <div className="reading-section-body">
         {blocks.map((block, index) => renderReadingBlock(block, `${label}-${index}`))}
+      </div>
+    </section>
+  );
+}
+
+// 每卷书第一天：在摘要前展示「本书概览」表
+function BookOverview({ overview }: { overview: { title: string; table: ReadingBlock } }) {
+  return (
+    <section className="reading-section book-overview">
+      <div className="reading-section-heading">
+        <span>本书概览</span>
+        <h3>{overview.title}</h3>
+      </div>
+      <div className="reading-section-body">
+        {renderReadingBlock(overview.table, "overview-table")}
       </div>
     </section>
   );
@@ -454,6 +470,7 @@ export default function DevotionPage() {
                 </div>
               </header>
               <div className="reading-body">
+                {reading.overview && <BookOverview overview={reading.overview} />}
                 <ReadingSection blocks={reading.sections.summary} label="第一段 · 摘要" />
                 <ReadingSection blocks={reading.sections.thought} label="第二段 · 默想" />
                 <ReadingSection blocks={reading.sections.practice} label="第三段 · 与主同行" />
